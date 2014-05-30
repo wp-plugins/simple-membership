@@ -46,6 +46,8 @@ You can create a free forum user account and ask your question in the above foru
 * There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
 * Membership management side is handled by the plugin.
 * Can be translated to any language.
+* Works with any WordPress theme.
+* The login and registration widgets will be responsive if you are using a responsive theme.
 
 == Installation ==
 

@@ -20,6 +20,7 @@ class BSettings {
 
     private function tab_1() {
         register_setting('swpm-settings-tab-1', 'swpm-settings', array(&$this, 'sanitize_tab_1'));
+        add_settings_section('swpm-documentation', 'Plugin Documentation', array(&$this, 'swpm_documentation_callback'), 'simple_wp_membership_settings');
         add_settings_section('general-settings', 'General Settings', array(&$this, 'general_settings_callback'), 'simple_wp_membership_settings');
         add_settings_field('enable-free-membership', 'Enable Free Membership', array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings', array('item' => 'enable-free-membership'));
         add_settings_field('free-membership-id', 'Free Membership Level ID', array(&$this, 'textfield_small_callback'), 'simple_wp_membership_settings', 'general-settings', array('item' => 'free-membership-id'));
@@ -101,9 +102,21 @@ class BSettings {
         echo "<input type='text' name='swpm-settings[" . $item . "]'  size='100' value='" . $text . "' />";
     }
 
+    public function swpm_documentation_callback() {
+        ?>
+        <div style="background: none repeat scroll 0 0 #FFF6D5;border: 1px solid #D1B655;color: #3F2502;margin: 10px 0;padding: 5px 5px 5px 10px;text-shadow: 1px 1px #FFFFFF;">
+        <p>Please visit the
+        <a target="_blank" href="https://simple-membership-plugin.com/">Simple Membership Plugin Site</a>
+        to read setup and configuration documentation.
+        </p>
+        </div>
+        <?php
+    }
+    
     public function general_settings_callback() {
         echo "<p>General Plugin Settings.</p>";
     }
+
     public function testndebug_settings_callback(){
         echo "<p>Test and Debug Related Settings.</p>";
     }
