@@ -1,0 +1,29 @@
+/* Login form CSS */
+.swpm-login-widget-form input,.swpm-login-widget-form checkbox{
+width: auto;
+}
+.swpm-login-widget-form table{
+border: none;
+}
+.swpm-login-widget-form tr{
+border: none;
+}
+.swpm-login-widget-form td{
+border: none;
+}
+
+/* Password reset form CSS */
+.swpm-password-reset-widget-form table{
+border: none;
+}
+swpm-password-reset-widget-form tr{
+border: none;
+}
+.swpm-password-reset-widget-form td{
+border: none;
+}
+
+/* Registration form CSS */
+.swpm-registration-widget-form td{
+min-width: 100px;
+}
