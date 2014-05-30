@@ -1,5 +1,5 @@
 === Simple Membership ===
-Contributors: smp7
+Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content
 Requires at least: 3.3
@@ -28,11 +28,11 @@ There is an option to enable debug logging so you can troubleshoot membership pa
 
 = Documentation =
 
-Read the [setup documentation](https://simple-membership-plugin.com/wp-content/uploads/documentation/simple-membership/membership-basic-setup-and-configuration.pdf) after you install the plugin to get started
+Read the [setup documentation](https://simple-membership-plugin.com/wp-content/uploads/documentation/simple-membership/membership-basic-setup-and-configuration.pdf) after you install the plugin to get started.
 
 = Plugin Support =
 
-If you have any issue with this plugin please post it on the support forum here:
+If you have any issue with this plugin, please post it on the support forum here:
 https://simple-membership-plugin.com/forums/
 
 You can create a free forum user account and ask your question in the above forum.
