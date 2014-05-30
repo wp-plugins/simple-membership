@@ -8,7 +8,7 @@ Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple membership plugin to add membership functionality to your site. Protect members only content using content protection easily.
+Simple membership plugin can add membership functionality to your site. Protect members only content using content protection easily.
 
 == Description ==
 
@@ -22,7 +22,7 @@ When you are editing a post or page in the WordPress editor, you can select to p
 
 Non-members viewing a protected page will be prompted to login or become a member.
 
-You can configure it to have free and/or paid membership on your site. Paid membership payment is handled via PayPal. Both one time and recurring/subscription payments are supported.
+You can configure it to have free and/or paid memberships on your site. Paid membership payment is handled securely via PayPal. Both one time and recurring/subscription payments are supported.
 
 There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
 
