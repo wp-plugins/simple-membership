@@ -12,19 +12,22 @@ Simple membership plugin can add membership functionality to your site. Protect 
 
 == Description ==
 
-A flexible, well-supported, and easy-to-use WordPress membership plugin for offering free and premium content from your WordPress site
+= A flexible, well-supported, and easy-to-use WordPress membership plugin for offering free and premium content from your WordPress site =
 
 The simple membership plugin lets you protect your posts and pages so only your members can view the protected content.
 
+= Unlimited Membership Access Levels =
 Set up unlimited membership levels (example: free, silver, gold etc) and protect your posts and pages using the membership levels you create.
 
+= User Friendly Interface for Content Protection = 
 When you are editing a post or page in the WordPress editor, you can select to protect that post or page for your members.
 
 Non-members viewing a protected page will be prompted to login or become a member.
 
-You can configure it to have free and/or paid memberships on your site. Paid membership payment is handled securely via PayPal. Both one time and recurring/subscription payments are supported.
+= Have Free and Paid Memberships =
+You can configure it to have free and/or paid memberships on your site. Paid membership payment is handled securely via PayPal. 
 
-There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
+Both one time and recurring/subscription payments are supported.
 
 = Documentation =
 
@@ -36,6 +39,13 @@ If you have any issue with this plugin, please post it on the support forum here
 https://simple-membership-plugin.com/forums/
 
 You can create a free forum user account and ask your question in the above forum.
+
+= Miscellaneous =
+
+* Ability to protect photo galleries.
+* There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
+* Membership management side is handled by the plugin.
+* Can be translated to any language.
 
 == Installation ==
 
