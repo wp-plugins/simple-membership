@@ -13,6 +13,7 @@ include_once('class.bFrontForm.php');
 include_once('class.bLevelForm.php');
 include_once('class.bMembershipLevels.php');
 include_once('class.bLog.php');
+include_once('class.bMessages.php');
 
 class SimpleWpMembership {
 
@@ -351,6 +352,11 @@ class SimpleWpMembership {
     }
 
     public function init() {
+        if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.
+            $uid = md5(microtime());
+            $_COOKIE['swpm_session'] = $uid; // fake it for current session/
+            setcookie('swpm_session', $uid, 0, '/');
+        }
         if (isset($_GET['swpm-logout'])) {
             BAuth::get_instance()->logout();
             wp_redirect(site_url());
@@ -472,15 +478,19 @@ class SimpleWpMembership {
         $joinuspage_url = $settings_configs->get_value('join-us-page-url');
         $membership_level = '';
         $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
-        $code      = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
+        $code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
         $member = BTransfer::$default_fields;
         global $wpdb;
+        $succeeded = $this->notices();
+        if($succeeded){
+            return;
+        }
         if (!empty($member_id) && !empty($code)){
             $query = 'SELECT * FROM ' . $wpdb->prefix . 'swpm_members_tbl WHERE member_id= %d AND reg_code=%s';
             $query = $wpdb->prepare($query, $member_id, $code);
             $member = $wpdb->get_row($query);
             if (empty($member)){
-                return 'Invalid Request';
+                return 'Error! Invalid Request. Could not find a match for the given security code and the user ID.';
             }
             $membership_level = $member->membership_level;
         }
@@ -500,7 +510,6 @@ class SimpleWpMembership {
         if (empty($result)) {
             return "Membership Level Not Found.";
         }
-        $succeeded = $this->notices();
         $membership_level_alias = $result->alias;
         if (isset($_POST['swpm_registration_submit']))
             $member = $_POST;
@@ -558,9 +567,11 @@ class SimpleWpMembership {
                 $headers = 'From: ' . $from_address . "\r\n";
                 $query = "SELECT alias FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = " . $member_info['membership_level'];
                 $member_info['membership_level_name'] = $wpdb->get_var($query);
+                $member_info['password'] = $member_info['plain_password'];
+                $member_info['login_link'] = $login_link;
                 $values = array_values($member_info);
                 $keys = array_map(function($n) {
-                    return "{$n}";
+                    return '{'.$n .'}';
                 }, array_keys($member_info));
                 $body = str_replace($keys, $values, $body);
                 wp_mail(trim($_POST['email']), $subject, $body, $headers);
@@ -653,7 +664,7 @@ class SimpleWpMembership {
         $current_tab = BSettings::get_instance()->current_tab;
         switch ($current_tab) {
             case 4:
-                
+
                 $link_for = filter_input(INPUT_POST, 'swpm_link_for',FILTER_SANITIZE_STRING);
                 $member_id = filter_input(INPUT_POST, 'member_id',FILTER_SANITIZE_NUMBER_INT);
                 $send_email = filter_input(INPUT_POST, 'swpm_reminder_email',FILTER_SANITIZE_NUMBER_INT);

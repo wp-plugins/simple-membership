@@ -52,16 +52,6 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $results = $wpdb->query($updatedb);
         do_action('swpm_membership_changed', array('member_id'=>$swpm_id, 'from_level'=>$old_membership_level, 'to_level'=>$membership_level));
 
-//TODO - Update the corresponding WP user object role
-//swpm_debug_log_subsc("Updating WordPress user role...",true);
-//$resultset = $wpdb->get_row("SELECT * FROM $members_table_name where member_id='$swpm_id'", OBJECT);
-//$membership_level = $resultset->membership_level;
-//$username = $resultset->user_name;
-//$membership_level_resultset = $wpdb->get_row("SELECT * FROM $membership_level_table where id='$membership_level'", OBJECT);
-//swpm_debug_log_subsc("Calling WP role update function. Current users membership level is: ".$membership_level,true);
-//update-role-function($username,$membership_level_resultset->role);
-//swpm_debug_log_subsc("Current WP users role updated to: ".$membership_level_resultset->role,true);
-
         //Set Email details for the account upgrade notification
         $email = $ipn_data['payer_email'];
         $subject = $settings->get_value('upgrade-complete-mail-subject');
@@ -109,9 +99,13 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $updatedb = "INSERT INTO $members_table_name (user_name,first_name,last_name,password,member_since,membership_level,account_state,last_accessed,last_accessed_from_ip,email,address_street,address_city,address_state,address_zipcode,country,gender,referrer,extra_info,reg_code,subscription_starts,txn_id,subscr_id) VALUES ('$user_name','$first_name','$last_name','$password', '$date','$membership_level','$account_state','$date','IP','$email','$address_street','$address_city','$address_state','$address_zipcode','$country','$gender','','','$md5_code','$date','','$subscr_id')";
         $results = $wpdb->query($updatedb);
 
-        $results = $wpdb->get_row("SELECT * FROM $members_table_name where subscr_id='$subscr_id' and reg_code='$reg_code'", OBJECT);
+        $results = $wpdb->get_row("SELECT * FROM $members_table_name where subscr_id='$subscr_id' and reg_code='$md5_code'", OBJECT);
         $id = $results->member_id; //Alternatively use $wpdb->insert_id;
-
+        if(empty($id)){
+            swpm_debug_log_subsc("Error! Failed to insert a new member record. This request will fail.",false);
+            return;
+        }
+        
         $separator='?';
         $url = $settings->get_value('registration-page-url');
         if(strpos($url,'?')!==false){$separator='&';}
@@ -119,11 +113,11 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $reg_url = $url.$separator.'member_id='.$id.'&code='.$md5_code;
         swpm_debug_log_subsc("Member signup URL: ".$reg_url,true);
 
-        $subject = $settings->get_value('reg-complete-mail-subject');
+        $subject = $settings->get_value('reg-prompt-complete-mail-subject');
         if (empty($subject)){
             $subject = "Please complete your registration";
         }
-        $body = $settings->get_value('reg-complete-mail-body');
+        $body = $settings->get_value('reg-prompt-complete-mail-body');
         if (empty($body)){
             $body = "Please use the following link to complete your registration. \n {reg_link}";
         }
