@@ -65,7 +65,7 @@ class swpm_paypal_ipn_handler {
             $this->debug_log('This is a refund notification. Refund amount: '.$gross_total,true);
             return true;
         }
-		
+
         if (($transaction_type == "subscr_signup"))
         {
             $this->debug_log('Subscription signup IPN received... nothing to do here(handled by the subscription IPN handler)',true);
@@ -137,7 +137,7 @@ class swpm_paypal_ipn_handler {
             //--------------------------------------------------------------------------------------
             // ========= Need to find the (level ID) in the custom variable ============
             $subsc_ref = $customvariables['subsc_ref'];//Membership level ID
-            $this->debug_log('Membership payment paid for membership level ID: '.$subsc_ref,true);		    
+            $this->debug_log('Membership payment paid for membership level ID: '.$subsc_ref,true);
             if (!empty($subsc_ref))
             {
                 $swpm_id = "";
@@ -165,7 +165,7 @@ class swpm_paypal_ipn_handler {
         if (function_exists('wp_aff_platform_install'))
         {
             $this->debug_log('WP Affiliate Platform is installed, checking if custom field has affiliate data...',true);
-            //It expects the value of the custom field to be like the following: 
+            //It expects the value of the custom field to be like the following:
             //<input type="hidden" name="custom" value="subsc_ref=4&ap_id=AFF_ID" />
 
             $custom_field_val = $this->ipn_data['custom'];
@@ -189,7 +189,7 @@ class swpm_paypal_ipn_handler {
                     }else if (!empty($this->ipn_data['mc_shipping'])){
                             $total_shipping = $this->ipn_data['mc_shipping'];
                     }
-                    $gross_sale_amt = $this->ipn_data['mc_gross'];	
+                    $gross_sale_amt = $this->ipn_data['mc_gross'];
                     $this->debug_log('Gross sale amount: '.$gross_sale_amt.' Tax: '.$total_tax.' Shipping: '.$total_shipping,true);
                     $sale_amount = $gross_sale_amt - $total_shipping - $total_tax;
 
@@ -205,6 +205,8 @@ class swpm_paypal_ipn_handler {
             {
                 $this->debug_log("Referrer value is empty! No commission will be awarded for this sale",true);
             }
+            
+            do_action('swpm_paypal_ipn_processed', $this->ipn_data);
         }
         return true;
     }
@@ -229,13 +231,13 @@ class swpm_paypal_ipn_handler {
       // open the connection to paypal
       if($this->sandbox_mode){//connect to PayPal sandbox
 	      $uri = 'ssl://'.$url_parsed['host'];
-	      $port = '443';         	
+	      $port = '443';
 	      $fp = fsockopen($uri,$port,$err_num,$err_str,30);
       }
       else{//connect to live PayPal site using standard approach
       	$fp = fsockopen($url_parsed['host'],"80",$err_num,$err_str,30);
       }
-            
+
       if(!$fp)
       {
          // could not open the connection.  If loggin is on, the error message
@@ -282,12 +284,12 @@ class swpm_paypal_ipn_handler {
 
     function debug_log($message,$success,$end=false)
     {
-        bLog::log_simple_debug($message, $success, $end);
+        BLog::log_simple_debug($message, $success, $end);
     }
 }
 
 // Start of IPN handling (script execution)
-  
+
 $ipn_handler_instance = new swpm_paypal_ipn_handler();
 
 $settings = BSettings::get_instance();
@@ -302,7 +304,7 @@ if(!empty($debug_enabled))//debug is enabled in the system
 	{
             $ipn_handler_instance->debug_log('This debug line was generated because you entered the URL of the ipn handling script in the browser.',true,true);
             exit;
-	}	
+	}
 }
 
 $sandbox_enabled = $settings->get_value('enable-sandbox-testing');

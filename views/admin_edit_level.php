@@ -38,7 +38,7 @@
                         value="<?php echo $noexpire?'':$subscription_period;?>"></td>
 		            <td style="background-color: #cfdfe9" title="fresh">
                     <select id="subscription_unit" name="subscription_unit">
-                   <?= bUtils::subscription_unit_dropdown($subscription_unit)?>
+                   <?= BUtils::subscription_unit_dropdown($subscription_unit)?>
                     </select>
                     </td>
 		            </tr>

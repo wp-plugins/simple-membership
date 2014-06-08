@@ -1,110 +1,259 @@
 <?php
-abstract class BProtectionBase{
-	protected $bitmap;
-	protected $posts;
-	protected $pages;
-	protected $comments;
-	protected $categories;
-	protected $attachments;
-	protected $custom_posts;
-	protected $details;
-	private function __construct(){}
-	protected function init($level_id){
+
+abstract class BProtectionBase {
+
+    protected $bitmap;
+    protected $posts;
+    protected $pages;
+    protected $comments;
+    protected $categories;
+    protected $attachments;
+    protected $custom_posts;
+    protected $details;
+    protected $options;
+
+    private function __construct() {
+
+    }
+
+    protected function init($level_id) {
         global $wpdb;
         $this->owning_level_id = $level_id;
-        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id =". $level_id;
+        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id =" . $level_id;
         $result = $wpdb->get_row($query);
-        $this->bitmap       = isset($result->permissions)? $result->permissions:0;
-        $this->posts        = isset($result->post_list)? unserialize($result->post_list): array();
-        $this->pages        = isset($result->page_list)? unserialize($result->page_list): array();
-        $this->comments     = isset($result->comment_list)? unserialize($result->comment_list): array();
-        $this->categories   = isset($result->category_list)? unserialize($result->category_list): array();
-        $this->attachments  = isset($result->attachment_list)? unserialize($result->attachment_list): array();
-        $this->custom_posts = isset($result->custom_post_list)? unserialize($result->custom_post_list): array();
-        $this->details = (array)$result;
-	}
-    protected function in_posts($id){
-        return in_array($id, (array)$this->posts);
+        $this->bitmap = isset($result->permissions) ? $result->permissions : 0;
+        $this->posts = isset($result->post_list) ? (array) unserialize($result->post_list) : array();
+        $this->pages = isset($result->page_list) ? (array) unserialize($result->page_list) : array();
+        $this->comments = isset($result->comment_list) ? (array) unserialize($result->comment_list) : array();
+        $this->categories = isset($result->category_list) ? (array) unserialize($result->category_list) : array();
+        $this->attachments = isset($result->attachment_list) ? (array) unserialize($result->attachment_list) : array();
+        $this->custom_posts = isset($result->custom_post_list) ? (array) unserialize($result->custom_post_list) : array();
+        $this->options = isset($result->options) ? (array) unserialize($result->options) : array();
+        $this->disable_bookmark = isset($result->disable_bookmark_list) ? (array) unserialize($result->disable_bookmark_list) : array();
+        $this->details = (array) $result;
     }
-    protected function in_pages($id){
-        return in_array($id, (array)$this->pages);
+    public function apply($ids, $type){
+        $post_types = get_post_types(array('public' => true, '_builtin' => false));
+        if(in_array($type,$post_types)){$type = 'custom_post';}
+        return $this->update_perms($ids, true, $type);
     }
-    protected function in_attachments($id){
-        return in_array($id, (array)$this->attachments);
+    public function remove($ids, $type){
+        $post_types = get_post_types(array('public' => true, '_builtin' => false));
+        if(in_array($type,$post_types)){$type = 'custom_post';}
+        return $this->update_perms($ids, false, $type);
     }
-    protected function in_custom_posts($id){
-        return in_array($id, (array)$this->custom_posts);
+    public function get_options() {
+        return $this->options;
     }
-    protected function in_comments($id){
-        return in_array($id,(array) $this->comments);
+
+    public function get_posts() {
+        return $this->posts;
     }
-    protected function in_categories($id){
-        return in_category((array)$this->categories, $id);
+
+    public function get_pages() {
+        return $this->pages;
     }
-    protected function in_parent_categories($id){
-        $cats = get_the_category($id);
-        $parents = array();
-        foreach ($cats as $key => $cat) {
-            $parents = array_merge($parents,explode(',',get_category_parents($cat->cat_ID,false,',')));
-        }
+
+    public function get_comments() {
+        return $this->comments;
+    }
+
+    public function get_categories() {
+        return $this->categories;
+    }
+
+    public function get_attachments() {
+        return $this->attachments;
+    }
+
+    public function get_custom_posts() {
+        return $this->custom_posts;
+    }
+
+    public function is_bookmark_disabled($id) {
+        $posts = isset($this->disable_bookmark['posts']) ?
+                $this->disable_bookmark['posts'] : array();
+        $pages = isset($this->disable_bookmark['pages']) ?
+                $this->disable_bookmark['pages'] : array();
+        return in_array($id, $pages) || in_array($id, $posts);
+    }
+
+    public function in_posts($id) {
+        return (/* ($this->bitmap&4)===4) && */in_array($id, (array) $this->posts));
+    }
+
+    public function in_pages($id) {
+        return (/* ($this->bitmap&8)===8) && */ in_array($id, (array) $this->pages));
+    }
+
+    public function in_attachments($id) {
+        return (/* ($this->bitmap&16)===16) && */in_array($id, (array) $this->attachments));
+    }
+
+    public function in_custom_posts($id) {
+        return (/* ($this->bitmap&32)===32) && */ in_array($id, (array) $this->custom_posts));
+    }
+
+    public function in_comments($id) {
+        return (/* ($this->bitmap&2)===2) && */ in_array($id, (array) $this->comments));
+    }
+
+    public function in_categories($id) {
+        if (empty($this->categories))
+            return false;
+        return (/* ($this->bitmap&1)===1) && */ in_array($id, (array) $this->categories));
+    }
+
+    public function post_in_categories($post_id) {
+        if (empty($this->categories))
+            return false;
+        return (/* ($this->bitmap&1)===1) && */ in_category((array) $this->categories, $post_id));
+    }
+
+    public function in_parent_categories($id) {
+        if (empty($this->categories))
+            return false;
+        $parents = explode(',', get_category_parents($id, false, ','));
         $parents = array_unique($parents);
-        foreach($parents as $parent){
-            if(empty($parent)) continue;
-            if(in_array(get_cat_ID($parent), (array)$this->categories)) return true;
+        foreach ($parents as $parent) {
+            if (empty($parent))
+                continue;
+            if (/* (($this->bitmap&1)===1) && */(in_array($parent, (array) $this->categories)))
+                return true;
         }
         return false;
     }
-	public function update_perms($post_id, $set, $type){
-		$list  = null;
-		$index = '';
-		switch($type){
-			case 'page':
-			$list  = $this->pages;
-			$index = 'page_list';
-			break;
-			case 'post':
-			$list  = $this->posts;
-			$index = 'post_list';
-			break;
-			case 'attachment':
-			$list = $this->attachments;
-			$index = 'attachment_list';
-			break;
-			default:
-				if(in_array($type, get_post_types(array('public'   => true,'_builtin' => false)))){
-					$list  = $this->custom_posts;
-					$index = 'custom_post_list';
-				}
-			break;
-		}
-		if(!empty($index)){
-			if($set){
-				$list[] = $post_id;
-				$list = array_unique($list);
-			}
-			else{
-				foreach($list as $k=>$v)if($v===$post_id) unset($list[$k]);
-			}
-			$this->details[$index] = $list;
-		}
-		return $this;
-	}
-	public function save(){
-		global $wpdb;
-		$data = array();
-		$list_type = array('page_list','post_list','attachment_list','custom_post_list','comment_list','category_list');
-		foreach($this->details as $key=>$value){
-			if($key == 'id') continue;
-			if(is_serialized($value)||!in_array($key,$list_type))
-				$data[$key] = $value;
-			else
-				$data[$key] = serialize($value);
-		}
-		$wpdb->update($wpdb->prefix. "swpm_membership_tbl", $data, array('id'=>$this->owning_level_id));
-	}
-	public function get($key){
-		if(isset($this->details[$key]))
-			return $this->details[$key];
-		return "";
-	}
+
+    public function post_in_parent_categories($post_id) {
+        if (empty($this->categories))
+            return false;
+        $cats = get_the_category($post_id);
+        $parents = array();
+        foreach ($cats as $key => $cat) {
+            $parents = array_merge($parents, explode(',', get_category_parents($cat->cat_ID, false, ',')));
+        }
+        $parents = array_unique($parents);
+        foreach ($parents as $parent) {
+            if (empty($parent))
+                continue;
+            if (/* (($this->bitmap&1)===1) && */(in_array(get_cat_ID($parent), (array) $this->categories)))
+                return true;
+        }
+        return false;
+    }
+
+    public function add_posts($ids) {
+        return $this->update_perms($ids, true, 'post');
+    }
+
+    public function add_pages($ids) {
+        return $this->update_perms($ids, true, 'page');
+    }
+
+    public function add_attachments($ids) {
+        return $this->update_perms($ids, true, 'attachment');
+    }
+
+    public function add_comments($ids) {
+        return $this->update_perms($ids, true, 'comment');
+    }
+
+    public function add_categories($ids) {
+        return $this->update_perms($ids, true, 'category');
+    }
+
+    public function add_custom_posts($ids) {
+        return $this->update_perms($ids, true, 'custom_post');
+    }
+
+    public function remove_posts($ids) {
+        return $this->update_perms($ids, false, 'post');
+    }
+
+    public function remove_pages($ids) {
+        return $this->update_perms($ids, false, 'page');
+    }
+
+    public function remove_attachments($ids) {
+        return $this->update_perms($ids, false, 'attachment');
+    }
+
+    public function remove_comments($ids) {
+        return $this->update_perms($ids, false, 'comment');
+    }
+
+    public function remove_categories($ids) {
+        return $this->update_perms($ids, false, 'category');
+    }
+
+    public function remove_custom_posts($ids) {
+        return $this->update_perms($ids, false, 'custom_post');
+    }
+
+    private function update_perms($ids, $set, $type) {
+        $list = null;
+        $index = '';
+        switch ($type) {
+            case 'page':
+                $list = $this->pages;
+                $index = 'page_list';
+                break;
+            case 'post':
+                $list = $this->posts;
+                $index = 'post_list';
+                break;
+            case 'attachment':
+                $list = $this->attachments;
+                $index = 'attachment_list';
+                break;
+            case 'comment':
+                $list = $this->comments;
+                $index = 'comment_list';
+                break;
+            case 'category':
+                $list = $this->categories;
+                $index = 'category_list';
+                break;
+            case 'custom_post':
+                $list = $this->custom_posts;
+                $index = 'custom_post_list';
+                break;
+            default:
+                break;
+        }
+        if (!empty($index)) {
+            if ($set) {
+                $list = array_merge($list, $ids);
+                $list = array_unique($list);
+            } else {
+                $list = array_diff($list, $ids);
+            }
+            $this->details[$index] = $list;
+        }
+        return $this;
+    }
+
+    public function save() {
+        global $wpdb;
+        $data = array();
+
+        $list_type = array('page_list', 'post_list', 'attachment_list',
+            'custom_post_list', 'comment_list', 'category_list');
+        foreach ($this->details as $key => $value) {
+            if ($key == 'id')
+                continue;
+            if (is_serialized($value) || !in_array($key, $list_type))
+                $data[$key] = $value;
+            else
+                $data[$key] = serialize($value);
+        }
+        $wpdb->update($wpdb->prefix . "swpm_membership_tbl", $data, array('id' => $this->owning_level_id));
+    }
+
+    public function get($key) {
+        if (isset($this->details[$key]))
+            return $this->details[$key];
+        return "";
+    }
+
 }

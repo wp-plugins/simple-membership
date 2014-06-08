@@ -1,6 +1,6 @@
 <?php
 
-class bLog {
+class BLog {
     private $error;
     private $warn;
     private $notice;
@@ -13,7 +13,7 @@ class bLog {
     public static function get_logger($context = ''){
         $context = empty($context)? 'default': $context;
         if (!isset(self::$intance[$context])){
-            self::$intance[$context] = new bLog();
+            self::$intance[$context] = new BLog();
         }
         return self::$intance[$context];
     }
@@ -52,12 +52,12 @@ class bLog {
         }
         fclose($fp);
     }
-    
+
     public static function log_simple_debug($message, $success, $end = false) {
         $settings = BSettings::get_instance();
         $debug_enabled = $settings->get_value('enable-debug');
         if (empty($debug_enabled)) {//Debug is not enabled
-            return; 
+            return;
         }
 
         //Lets write to the log file

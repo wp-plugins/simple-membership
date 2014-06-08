@@ -9,7 +9,7 @@
 	<tr>
 		<th scope="row"><label for="gender"><?php _e('Gender'); ?></label></th>
 		<td><select class="regular-text" name="gender" id="gender">
-				<?= bUtils::gender_dropdown($gender) ?>
+				<?= BUtils::gender_dropdown($gender) ?>
 			</select>
 		</td>
 	</tr>

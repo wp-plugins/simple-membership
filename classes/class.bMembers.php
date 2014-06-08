@@ -139,7 +139,7 @@ class BMembers extends WP_List_Table {
         global $wpdb;
         if (isset($_REQUEST['member_id'])) {
             $id = absint($_REQUEST['member_id']);
-            $user_name = bUtils::get_user_by_id($id);
+            $user_name = BUtils::get_user_by_id($id);
             $this->delete_wp_user($user_name);
             $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
             $wpdb->query($query);
@@ -148,7 +148,7 @@ class BMembers extends WP_List_Table {
             if (!empty($members)) {
                 $members = array_map('absint', $members);
                 foreach ($members as $swpm_id) {
-                    $user_name = bUtils::get_user_by_id($swpm_id);
+                    $user_name = BUtils::get_user_by_id($swpm_id);
                     $this->delete_wp_user($user_name);
                 }
                 $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id IN (" . implode(',', $members) . ")";
