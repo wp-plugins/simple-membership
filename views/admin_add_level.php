@@ -2,7 +2,7 @@
 
 <form action="" method="post" name="swpm-create-level" id="swpm-create-level" class="validate"<?php do_action('level_new_form_tag');?>>
 <input name="action" type="hidden" value="createlevel" />
-<h3>Add Membership Level</h3> 
+<h3>Add Membership Level</h3>
 <p><?php _e('Create new membership level.'); ?></p>
 <?php wp_nonce_field( 'create-swpmlevel', '_wpnonce_create-swpmlevel' ) ?>
 <table class="form-table">
@@ -15,8 +15,8 @@
 		<th scope="row"><label for="role"><?php _e('Default WordPress Role'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
 		<td><select  class="regular-text" name="role"><?php wp_dropdown_roles( 'subscriber' ); ?></select></td>
 	</tr>
-    <tr>
-        <th scope="row"><label for="subscription_unit"><?php _e('Subscription Duration'); ?> <span class="description"><?php _e('(required)'); ?></span></label>        
+        <tr>
+        <th scope="row"><label for="subscription_unit"><?php _e('Subscription Duration'); ?> <span class="description"><?php _e('(required)'); ?></span></label>
         </th>
         <td>
             <div class="color-option"><input name="subscript_duration_type" id="subscript_duration_noexpire" checked="checked" type="radio" value="0" class="tog">
@@ -27,6 +27,7 @@
 	            </tbody></table>
             </div>
         </td>
+        </tr>
         <tr>
             <th></th>
             <td>
@@ -47,8 +48,7 @@
             </div>
             </td>
         </tr>
-    </tr>
-<?php //include('admin_member_form_common_part.php');?>
+        <?= apply_filters('swpm_admin_add_membership_level_ui', '');?>
 </tbody>
 </table>
 <?php submit_button( __( 'Add New Membership Level '), 'primary', 'createswpmlevel', true, array( 'id' => 'createswpmlevelsub' ) ); ?>
@@ -56,16 +56,16 @@
 </div>
 <script>
 jQuery(document).ready(function($){
-    $('.tog:radio').on('update_deps click',function(){        
+    $('.tog:radio').on('update_deps click',function(){
         if($(this).attr('checked')){
             $("#swpm-create-level").validationEngine('detach');
             if($(this).val()==0)
                 $('#subscription_period').removeClass('validate[required]');
             else if($(this).val()==1)
-                $('#subscription_period').addClass('validate[required]');                
+                $('#subscription_period').addClass('validate[required]');
             $("#swpm-create-level").validationEngine('attach');
         }
-    });   
+    });
     $('.tog:radio').trigger('update_deps');
 });
 </script>

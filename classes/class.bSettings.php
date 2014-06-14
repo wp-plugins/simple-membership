@@ -7,6 +7,9 @@ class BSettings {
     public $current_tab;
 
     private function __construct() {
+        $this->settings = (array) get_option('swpm-settings');
+    }
+    public function init_config_hooks(){
         $page = filter_input(INPUT_GET, 'page');
 //        if($page == 'simple_wp_membership_settings'){
         if(is_admin()){ // for frontend just load settings but dont try to render settings page.
@@ -19,9 +22,7 @@ class BSettings {
                 $this->$method();
             }
         }
-        $this->settings = (array) get_option('swpm-settings');
     }
-
     private function tab_1() {
         register_setting('swpm-settings-tab-1', 'swpm-settings', array(&$this, 'sanitize_tab_1'));
         add_settings_section('swpm-documentation', 'Plugin Documentation',
@@ -215,23 +216,29 @@ class BSettings {
     }
 
     public function sanitize_tab_1($input) {
-        if (empty($this->settings))
+        if (empty($this->settings)){
             $this->settings = (array) get_option('swpm-settings');
+        }
         $output = $this->settings;
         //general settings block
-        if (isset($input['enable-free-membership']))
+        if (isset($input['enable-free-membership'])){
             $output['enable-free-membership'] = esc_url($input['enable-free-membership']);
-        else
+        }
+        else{
             $output['enable-free-membership'] = "";
-        if (isset($input['enable-debug']))
+        }
+        if (isset($input['enable-debug'])){
             $output['enable-debug'] = esc_url($input['enable-debug']);
-        else
+        }
+        else{
             $output['enable-debug'] = "";
-        if (isset($input['enable-sandbox-testing']))
+        }
+        if (isset($input['enable-sandbox-testing'])){
             $output['enable-sandbox-testing'] = esc_url($input['enable-sandbox-testing']);
-        else
+        }
+        else{
             $output['enable-sandbox-testing'] = "";
-
+        }
         $output['free-membership-id'] = ($input['free-membership-id'] != 1) ? absint($input['free-membership-id']) : '';
         $output['login-page-url'] = esc_url($input['login-page-url']);
         $output['registration-page-url'] = esc_url($input['registration-page-url']);
@@ -242,6 +249,10 @@ class BSettings {
     }
 
     public function sanitize_tab_3($input) {
+        if (empty($this->settings)){
+            $this->settings = (array) get_option('swpm-settings');
+        }
+        $output = $this->settings;
         $output['reg-complete-mail-subject'] = sanitize_text_field($input['reg-complete-mail-subject']);
         $output['reg-complete-mail-body'] = wp_kses_data(force_balance_tags($input['reg-complete-mail-body']));
 
@@ -251,20 +262,25 @@ class BSettings {
         $output['reg-prompt-complete-mail-subject'] = sanitize_text_field($input['reg-prompt-complete-mail-subject']);
         $output['reg-prompt-complete-mail-body'] = wp_kses_data(force_balance_tags($input['reg-prompt-complete-mail-body']));
         $output['email-from'] = trim($input['email-from']);
-        if (isset($input['enable-admin-notification-after-reg']))
+        if (isset($input['enable-admin-notification-after-reg'])){
             $output['enable-admin-notification-after-reg'] = esc_html($input['enable-admin-notification-after-reg']);
-        else
+        }
+        else{
             $output['enable-admin-notification-after-reg'] = "";
-        if (isset($input['enable-notification-after-manual-user-add']))
+        }
+        if (isset($input['enable-notification-after-manual-user-add'])){
             $output['enable-notification-after-manual-user-add'] = esc_html($input['enable-notification-after-manual-user-add']);
-        else
+        }
+        else{
             $output['enable-notification-after-manual-user-add'] = "";
+        }
         return $output;
     }
 
     public function get_value($key, $default = "") {
-        if (isset($this->settings[$key]))
+        if (isset($this->settings[$key])){
             return $this->settings[$key];
+        }
         return $default;
     }
 

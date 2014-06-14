@@ -36,6 +36,12 @@ class BAdminRegistration extends BRegistration {
             $wp_user_info['user_registered'] = date('Y-m-d H:i:s');
             BUtils::create_wp_user($wp_user_info);
             /*             * ******************** register to wordpress ********** */
+            $send_notification = BSettings::get_instance()->get_value('enable-notification-after-manual-user-add');
+            $member_info['plain_password'] = $plain_password;
+            $this->member_info = $member_info;
+            if (!empty($send_notification)){
+                $this->send_reg_email();
+            }
             $message = array('succeeded' => true, 'message' => 'Registration Successful.');
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership');

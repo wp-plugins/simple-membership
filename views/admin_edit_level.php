@@ -2,8 +2,8 @@
 <form action="" method="post" name="swpm-edit-level" id="swpm-edit-level" class="validate"<?php do_action('level_edit_form_tag');?>>
 <input name="action" type="hidden" value="editlevel" />
 <?php wp_nonce_field( 'edit-swpmlevel', '_wpnonce_edit-swpmlevel' ) ?>
-<h3>Edit Membership Level</h3>
-<p><?php _e('Edit membership level.'); ?></p>
+<h3><?= _e('Edit membership level'); ?></h3>
+<p><?=  _e('Edit membership level.'); ?></p>
 <table class="form-table">
     <tbody>
 	<tr>
@@ -48,7 +48,7 @@
 
         </td>
     </tr>
-<?php //include('admin_member_form_common_part.php');?>
+     <?= apply_filters('swpm_admin_edit_membership_level_ui', '', $id);?>
 </tbody>
 </table>
 <?php submit_button( __( 'Edit Membership Level '), 'primary', 'editswpmlevel', true, array( 'id' => 'editswpmlevelsub' ) ); ?>

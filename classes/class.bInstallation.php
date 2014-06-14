@@ -102,6 +102,19 @@ class BInstallation {
 			)VALUES (1 , 'Content Protection', 'administrator', '15', '0',NULL,NULL, NULL , NULL , NULL , NULL,NULL,NULL,'');";
             $wpdb->query($sql);
         }
+        $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_membership_meta_tbl (
+                        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        level_id int(11) NOT NULL,
+                        meta_key varchar(255) NOT NULL,
+                        meta_label varchar(255) NULL,
+                        meta_value text,
+                        meta_type varchar(255) NOT NULL DEFAULT 'text',
+                        meta_default text,
+                        meta_context varchar(255) NOT NULL DEFAULT 'default',
+                        KEY level_id (level_id),
+                        UNIQUE KEY meta_key_id (level_id,meta_key)
+          ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+        dbDelta($sql);
     }
 
     public static function initdb() {

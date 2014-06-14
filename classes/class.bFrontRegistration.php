@@ -6,7 +6,6 @@
  * @author nur
  */
 class BFrontRegistration extends BRegistration {
-    private $member_info = array();
     protected static $__CLASS__ = __CLASS__;
     public function regigstration_ui(){
         $settings_configs = BSettings::get_instance();
@@ -54,6 +53,8 @@ class BFrontRegistration extends BRegistration {
     }
     public function register() {
         if($this->create_swpm_user()&&$this->create_wp_user()&&$this->send_reg_email()){
+            do_action('swpm_front_end_registration_complete');
+            
             $login_page_url = BSettings::get_instance()->get_value('login-page-url');
             $after_rego_msg = '<p>Registration Successful. Please <a href="' . $login_page_url . '">Login</a></p>';
             $message = array('succeeded' => true, 'message' => $after_rego_msg);
@@ -109,34 +110,6 @@ class BFrontRegistration extends BRegistration {
         }
         $member_info['plain_password'] = $plain_password;
         $this->member_info = $member_info;
-        return true;
-    }
-    private function send_reg_email(){
-        global $wpdb;
-        $member_info = $this->member_info;
-        $settings = BSettings::get_instance();
-        $subject = $settings->get_value('reg-complete-mail-subject');
-        $body = $settings->get_value('reg-complete-mail-body');
-        $from_address = $settings->get_value('email-from');
-        $login_link = $settings->get_value('login-page-url');
-        $headers = 'From: ' . $from_address . "\r\n";
-        $query = "SELECT alias FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = " . $member_info['membership_level'];
-        $member_info['membership_level_name'] = $wpdb->get_var($query);
-        $member_info['password'] = $member_info['plain_password'];
-        $member_info['login_link'] = $login_link;
-        $values = array_values($member_info);
-        $keys = array_map(function($n) {
-            return '{'.$n .'}';
-        }, array_keys($member_info));
-        $body = str_replace($keys, $values, $body);
-        wp_mail(trim($_POST['email']), $subject, $body, $headers);
-        if ($settings->get_value('enable-admin-notification-after-reg')) {
-            $subject = "Notification of New Member Registration";
-            $body = "A new member has registered. The following email was sent to the member." .
-                    "\n\n-------Member Email----------\n" . $body .
-                    "\n\n------End------\n";
-            wp_mail($from_address, $subject, $body, $headers);
-        }
         return true;
     }
     private function create_wp_user(){
