@@ -13,13 +13,19 @@ class BAuth {
         $this->isLoggedIn = false;
         $this->userData = null;
         $this->protected = BProtection::get_instance();
-        if (!$this->validate()){
+    }
+    private function init(){
+        $valid = $this->validate();
+        Blog::log_simple_debug("init:". ($valid? "valid": "invalid"), true);
+        if (!$valid){
             $this->authenticate();
         }
     }
-
     public static function get_instance() {
-        self::$_this = empty(self::$_this) ? new BAuth() : self::$_this;
+        if (empty(self::$_this)){
+            self::$_this = new BAuth();
+            self::$_this->init();
+        }
         return self::$_this;
     }
 
@@ -27,6 +33,7 @@ class BAuth {
         global $wpdb;
         $swpm_user_name = filter_input(INPUT_POST, 'swpm_user_name');
         $swpm_password = filter_input(INPUT_POST, 'swpm_password');
+        Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
             $pass = trim($swpm_password);
@@ -53,6 +60,7 @@ class BAuth {
                 $this->set_cookie($remember);
                 $this->isLoggedIn = true;
                 $this->lastStatusMsg = "Logged In.";
+                Blog::log_simple_debug("swpm_login action.", true);
                 do_action('swpm_login', $user, $pass, $remember);
                 return true;
             }
@@ -95,6 +103,7 @@ class BAuth {
     }
 
     public function login($user, $pass, $remember = '', $secure = '') {
+        Blog::log_simple_debug("login",true);
         if ($this->isLoggedIn){
             return;
         }
@@ -148,6 +157,7 @@ class BAuth {
         if (count($cookie_elements) != 3){
             return false;
         }
+        Blog::log_simple_debug("validate:" . $_COOKIE[$auth_cookie_name],true);
         list($username, $expiration, $hmac) = $cookie_elements;
         $expired = $expiration;
         // Allow a grace period for POST and AJAX requests
@@ -159,15 +169,16 @@ class BAuth {
             $this->lastStatusMsg = "Session Expired."; //do_action('auth_cookie_expired', $cookie_elements);
             return false;
         }
+        Blog::log_simple_debug("validate:Session Expired",true);
         global $wpdb;
         $query = " SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
         $query.= " WHERE user_name = '" . $username . "'";
         $user = $wpdb->get_row($query);
-        if (!$user) {
+        if (empty($user)) {
             $this->lastStatusMsg = "Invalid User Name";
             return false;
         }
-
+        Blog::log_simple_debug("validate:Invalid User Name:" . serialize($user),true);
         $pass_frag = substr($user->password, 8, 4);
         $key = BAuth::b_hash($username . $pass_frag . '|' . $expiration);
         $hash = hash_hmac('md5', $username . '|' . $expiration, $key);
@@ -175,7 +186,7 @@ class BAuth {
             $this->lastStatusMsg = "Bad Cookie Hash";
             return false;
         }
-
+        Blog::log_simple_debug("validate:bad hash",true);
         if ($expiration < time()){
             $GLOBALS['login_grace_period'] = 1;
         }

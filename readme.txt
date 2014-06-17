@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.5.1 = 
+- Compatibility with the after login redirection addon:
+http://wordpress.org/plugins/simple-membership-after-login-redirection/
 
 = 1.5 =
 - Fixed a bug with sending member email when added via admin dashboard.
