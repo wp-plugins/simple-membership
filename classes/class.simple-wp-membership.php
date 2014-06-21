@@ -29,6 +29,7 @@ class SimpleWpMembership {
         //add_action('admin_init', array(&$this, 'admin_init')); //This call has been moved inside 'init' function
         add_action('init', array(&$this, 'init'));
         add_filter('the_content', array(&$this, 'filter_content'));
+        add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));
         //add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
         add_filter('comment_text', array(&$this, 'filter_comment'));
         add_action('save_post', array(&$this, 'save_postdata'));
@@ -54,6 +55,10 @@ class SimpleWpMembership {
         //init is too early for settings api.
         add_action('admin_init', function (){BSettings::get_instance()->init_config_hooks();});
 
+    }
+    public function hide_adminbar(){
+        $hide = BSettings::get_instance()->get_value('hide-adminbar');
+        return $hide? FALSE: TRUE;
     }
     public function shutdown(){
         BLog::writeall();
@@ -275,7 +280,8 @@ class SimpleWpMembership {
     public function filter_comment($content) {
         $acl = BAccessControl::get_instance();
         global $comment;
-        return $acl->filter_comment($comment->comment_ID, $content);
+        return $acl->filter_post($comment->comment_post_ID, $content);
+        //return $acl->filter_comment($comment->comment_ID, $content);
     }
 
     public function filter_content($content) {

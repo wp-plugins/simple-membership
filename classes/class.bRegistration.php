@@ -35,7 +35,8 @@ abstract class BRegistration {
             return '{'.$n .'}';
         }, array_keys($member_info));
         $body = str_replace($keys, $values, $body);
-        wp_mail(trim($_POST['email']), $subject, $body, $headers);
+        $email = sanitize_email(filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW));
+        wp_mail(trim($email), $subject, $body, $headers);
         if ($settings->get_value('enable-admin-notification-after-reg')) {
             $subject = "Notification of New Member Registration";
             $body = "A new member has registered. The following email was sent to the member." .

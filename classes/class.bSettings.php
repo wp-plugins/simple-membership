@@ -25,49 +25,53 @@ class BSettings {
     }
     private function tab_1() {
         register_setting('swpm-settings-tab-1', 'swpm-settings', array(&$this, 'sanitize_tab_1'));
-        add_settings_section('swpm-documentation', 'Plugin Documentation',
+        add_settings_section('swpm-documentation', BUtils::_('Plugin Documentation'),
                 array(&$this, 'swpm_documentation_callback'), 'simple_wp_membership_settings');
-        add_settings_section('general-settings', 'General Settings',
+        add_settings_section('general-settings', BUtils::_('General Settings'),
                 array(&$this, 'general_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('enable-free-membership', 'Enable Free Membership',
+        add_settings_field('enable-free-membership', BUtils::_('Enable Free Membership'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'enable-free-membership',
-                      'message'=>''));
-        add_settings_field('free-membership-id', 'Free Membership Level ID',
+                      'message'=> BUtils::_('Enable/disable registration for free membership level')));
+        add_settings_field('free-membership-id', BUtils::_('Free Membership Level ID'),
                 array(&$this, 'textfield_small_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'free-membership-id',
-                      'message'=>''));
+                      'message'=> BUtils::_('Assign free membership level ID')));
+        add_settings_field('hide-adminbar',  BUtils::_('Hide Adminbar'),
+                array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
+                array('item' => 'hide-adminbar',
+                      'message'=>BUtils::_('WordPress shows an admin toolbar to the logged in users of the site. Check this box if you want to hide that admin toolbar in the fronend of your site.')));
 
-        add_settings_section('pages-settings', 'Pages Settings',
+        add_settings_section('pages-settings', BUtils::_('Pages Settings'),
                 array(&$this, 'pages_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('login-page-url', 'Login Page URL',
+        add_settings_field('login-page-url', BUtils::_('Login Page URL'),
                 array(&$this, 'textfield_long_callback'), 'simple_wp_membership_settings', 'pages-settings',
                 array('item' => 'login-page-url',
                       'message'=>''));
-        add_settings_field('registration-page-url', 'Registration Page URL',
+        add_settings_field('registration-page-url', BUtils::_('Registration Page URL'),
                 array(&$this, 'textfield_long_callback'), 'simple_wp_membership_settings', 'pages-settings',
                 array('item' => 'registration-page-url',
                       'message'=>''));
-        add_settings_field('join-us-page-url', 'Join Us Page URL',
+        add_settings_field('join-us-page-url', BUtils::_('Join Us Page URL'),
                 array(&$this, 'textfield_long_callback'), 'simple_wp_membership_settings', 'pages-settings',
                 array('item' => 'join-us-page-url',
                       'message'=>''));
-        add_settings_field('profile-page-url', 'Edit Profile Page URL',
+        add_settings_field('profile-page-url', BUtils::_('Edit Profile Page URL'),
                 array(&$this, 'textfield_long_callback'), 'simple_wp_membership_settings', 'pages-settings',
                 array('item' => 'profile-page-url',
                       'message'=>''));
-        add_settings_field('reset-page-url', 'Password Reset Page URL',
+        add_settings_field('reset-page-url', BUtils::_('Password Reset Page URL'),
                 array(&$this, 'textfield_long_callback'), 'simple_wp_membership_settings', 'pages-settings',
                 array('item' => 'reset-page-url',
                       'message'=>''));
 
-        add_settings_section('debug-settings', 'Test & Debug Settings',
+        add_settings_section('debug-settings', BUtils::_('Test & Debug Settings'),
                 array(&$this, 'testndebug_settings_callback'), 'simple_wp_membership_settings');
         add_settings_field('enable-debug', 'Enable Debug',
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'debug-settings',
                 array('item' => 'enable-debug',
                       'message'=>'Check this option to enable debug logging. View debug log file <a href="'.SIMPLE_WP_MEMBERSHIP_URL.'/log.txt" target="_blank">here</a>.'));
-        add_settings_field('enable-sandbox-testing', 'Enable Sandbox Testing',
+        add_settings_field('enable-sandbox-testing', BUtils::_('Enable Sandbox Testing'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'debug-settings',
                 array('item' => 'enable-sandbox-testing',
                       'message'=>'Enable this option if you want to do sandbox payment testing.'));
@@ -83,50 +87,50 @@ class BSettings {
     private function tab_3() {
         register_setting('swpm-settings-tab-3', 'swpm-settings', array(&$this, 'sanitize_tab_3'));
 
-        add_settings_section('email-misc-settings', 'Email Misc. Settings',
+        add_settings_section('email-misc-settings', BUtils::_('Email Misc. Settings'),
                 array(&$this, 'email_misc_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('email-misc-from', 'From Email Address',
+        add_settings_field('email-misc-from', BUtils::_('From Email Address'),
                 array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'email-misc-settings',
                 array('item' => 'email-from',
                     'message'=>'field specific message.'));
 
-        add_settings_section('reg-prompt-email-settings', 'Email Settings (Prompt to Complete Registration )',
+        add_settings_section('reg-prompt-email-settings', BUtils::_('Email Settings (Prompt to Complete Registration )'),
                 array(&$this, 'reg_prompt_email_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('reg-prompt-complete-mail-subject', 'Email Subject',
+        add_settings_field('reg-prompt-complete-mail-subject', BUtils::_('Email Subject'),
                 array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'reg-prompt-email-settings',
                 array('item' => 'reg-prompt-complete-mail-subject',
                       'message'=>''));
-        add_settings_field('reg-prompt-complete-mail-body', 'Email Body',
+        add_settings_field('reg-prompt-complete-mail-body', BUtils::_('Email Body'),
                 array(&$this, 'textarea_callback'), 'simple_wp_membership_settings', 'reg-prompt-email-settings',
                 array('item' => 'reg-prompt-complete-mail-body',
                       'message'=>''));
 
-        add_settings_section('reg-email-settings', 'Email Settings (Registration Complete)',
+        add_settings_section('reg-email-settings', BUtils::_('Email Settings (Registration Complete)'),
                 array(&$this, 'reg_email_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('reg-complete-mail-subject', 'Email Subject',
+        add_settings_field('reg-complete-mail-subject', BUtils::_('Email Subject'),
                 array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'reg-email-settings',
                 array('item' => 'reg-complete-mail-subject',
                       'message'=>''));
-        add_settings_field('reg-complete-mail-body', 'Email Body',
+        add_settings_field('reg-complete-mail-body', BUtils::_('Email Body'),
                 array(&$this, 'textarea_callback'), 'simple_wp_membership_settings', 'reg-email-settings',
                 array('item' => 'reg-complete-mail-body',
                       'message'=>''));
-        add_settings_field('enable-admin-notification-after-reg', 'Send Notification To Admin',
+        add_settings_field('enable-admin-notification-after-reg', BUtils::_('Send Notification To Admin'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'reg-email-settings',
                 array('item' => 'enable-admin-notification-after-reg',
                       'message'=>''));
-        add_settings_field('enable-notification-after-manual-user-add', 'Send Email to Member When Added via Admin Dashboard',
+        add_settings_field('enable-notification-after-manual-user-add', BUtils::_('Send Email to Member When Added via Admin Dashboard'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'reg-email-settings',
                 array('item' => 'enable-notification-after-manual-user-add',
                       'message'=>''));
 
-        add_settings_section('upgrade-email-settings', ' Email Settings (Account Upgrade Notification)',
+        add_settings_section('upgrade-email-settings', BUtils::_(' Email Settings (Account Upgrade Notification)'),
                 array(&$this, 'upgrade_email_settings_callback'), 'simple_wp_membership_settings');
-        add_settings_field('upgrade-complete-mail-subject', 'Email Subject',
+        add_settings_field('upgrade-complete-mail-subject', BUtils::_('Email Subject'),
                 array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'upgrade-email-settings',
                 array('item' => 'upgrade-complete-mail-subject',
                       'message'=>''));
-        add_settings_field('upgrade-complete-mail-body', 'Email Body',
+        add_settings_field('upgrade-complete-mail-body', BUtils::_('Email Body'),
                 array(&$this, 'textarea_callback'), 'simple_wp_membership_settings', 'upgrade-email-settings',
                 array('item' => 'upgrade-complete-mail-body',
                       'message'=>''));
@@ -221,6 +225,13 @@ class BSettings {
         }
         $output = $this->settings;
         //general settings block
+
+        if (isset($input['hide-adminbar'])){
+            $output['hide-adminbar'] = esc_url($input['hide-adminbar']);
+        }
+        else{
+            $output['hide-adminbar'] = "";
+        }
         if (isset($input['enable-free-membership'])){
             $output['enable-free-membership'] = esc_url($input['enable-free-membership']);
         }

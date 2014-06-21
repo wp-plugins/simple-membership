@@ -54,7 +54,7 @@ class BFrontRegistration extends BRegistration {
     public function register() {
         if($this->create_swpm_user()&&$this->create_wp_user()&&$this->send_reg_email()){
             do_action('swpm_front_end_registration_complete');
-            
+
             $login_page_url = BSettings::get_instance()->get_value('login-page-url');
             $after_rego_msg = '<p>Registration Successful. Please <a href="' . $login_page_url . '">Login</a></p>';
             $message = array('succeeded' => true, 'message' => $after_rego_msg);
@@ -147,7 +147,6 @@ class BFrontRegistration extends BRegistration {
             }
             $wpdb->update(
                     $wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id')));
-            echo '<pre>';
             $message = array('succeeded' => true, 'message' => 'Profile Updated.');
             BTransfer::get_instance()->set('status', $message);
         } else {
@@ -179,15 +178,19 @@ class BFrontRegistration extends BRegistration {
         }
         $settings = BSettings::get_instance();
         $password = wp_generate_password();
+        include_once(ABSPATH . WPINC . '/class-phpass.php');
+        $wp_hasher = new PasswordHash(8, TRUE);
+        $password_hash = $wp_hasher->HashPassword(trim($password)); //should use $saned??;
+        $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $user->member_id));
+
         $body = $settings->get_value('reset-mail-body');
         $subject = $settings->get_value('reset-mail-subject');
-        $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password), array('member_id' => $user->member_id));
         $search = array('{user_name}', '{first_name}', '{last_name}', '{password}');
         $replace = array($user->user_name, $user->first_name, $user->last_name, $password);
         $body = str_replace($search, $replace, $body);
         $from = $settings->get_value('email-from');
         $headers = "From: " . $from . "\r\n";
-        wp_mail($from, $subject, $body, $headers);
+        wp_mail($email, $subject, $body, $headers);
         $message = "New password has been sent to your email address.";
         $message = array('succeeded' => false, 'message' => $message);
         BTransfer::get_instance()->set('status', $message);

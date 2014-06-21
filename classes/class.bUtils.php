@@ -178,4 +178,10 @@ class BUtils {
             return false;
         }
     }
+    public static function _($msg){
+        return __($msg, 'swpm');
+    }
+    public static function e($msg){
+        _e($msg, 'swpm');
+    }
 }
