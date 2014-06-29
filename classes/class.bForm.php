@@ -9,19 +9,35 @@ class BForm {
 
     public function __construct($fields) {
         $this->fields = $fields;
-        ;
         $this->sanitized = array();
-        foreach ($fields as $key => $value){
-            $this->$key();
+        $this->validate_wp_user_email();
+        if ($this->is_valid()){
+            foreach ($fields as $key => $value){
+                $this->$key();
+            }
         }
     }
+    protected function validate_wp_user_email(){
+        $user_name = filter_input(INPUT_POST, 'user_name',FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW);
+        if (empty($user_name)) {return;}
+        $user = get_user_by('login', $user_name);
+        if ($user && ($user->email != $email)){
+            $this->errors['wp_email'] =  BUtils::_('Wordpress account exists with given user name. But given email doesn\'t match.');
+            return;
+        }
+        $user = get_user_by('email', $email);
+        if($user && ($user_name != $user->login)){
+            $this->errors['wp_user'] =  BUtils::_('Wordpress account exists with given email. But given user name doesn\'t match.');
 
+        }
+    }
     protected function user_name() {
         global $wpdb;
         if (!empty($this->fields['user_name'])){return;}
         $user_name = filter_input(INPUT_POST, 'user_name',FILTER_SANITIZE_STRING);
         if (empty($user_name)) {
-            $this->errors['user_name'] = 'User name is required';
+            $this->errors['user_name'] = BUtils::_('User name is required');
             return;
         }
         $saned = sanitize_text_field($user_name);
@@ -30,7 +46,7 @@ class BForm {
         $result = $wpdb->get_var($query);
         if ($result > 0) {
             if ($saned != $this->fields['user_name']) {
-                $this->errors['user_name'] = 'User name already exists.';
+                $this->errors['user_name'] = BUtils::_('User name already exists.');
                 return;
             }
         }
@@ -53,14 +69,14 @@ class BForm {
         $password = filter_input(INPUT_POST, 'password',FILTER_UNSAFE_RAW);
         $password_re = filter_input(INPUT_POST, 'password_re',FILTER_UNSAFE_RAW);
         if (empty($this->fields['password']) && empty($password)) {
-            $this->errors['password'] = 'Password is required';
+            $this->errors['password'] = BUtils::_('Password is required');
             return;
         }
         if (!empty($password)) {
             $saned = sanitize_text_field($password);
             $saned_re = sanitize_text_field($password_re);
             if ($saned != $saned_re){
-                $this->errors['password'] = 'Password mismatch';
+                $this->errors['password'] = BUtils::_('Password mismatch');
             }
             include_once(ABSPATH . WPINC . '/class-phpass.php');
             $wp_hasher = new PasswordHash(8, TRUE);
@@ -76,11 +92,11 @@ class BForm {
         }
         $email = filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW);
         if (empty($email)) {
-            $this->errors['email'] = 'Email is required';
+            $this->errors['email'] = BUtils::_('Email is required');
             return;
         }
         if (!is_email($email)) {
-            $this->errors['email'] = 'Email is invalid';
+            $this->errors['email'] = BUtils::_('Email is invalid');
             return;
         }
         $saned = sanitize_email($email);
@@ -93,7 +109,7 @@ class BForm {
         $result = $wpdb->get_var($query);
         if ($result > 0) {
             if ($saned != $this->fields['email']) {
-                $this->errors['email'] = 'Email is already used.';
+                $this->errors['email'] = BUtils::_('Email is already used.');
                 return;
             }
         }
@@ -109,7 +125,7 @@ class BForm {
             $this->sanitized['phone'] = $saned;
         }
         else{
-            $this->errors['phone'] = 'Phone number is invalid';
+            $this->errors['phone'] = BUtils::_('Phone number is invalid');
         }
     }
 
@@ -155,7 +171,7 @@ class BForm {
             $this->sanitized['member_since'] =  sanitize_text_field($member_since);
             return;
         }
-        $this->errors['member_since'] = 'Member since field is invalid';
+        $this->errors['member_since'] = BUtils::_('Member since field is invalid');
 
     }
 
@@ -166,7 +182,7 @@ class BForm {
             $this->sanitized['subscription_starts'] =  sanitize_text_field($subscription_starts);
             return;
         }
-        $this->errors['subscription_starts'] = 'Subscription starts field is invalid';
+        $this->errors['subscription_starts'] = BUtils::_('Subscription starts field is invalid');
     }
 
     protected function gender() {
@@ -176,7 +192,7 @@ class BForm {
             $this->sanitized['gender'] = $gender;
         }
         else{
-            $this->errors['gender'] = 'Gender field is invalid';
+            $this->errors['gender'] = BUtils::_('Gender field is invalid');
         }
     }
 
@@ -187,7 +203,7 @@ class BForm {
             $this->sanitized['account_state'] = $account_state;
         }
         else{
-            $this->errors['account_state'] = 'Account state field is invalid';
+            $this->errors['account_state'] = BUtils::_('Account state field is invalid');
         }
     }
 

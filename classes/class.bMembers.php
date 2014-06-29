@@ -4,8 +4,8 @@ class BMembers extends WP_List_Table {
 
     function __construct() {
         parent::__construct(array(
-            'singular' => 'Member',
-            'plural' => 'Members',
+            'singular' => BUtils::_('Member'),
+            'plural' => BUtils::_('Members'),
             'ajax' => false
         ));
     }
@@ -13,14 +13,14 @@ class BMembers extends WP_List_Table {
     function get_columns() {
         return array(
             'cb' => '<input type="checkbox" />'
-            , 'member_id' => 'ID'
-            , 'user_name' => 'User Name'
-            , 'first_name' => 'First Name'
-            , 'last_name' => 'Last Name'
-            , 'email' => 'Email'
-            , 'alias' => 'Membership Level'
-            , 'subscription_starts' => 'Subscription Starts'
-            , 'account_state' => 'Account State'
+            , 'member_id' => BUtils::_('ID')
+            , 'user_name' => BUtils::_('User Name')
+            , 'first_name' => BUtils::_('First Name')
+            , 'last_name' => BUtils::_('Last Name')
+            , 'email' => BUtils::_('Email')
+            , 'alias' => BUtils::_('Membership Level')
+            , 'subscription_starts' => BUtils::_('Subscription Starts')
+            , 'account_state' => BUtils::_('Account State')
         );
     }
 
@@ -32,7 +32,7 @@ class BMembers extends WP_List_Table {
 
     function get_bulk_actions() {
         $actions = array(
-            'bulk_delete' => 'Delete'
+            'bulk_delete' => BUtils::_('Delete')
         );
         return $actions;
     }
@@ -61,8 +61,9 @@ class BMembers extends WP_List_Table {
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
         $query .= " LEFT JOIN " . $wpdb->prefix . "swpm_membership_tbl";
         $query .= " ON ( membership_level = id ) ";
-        if (isset($_POST['s']))
+        if (isset($_POST['s'])){
             $query .= " WHERE = user_name = '" . strip_tags($_POST['s']) . "' ";
+        }
         $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
         $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
         if (!empty($orderby) & !empty($order)) {

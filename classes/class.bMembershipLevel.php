@@ -28,12 +28,12 @@ class BMembershipLevel {
             $id = $wpdb->insert_id;
             $custom = apply_filters('swpm_admin_add_membership_level', array());
             $this->save_custom_fields($id, $custom);
-            $message = array('succeeded' => true, 'message' => 'Membership Level Creation Successful.');
+            $message = array('succeeded' => true, 'message' => BUtils::_('Membership Level Creation Successful.'));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership_levels');
             return;
         }
-        $message = array('succeeded' => false, 'message' => 'Please correct the following:', 'extra' => $form->get_errors());
+        $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);
     }
 
@@ -47,11 +47,11 @@ class BMembershipLevel {
             //@todo meta table and collect all relevant info and pass as argument
             $custom = apply_filters('swpm_admin_edit_membership_level', array(), $id);
             $this->save_custom_fields($id, $custom);
-            $message = array('succeeded' => true, 'message' => 'Updated Successfully.');
+            $message = array('succeeded' => true, 'message' => BUtils::_('Updated Successfully.'));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership_levels');
         }
-        $message = array('succeeded' => false, 'message' => 'Please correct the following:', 'extra' => $form->get_errors());
+        $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);
     }
     private function save_custom_fields($level_id, $data){

@@ -22,7 +22,7 @@ class BFrontRegistration extends BRegistration {
             $query = $wpdb->prepare($query, $member_id, $code);
             $member = $wpdb->get_row($query);
             if (empty($member)){
-                echo 'Error! Invalid Request. Could not find a match for the given security code and the user ID.';
+                BUtils::e('Error! Invalid Request. Could not find a match for the given security code and the user ID.');
             }
             $membership_level = $member->membership_level;
         }
@@ -33,8 +33,7 @@ class BFrontRegistration extends BRegistration {
         }
         if (empty($membership_level)) {
             $joinuspage_link = '<a href="' . $joinuspage_url . '">Join us</a>';
-            $output = 'Free membership is disabled on this site. Please make a payment from the ' . $joinuspage_link . ' page to pay for a premium membership.';
-            echo  $output;
+            BUtils::e('Free membership is disabled on this site. Please make a payment from the ' . $joinuspage_link . ' page to pay for a premium membership.');
             return;
         }
 
@@ -56,7 +55,7 @@ class BFrontRegistration extends BRegistration {
             do_action('swpm_front_end_registration_complete');
 
             $login_page_url = BSettings::get_instance()->get_value('login-page-url');
-            $after_rego_msg = '<p>Registration Successful. Please <a href="' . $login_page_url . '">Login</a></p>';
+            $after_rego_msg = '<p>'. BUtils::_('Registration Successful.'). BUtils::_('Please').' <a href="' . $login_page_url . '">'.BUtils::_('Login').'</a></p>';
             $message = array('succeeded' => true, 'message' => $after_rego_msg);
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -71,7 +70,7 @@ class BFrontRegistration extends BRegistration {
         $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
         $code      = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
         if (!$form->is_valid()) {
-            $message = array('succeeded' => false, 'message' => 'Please correct the following',
+            $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following'),
                 'extra' => $form->get_errors());
             BTransfer::get_instance()->set('status', $message);
             return false;
@@ -84,7 +83,7 @@ class BFrontRegistration extends BRegistration {
             $member_info['membership_level'] = $free_level;
         }
         else if (empty($member_id)){
-            $message = array('succeeded' => false, 'message' => 'Membership Level Couldn\'t be found.');
+            $message = array('succeeded' => false, 'message' => BUtils::_('Membership Level Couldn\'t be found.'));
             BTransfer::get_instance()->set('status', $message);
             return false;
         }
@@ -150,7 +149,7 @@ class BFrontRegistration extends BRegistration {
             $message = array('succeeded' => true, 'message' => 'Profile Updated.');
             BTransfer::get_instance()->set('status', $message);
         } else {
-            $message = array('succeeded' => false, 'message' => 'Please correct the following',
+            $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following'),
                 'extra' => $form->get_errors());
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -160,7 +159,7 @@ class BFrontRegistration extends BRegistration {
     public function reset_password($email) {
         $email = sanitize_email($email);
         if (!is_email($email)) {
-            $message = "Email Address Not Valid.";
+            $message = BUtils::_("Email Address Not Valid.");
             $message = array('succeeded' => false, 'message' => $message);
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -171,7 +170,7 @@ class BFrontRegistration extends BRegistration {
                 ' WHERE email = %s';
         $user = $wpdb->get_row($wpdb->prepare($query, $email));
         if (empty($user)) {
-            $message = "User Not Found.";
+            $message = BUtils::_("User Not Found.");
             $message = array('succeeded' => false, 'message' => $message);
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -191,7 +190,7 @@ class BFrontRegistration extends BRegistration {
         $from = $settings->get_value('email-from');
         $headers = "From: " . $from . "\r\n";
         wp_mail($email, $subject, $body, $headers);
-        $message = "New password has been sent to your email address.";
+        $message = BUtils::_("New password has been sent to your email address.");
         $message = array('succeeded' => false, 'message' => $message);
         BTransfer::get_instance()->set('status', $message);
     }

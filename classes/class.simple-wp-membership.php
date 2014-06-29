@@ -144,7 +144,7 @@ class SimpleWpMembership {
             include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/edit.php');
             return;
         }
-        echo 'You are not logged in.';
+        BUtils::e( 'You are not logged in.');
     }
 
     public function notices() {

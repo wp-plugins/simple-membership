@@ -14,7 +14,7 @@
 <br />5. Hit the Update/Save Button to save the changes.
 
 <br /><br />
-<h3>Example Content Protection Settings</h3>
+<h3><?= BUtils::_('Example Content Protection Settings')?></h3>
 
 <img src="<?php echo SIMPLE_WP_MEMBERSHIP_URL.'/images/simple-membership-content-protection-usage.png'; ?>" alt="Content protection example usage">
 

@@ -5,18 +5,18 @@ if( ! class_exists( 'WP_List_Table' ) )
 class BMembershipLevels extends WP_List_Table{
     function __construct(){
         parent::__construct(array(
-            'singular'=>'Membership Level',
-            'plural'  => 'Membership Levels',
+            'singular'=>BUtils::_('Membership Level'),
+            'plural'  => BUtils::_('Membership Levels'),
             'ajax'    => false
         ));
     }
     function get_columns(){
         return array(
             'cb' => '<input type="checkbox" />'
-            ,'id'=>'ID'
-            ,'alias'=>'Membership Level'
-            ,'role'=>'Role'
-            ,'valid_for'=>'Subscription Valid For'
+            ,'id'=>BUtils::_('ID')
+            ,'alias'=>BUtils::_('Membership Level')
+            ,'role'=>BUtils::_('Role')
+            ,'valid_for'=>BUtils::_('Subscription Valid For')
             );
     }
     function get_sortable_columns(){
@@ -26,7 +26,7 @@ class BMembershipLevels extends WP_List_Table{
     }
     function get_bulk_actions() {
         $actions = array(
-            'bulk_delete'    => 'Delete'
+            'bulk_delete'    => BUtils::_('Delete')
         );
         return $actions;
     }
@@ -84,58 +84,59 @@ class BMembershipLevels extends WP_List_Table{
         $this->items = $wpdb->get_results($query, ARRAY_A);
     }
     function no_items() {
-      _e( 'No membership levels found.' );
+        BUtils::e( 'No membership levels found.' );
     }
-	function process_form_request(){
-		if(isset($_REQUEST['id']))
-			return $this->edit($_REQUEST['id']);
-		return $this->add();
-
-	}
-	function add(){
-		global $wpdb;
-                $member = BTransfer::$default_fields;
-		if(isset($_POST['createswpmlevel'])){
-			$member = $_POST;
-		}
-		extract($member, EXTR_SKIP);
-		include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_add_level.php');
-		return false;
-	}
-	function edit($id){
-		global $wpdb;
-		$id = absint($id);
-		$query = "SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE id = $id";
-		$member = $wpdb->get_row($query, ARRAY_A);
-		extract($member, EXTR_SKIP);
-                $noexpire = bUtils::calculate_subscription_period($subscription_period,$subscription_unit) == 'noexpire';
-		include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_edit_level.php');
-		return false;
-	}
-	function delete(){
-		global $wpdb;
-		if(isset($_REQUEST['id'])){
-			$id = absint($_REQUEST['id']);
-			$query = "DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = $id";
-			$wpdb->query($query);
-		}
-		else if (isset($_REQUEST['ids'])){
-			$members = $_REQUEST['ids'];
-			if(!empty($members)){
-				$members = array_map('absint', $members);
-				$members = implode(',', $members);
-				$query = "DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id IN (" . $members . ")";
-				$wpdb->query($query);
-			}
-		}
-	}
-	function show(){
-            $selected = 1;
-            include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_levels.php');
-	}
-        function manage(){
-            $selected = 2;
-             include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_manage.php');
+    function process_form_request(){
+        if(isset($_REQUEST['id'])){
+            return $this->edit($_REQUEST['id']);
         }
+        return $this->add();
+
+    }
+    function add(){
+        global $wpdb;
+        $member = BTransfer::$default_fields;
+        if(isset($_POST['createswpmlevel'])){
+            $member = $_POST;
+        }
+        extract($member, EXTR_SKIP);
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_add_level.php');
+        return false;
+    }
+    function edit($id){
+        global $wpdb;
+        $id = absint($id);
+        $query = "SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE id = $id";
+        $member = $wpdb->get_row($query, ARRAY_A);
+        extract($member, EXTR_SKIP);
+        $noexpire = bUtils::calculate_subscription_period($subscription_period,$subscription_unit) == 'noexpire';
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_edit_level.php');
+        return false;
+    }
+    function delete(){
+        global $wpdb;
+        if(isset($_REQUEST['id'])){
+            $id = absint($_REQUEST['id']);
+            $query = "DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = $id";
+            $wpdb->query($query);
+        }
+        else if (isset($_REQUEST['ids'])){
+            $members = $_REQUEST['ids'];
+            if(!empty($members)){
+                $members = array_map('absint', $members);
+                $members = implode(',', $members);
+                $query = "DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id IN (" . $members . ")";
+                $wpdb->query($query);
+            }
+        }
+    }
+    function show(){
+        $selected = 1;
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_levels.php');
+    }
+    function manage(){
+        $selected = 2;
+         include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_manage.php');
+    }
 }
 

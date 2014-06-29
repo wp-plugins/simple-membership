@@ -31,9 +31,7 @@ abstract class BRegistration {
         $member_info['password'] = $member_info['plain_password'];
         $member_info['login_link'] = $login_link;
         $values = array_values($member_info);
-        $keys = array_map(function($n) {
-            return '{'.$n .'}';
-        }, array_keys($member_info));
+        $keys = array_map('swpm_enclose_var', array_keys($member_info));
         $body = str_replace($keys, $values, $body);
         $email = sanitize_email(filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW));
         wp_mail(trim($email), $subject, $body, $headers);
@@ -46,4 +44,7 @@ abstract class BRegistration {
         }
         return true;
     }
+}
+function swpm_enclose_var($n){
+    return '{'.$n .'}';
 }

@@ -74,7 +74,7 @@ class BSettings {
         add_settings_field('enable-sandbox-testing', BUtils::_('Enable Sandbox Testing'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'debug-settings',
                 array('item' => 'enable-sandbox-testing',
-                      'message'=>'Enable this option if you want to do sandbox payment testing.'));
+                      'message'=>BUtils::_('Enable this option if you want to do sandbox payment testing.')));
 
     }
 
@@ -92,7 +92,7 @@ class BSettings {
         add_settings_field('email-misc-from', BUtils::_('From Email Address'),
                 array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'email-misc-settings',
                 array('item' => 'email-from',
-                    'message'=>'field specific message.'));
+                    'message'=>''));
 
         add_settings_section('reg-prompt-email-settings', BUtils::_('Email Settings (Prompt to Complete Registration )'),
                 array(&$this, 'reg_prompt_email_settings_callback'), 'simple_wp_membership_settings');

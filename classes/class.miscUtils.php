@@ -48,7 +48,7 @@ class miscUtils
 
         //Create registration page
         $swpm_rego_page = array(
-          'post_title' => 'Registration',
+          'post_title' => BUtils::_('Registration'),
           'post_name' => 'membership-registration',
           'post_content' => '[swpm_registration_form]',
           'post_parent' => $join_page_id,
@@ -71,7 +71,7 @@ class miscUtils
 
         //Create login page
         $swpm_login_page = array(
-          'post_title' => 'Member Login',
+          'post_title' => BUtils::_('Member Login'),
           'post_name' => 'membership-login',
           'post_content' => '[swpm_login_form]',
           'post_parent' => 0,
@@ -94,7 +94,7 @@ class miscUtils
 
         //Create profile page
         $swpm_profile_page = array(
-          'post_title' => 'Profile',
+          'post_title' => BUtils::_('Profile'),
           'post_name' => 'membership-profile',
           'post_content' => '[swpm_profile_form]',
           'post_parent' => $login_page_id,
@@ -117,7 +117,7 @@ class miscUtils
 
         //Create reset page
         $swpm_reset_page = array(
-          'post_title' => 'Password Reset',
+          'post_title' => BUtils::_('Password Reset'),
           'post_name' => 'password-reset',
           'post_content' => '[swpm_reset_form]',
           'post_parent' => $login_page_id,

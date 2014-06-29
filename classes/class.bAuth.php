@@ -44,14 +44,14 @@ class BAuth {
             if (!$userData) {
                 $this->isLoggedIn = false;
                 $this->userData = null;
-                $this->lastStatusMsg = "User Not Found.";
+                $this->lastStatusMsg = BUtils::_("User Not Found.");
                 return false;
             }
             $check = $this->check_password($pass, $userData->password);
             if (!$check) {
                 $this->isLoggedIn = false;
                 $this->userData = null;
-                $this->lastStatusMsg = "Password Empty or Invalid.";
+                $this->lastStatusMsg = BUtils::_("Password Empty or Invalid.");
                 return false;
             }
             if ($this->check_constraints()) {
@@ -75,7 +75,7 @@ class BAuth {
         $permission = BPermission::get_instance($this->userData->membership_level);
         $valid = true;
         if ($this->userData->account_state != 'active') {
-            $this->lastStatusMsg = 'Account is inactive.';
+            $this->lastStatusMsg = BUtils::_('Account is inactive.');
             $valid = false;
         }
         if (!$valid) {
@@ -85,7 +85,7 @@ class BAuth {
         }
         //:todo check if account expired and update db if it did.
         $this->userData->permitted = $permission;
-        $this->lastStatusMsg = "You are logged in as:" . $this->userData->user_name;
+        $this->lastStatusMsg = BUtils::_("You are logged in as:") . $this->userData->user_name;
         $this->isLoggedIn = true;
         return true;
     }
@@ -124,7 +124,7 @@ class BAuth {
         setcookie(SIMPLE_WP_MEMBERSHIP_SEC_AUTH, ' ', time() - YEAR_IN_SECONDS, "/", COOKIE_DOMAIN);
         $this->userData = null;
         $this->isLoggedIn = false;
-        $this->lastStatusMsg = "Logged Out Successfully.";
+        $this->lastStatusMsg = BUtils::_("Logged Out Successfully.");
         do_action('swpm_logout');
     }
 
@@ -166,7 +166,7 @@ class BAuth {
         }
         // Quick check to see if an honest cookie has expired
         if ($expired < time()) {
-            $this->lastStatusMsg = "Session Expired."; //do_action('auth_cookie_expired', $cookie_elements);
+            $this->lastStatusMsg = BUtils::_("Session Expired."); //do_action('auth_cookie_expired', $cookie_elements);
             return false;
         }
         Blog::log_simple_debug("validate:Session Expired",true);
@@ -175,7 +175,7 @@ class BAuth {
         $query.= " WHERE user_name = '" . $username . "'";
         $user = $wpdb->get_row($query);
         if (empty($user)) {
-            $this->lastStatusMsg = "Invalid User Name";
+            $this->lastStatusMsg = BUtils::_("Invalid User Name");
             return false;
         }
         Blog::log_simple_debug("validate:Invalid User Name:" . serialize($user),true);
@@ -183,7 +183,7 @@ class BAuth {
         $key = BAuth::b_hash($username . $pass_frag . '|' . $expiration);
         $hash = hash_hmac('md5', $username . '|' . $expiration, $key);
         if ($hmac != $hash) {
-            $this->lastStatusMsg = "Bad Cookie Hash";
+            $this->lastStatusMsg = BUtils::_("Bad Cookie Hash");
             return false;
         }
         Blog::log_simple_debug("validate:bad hash",true);

@@ -2,20 +2,20 @@
 <form action="" method="post" name="swpm-edit-level" id="swpm-edit-level" class="validate"<?php do_action('level_edit_form_tag');?>>
 <input name="action" type="hidden" value="editlevel" />
 <?php wp_nonce_field( 'edit-swpmlevel', '_wpnonce_edit-swpmlevel' ) ?>
-<h3><?= _e('Edit membership level'); ?></h3>
-<p><?=  _e('Edit membership level.'); ?></p>
+<h3><?= BUtils::_('Edit membership level'); ?></h3>
+<p><?= BUtils::_('Edit membership level.'); ?></p>
 <table class="form-table">
     <tbody>
 	<tr>
-		<th scope="row"><label for="alias"><?php _e('Membership Level Name'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+		<th scope="row"><label for="alias"><?= BUtils::_('Membership Level Name'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label></th>
 		<td><input class="regular-text validate[required]" name="alias" type="text" id="alias" value="<?php echo stripslashes($alias);?>" aria-required="true" /></td>
 	</tr>
 	<tr class="form-field form-required">
-		<th scope="row"><label for="role"><?php _e('Default WordPress Role'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+		<th scope="row"><label for="role"><?= BUtils::_('Default WordPress Role'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label></th>
 		<td><select  class="regular-text" name="role"><?php wp_dropdown_roles( $role ); ?></select></td>
 	</tr>
     <tr>
-        <th scope="row"><label for="subscription_unit"><?php _e('Subscription Duration'); ?> <span class="description"><?php _e('(required)'); ?></span></label>
+        <th scope="row"><label for="subscription_unit"><?= BUtils::_('Subscription Duration'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label>
         </th>
         <td>
             <fieldset>
@@ -24,7 +24,7 @@
                 <?php echo $noexpire?'checked="checked"': ""; ?>   type="radio" value="0" class="tog">
 	            <table class="color-palette">
 	            <tbody><tr>
-		            <td style="width: 60px;"><b>No Expiry</b></td>
+		            <td style="width: 60px;"><b><?= BUtils::_('No Expiry') ?></b></td>
 		            </tr>
 	            </tbody></table>
             </div>
@@ -51,7 +51,7 @@
      <?= apply_filters('swpm_admin_edit_membership_level_ui', '', $id);?>
 </tbody>
 </table>
-<?php submit_button( __( 'Edit Membership Level '), 'primary', 'editswpmlevel', true, array( 'id' => 'editswpmlevelsub' ) ); ?>
+<?php submit_button(BUtils::_('Edit Membership Level '), 'primary', 'editswpmlevel', true, array( 'id' => 'editswpmlevelsub' ) ); ?>
 </form>
 </div>
 <script>

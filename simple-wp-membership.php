@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple WordPress Membership
-Version: v1.6
+Version: v1.7
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -16,7 +16,7 @@ if (realpath (__FILE__) === realpath ($_SERVER["SCRIPT_FILENAME"])){
 include_once('classes/class.simple-wp-membership.php');
 
 define('SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL', home_url());
-define('SIMPLE_WP_MEMBERSHIP_VER', '1.6');
+define('SIMPLE_WP_MEMBERSHIP_VER', '1.7');
 define('SIMPLE_WP_MEMBERSHIP_PATH', dirname(__FILE__) . '/');
 define('SIMPLE_WP_MEMBERSHIP_URL', plugins_url('',__FILE__));
 define('SIMPLE_WP_MEMBERSHIP_AUTH', 'simple_wp_membership_'. COOKIEHASH);
@@ -24,8 +24,10 @@ define('SIMPLE_WP_MEMBERSHIP_SEC_AUTH', 'simple_wp_membership_sec_'. COOKIEHASH)
 register_activation_hook( SIMPLE_WP_MEMBERSHIP_PATH .'simple-wp-membership.php', 'SimpleWpMembership::activate' );
 register_deactivation_hook( SIMPLE_WP_MEMBERSHIP_PATH . 'simple-wp-membership.php', 'SimpleWpMembership::deactivate' );
 add_action('swpm_login','SimpleWpMembership::swpm_login', 10,3);
-add_action('plugins_loaded', function(){new SimpleWpMembership();});
-
+add_action('plugins_loaded', "swpm_plugins_loaded");
+function swpm_plugins_loaded(){
+    new SimpleWpMembership();
+}
 //Add settings link in plugins listing page
 function swpm_add_settings_link($links, $file) {
     if ($file == plugin_basename(__FILE__)) {

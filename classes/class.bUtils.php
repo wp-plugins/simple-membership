@@ -160,6 +160,8 @@ class BUtils {
             $role = 'subscriber'; //TODO - add user as a subscriber first. The subsequent update user role function to update the role to the correct one
             add_user_to_blog($blog_id, $wp_user_id, $role);
         } else {//Single site install
+            $wp_user_id = email_exists($wp_user_data['user_email']);
+            if ($wp_user_id) {return $wp_user_id;}
             $wp_user_id = wp_create_user($wp_user_data['user_login'], $wp_user_data['password'], $wp_user_data['user_email']);
         }
         $wp_user_data['ID'] = $wp_user_id;

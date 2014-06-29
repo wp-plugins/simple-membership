@@ -13,7 +13,7 @@ class BAjax {
         $email = esc_sql($field_value);
         $query = $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE email = %s", $email);
         $exists = $wpdb->get_var($query) > 0;
-        echo '[ "' . $field_id . (($exists) ? '",false, "&chi;&nbsp;Aready taken"]' : '",true, "&radic;&nbsp;Available"]');
+        echo '[ "' . $field_id . (($exists) ? '",false, "&chi;&nbsp;'.BUtils::_('Aready taken').'"]' : '",true, "&radic;&nbsp;Available"]');
         exit;
     }
 
@@ -25,7 +25,8 @@ class BAjax {
         $user = esc_sql($field_value);
         $query = $wpdb->prepare("SELECT COUNT(*) FROM $table WHERE user_name = %s", $user);
         $exists = $wpdb->get_var($query) > 0;
-        echo '[ "' . $field_id . (($exists) ? '",false,"&chi;&nbsp;Aready taken"]' : '",true,"&radic;&nbsp;Available"]');
+        echo '[ "' . $field_id . (($exists) ? '",false,"&chi;&nbsp;'. BUtils::_('Aready taken'). '"]' :
+            '",true,"&radic;&nbsp;'.BUtils::_('Available'). '"]');
         exit;
     }
 }

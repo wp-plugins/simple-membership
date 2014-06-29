@@ -42,12 +42,12 @@ class BAdminRegistration extends BRegistration {
             if (!empty($send_notification)){
                 $this->send_reg_email();
             }
-            $message = array('succeeded' => true, 'message' => 'Registration Successful.');
+            $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful.'));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership');
             return;
         }
-        $message = array('succeeded' => false, 'message' => 'Please correct the following:', 'extra' => $form->get_errors());
+        $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);
     }
     public function edit($id){
@@ -66,7 +66,7 @@ class BAdminRegistration extends BRegistration {
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership');
         }
-        $message = array('succeeded' => false, 'message' => 'Please correct the following:', 'extra' => $form->get_errors());
+        $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);
     }
 }

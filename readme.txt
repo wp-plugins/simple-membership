@@ -4,11 +4,11 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content, admin
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple membership plugin can add membership functionality to your site. Protect members only content using content protection easily.
+Simple membership plugin adds membership functionality to your site. Protect members only content using content protection easily.
 
 == Description ==
 
@@ -35,10 +35,10 @@ Read the [setup documentation](https://simple-membership-plugin.com/wp-content/u
 
 = Plugin Support =
 
-If you have any issue with this plugin, please post it on the support forum here:
-https://simple-membership-plugin.com/forums/
+If you have any issue with this plugin, please visit the plugin site and post it on the support forum or send us a contact:
+https://simple-membership-plugin.com/
 
-You can create a free forum user account and ask your question in the above forum.
+You can create a free forum user account and ask your questions.
 
 = Miscellaneous =
 
@@ -68,6 +68,11 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.7 = 
+- Tweaked code to make it compatible with PHP 5.2 (previously PHP 5.3 was the requirement).
+- Added checks for checking if a WP user account already exists with the chosen username (when a member registers).
+- Fixed a few translation strings.
 
 = 1.6 =
 - Added comment protection. Comments on your protected posts will also be protected automatically.
