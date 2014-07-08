@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content, admin
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.7.1 =
+- Fixed another PHP 5.2 code compatibility issue.
+- Updated the plugin's language file template.
 
 = 1.7 = 
 - Tweaked code to make it compatible with PHP 5.2 (previously PHP 5.3 was the requirement).

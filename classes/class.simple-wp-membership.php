@@ -53,8 +53,11 @@ class SimpleWpMembership {
         add_action('wp_ajax_nopriv_swpm_validate_user_name', 'BAjax::validate_user_name_ajax');
 
         //init is too early for settings api.
-        add_action('admin_init', function (){BSettings::get_instance()->init_config_hooks();});
+        add_action('admin_init', array(&$this, 'admin_init_hook'));
 
+    }
+    public function admin_init_hook(){
+        BSettings::get_instance()->init_config_hooks();
     }
     public function hide_adminbar(){
         $hide = BSettings::get_instance()->get_value('hide-adminbar');
@@ -317,6 +320,13 @@ class SimpleWpMembership {
     }
 
     public function init() {
+        
+        //Set up localisation. First loaded ones will override strings present in later loaded file. 
+        //Allows users to have a customized language in a different folder.
+        $locale = apply_filters( 'plugin_locale', get_locale(), 'swpm' );
+        load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );
+	load_plugin_textdomain('swpm', false, dirname(plugin_basename(__FILE__ )) . '/languages/');
+        
         if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.
             $uid = md5(microtime());
             $_COOKIE['swpm_session'] = $uid; // fake it for current session/
