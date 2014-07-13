@@ -6,7 +6,10 @@
  * @author nur
  */
 class BAdminRegistration extends BRegistration {
-    protected static $__CLASS__ = __CLASS__;
+    public static function get_instance(){
+        self::$_intance = empty(self::$_intance)? new BAdminRegistration():self::$_intance;
+        return self::$_intance;
+    }
     public function show_form() {
 
     }

@@ -6,7 +6,10 @@
  * @author nur
  */
 class BFrontRegistration extends BRegistration {
-    protected static $__CLASS__ = __CLASS__;
+    public static function get_instance(){
+        self::$_intance = empty(self::$_intance)? new BFrontRegistration():self::$_intance;
+        return self::$_intance;
+    }
     public function regigstration_ui(){
         $settings_configs = BSettings::get_instance();
         $is_free = BSettings::get_instance()->get_value('enable-free-membership');

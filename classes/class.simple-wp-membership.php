@@ -320,13 +320,13 @@ class SimpleWpMembership {
     }
 
     public function init() {
-        
-        //Set up localisation. First loaded ones will override strings present in later loaded file. 
+
+        //Set up localisation. First loaded ones will override strings present in later loaded file.
         //Allows users to have a customized language in a different folder.
         $locale = apply_filters( 'plugin_locale', get_locale(), 'swpm' );
         load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );
 	load_plugin_textdomain('swpm', false, dirname(plugin_basename(__FILE__ )) . '/languages/');
-        
+
         if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.
             $uid = md5(microtime());
             $_COOKIE['swpm_session'] = $uid; // fake it for current session/
@@ -431,15 +431,20 @@ class SimpleWpMembership {
     }
 
     public function menu() {
+        $menu_parent_slug = 'simple_wp_membership';
+
         add_menu_page(__("WP Membership", 'swpm'), __("WP Membership", 'swpm')
-                , 'manage_options', 'simple_wp_membership', array(&$this, "admin_members")
+                , 'manage_options', $menu_parent_slug, array(&$this, "admin_members")
                 , SIMPLE_WP_MEMBERSHIP_URL . '/images/logo.png');
-        add_submenu_page('simple_wp_membership', __("Members", 'swpm'), __('Members', 'swpm'),
-                'activate_plugins', 'simple_wp_membership', array(&$this, "admin_members"));
-        add_submenu_page('simple_wp_membership', __("Membership Levels", 'swpm'), __("Membership Levels", 'swpm'),
-                'activate_plugins', 'simple_wp_membership_levels', array(&$this, "admin_membership_levels"));
-        add_submenu_page('simple_wp_membership', __("Settings", 'swpm'), __("Settings", 'swpm'),
-                'activate_plugins', 'simple_wp_membership_settings', array(&$this, "admin_settings"));
+        add_submenu_page($menu_parent_slug, __("Members", 'swpm'), __('Members', 'swpm'),
+                'manage_options', 'simple_wp_membership', array(&$this, "admin_members"));
+        add_submenu_page($menu_parent_slug, __("Membership Levels", 'swpm'), __("Membership Levels", 'swpm'),
+                'manage_options', 'simple_wp_membership_levels', array(&$this, "admin_membership_levels"));
+        add_submenu_page($menu_parent_slug, __("Settings", 'swpm'), __("Settings", 'swpm'),
+                'manage_options', 'simple_wp_membership_settings', array(&$this, "admin_settings"));
+
+        do_action('swpm_after_main_admin_menu', $menu_parent_slug);
+
         $this->meta_box();
     }
 
@@ -448,7 +453,7 @@ class SimpleWpMembership {
         $levels = new BMembershipLevels();
         $level_action = filter_input(INPUT_GET, 'level_action');
         $action2 = filter_input(INPUT_GET, 'action2');
-        $action = $level_action ? : ($action2 ? : "");
+        $action = $level_action ? $level_action : ($action2 ? $action2 : "");
         switch ($action) {
             case 'add':
             case 'edit':
@@ -470,6 +475,7 @@ class SimpleWpMembership {
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/class.bMembers.php');
         $members = new BMembers();
         $action = filter_input(INPUT_GET, 'member_action');
+        $action = empty($action)? filter_input(INPUT_POST, 'action') : $action;
         switch ($action) {
             case 'add':
             case 'edit':

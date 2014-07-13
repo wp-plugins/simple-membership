@@ -8,14 +8,7 @@
 abstract class BRegistration {
     protected $member_info = array();
     protected static $_intance = null;
-    protected function __construct() {
-        ;
-    }
-    public static function get_instance(){
-        $cls = static::$__CLASS__;
-        self::$_intance = empty(self::$_intance)? new $cls():self::$_intance;
-        return self::$_intance;
-    }
+    public abstract static function get_instance();
     protected function send_reg_email(){
         global $wpdb;
         if (empty($this->member_info)) {return false;}
