@@ -50,8 +50,10 @@ class BFrontRegistration extends BRegistration {
         if (!empty($swpm_registration_submit)){
             $member = $_POST;
         }
+        ob_start();
         extract((array)$member, EXTR_SKIP);
-        include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/add.php');
+        include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/add.php');
+        return ob_get_clean();
     }
     public function register() {
         if($this->create_swpm_user()&&$this->create_wp_user()&&$this->send_reg_email()){

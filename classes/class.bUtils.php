@@ -35,6 +35,16 @@ class BUtils {
                 '<option ' . ((strtolower($selected) == 'months') ? 'selected="selected"' : "") . ' value="months">Months</option>' .
                 '<option ' . ((strtolower($selected) == 'years') ? 'selected="selected"' : "") . ' value="years">Years</option>';
     }
+    public static function membership_level_dropdown($selected = 0){
+        $options = '';
+        global $wpdb;
+        $query = "SELECT alias, id FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id != 1";
+        $levels = $wpdb->get_results($query);
+        foreach($levels as $level){
+            $options .= '<option '.($selected == $level->id ? 'select="selected"':'').' value="'.$level->id.'" >' . $level->alias . '</option>';
+        }
+        return $options;
+    }
 
     public static function get_user_by_id($swpm_id) {
         global $wpdb;
