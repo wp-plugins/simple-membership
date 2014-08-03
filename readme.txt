@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content, admin, access control, subscription
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,9 @@ Non-members viewing a protected page will be prompted to login or become a membe
 You can configure it to have free and/or paid memberships on your site. Paid membership payment is handled securely via PayPal. 
 
 Both one time and recurring/subscription payments are supported.
+
+= Member Login Widget on The Sidebar =
+You can easily add a member login widget on the sidebar of your site. Simply use the login form shortcode in the sidebar widget.
 
 = Documentation =
 
@@ -68,6 +71,9 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.7.4 =
+- Added capability to use any of the shortcodes (example: Login widget) in the sidebar text widget.
 
 = 1.7.3 =
 - Added french language translation to the plugin. The translation was submitted by Zeb.

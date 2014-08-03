@@ -25,18 +25,24 @@ include_once('class.bMembershipLevelUtils.php');
 class SimpleWpMembership {
     public function __construct() {
         BAuth::get_instance();
+        
         add_action('admin_menu', array(&$this, 'menu'));
         //add_action('admin_init', array(&$this, 'admin_init')); //This call has been moved inside 'init' function
+        
         add_action('init', array(&$this, 'init'));
+        
         add_filter('the_content', array(&$this, 'filter_content'));
-        add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));
-        //add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
+        add_filter('widget_text', 'do_shortcode');
+        add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));        
         add_filter('comment_text', array(&$this, 'filter_comment'));
-        add_action('save_post', array(&$this, 'save_postdata'));
+        //add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
+        
         add_shortcode("swpm_registration_form", array(&$this, 'registration_form'));
         add_shortcode('swpm_profile_form', array(&$this, 'profile_form'));
         add_shortcode('swpm_login_form', array(&$this, 'login'));
         add_shortcode('swpm_reset_form', array(&$this, 'reset'));
+        
+        add_action('save_post', array(&$this, 'save_postdata'));
         add_action('admin_notices', array(&$this, 'notices'));
         add_action('wp_enqueue_scripts', array(&$this, 'front_library'));
         add_action('load-toplevel_page_simple_wp_membership', array(&$this, 'admin_library'));
