@@ -337,8 +337,8 @@ class SimpleWpMembership {
         //Set up localisation. First loaded ones will override strings present in later loaded file.
         //Allows users to have a customized language in a different folder.
         $locale = apply_filters( 'plugin_locale', get_locale(), 'swpm' );
-        load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );
-	load_plugin_textdomain('swpm', false, dirname(plugin_basename(__FILE__ )) . '/languages/');
+        load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );       
+	load_plugin_textdomain('swpm', false, SIMPLE_WP_MEMBERSHIP_DIRNAME. '/languages/');
 
         if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.
             $uid = md5(microtime());
