@@ -25,7 +25,7 @@
 			<td><label for="last_name"><?= BUtils::_('Last Name') ?></label></td>
 			<td><input type="text" id="last_name" value="<?php echo $last_name;?>" tabindex="6" size="50" name="last_name" /></td>
 		</tr>
-                <tr>
+                <!--<tr>
                     <td><label for="gender"><?= BUtils::_('Gender'); ?></label></td>
 		<td><select name="gender" id="gender">
 				<?= BUtils::gender_dropdown() ?>
@@ -59,7 +59,7 @@
                 <tr>
                     <td ><label for="company_name"><?= BUtils::_('Company') ?></label></td>
                         <td><input name="company_name" type="text" id="company_name" tabindex="13" size="50"  value="<?php echo esc_attr($company_name); ?>" /></td>
-                </tr>
+                </tr>-->
 		<tr>
 			<td><label for="membership_level"><?= BUtils::_('Membership Level') ?></label></td>
 			<td>

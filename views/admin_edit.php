@@ -14,6 +14,7 @@
 		<td><?php echo esc_attr($email); ?></td>
 	</tr>
 <?php include('admin_member_form_common_part.php');?>
+<?= apply_filters('swpm_admin_custom_fields', '',$membership_level);?>
 <?php submit_button( BUtils::_('Edit User '), 'primary', 'editswpmuser', true, array( 'id' => 'createswpmusersub' ) ); ?>
 </form>
 </div>

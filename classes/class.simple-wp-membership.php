@@ -25,23 +25,26 @@ include_once('class.bMembershipLevelUtils.php');
 class SimpleWpMembership {
     public function __construct() {
         BAuth::get_instance();
-        
+
         add_action('admin_menu', array(&$this, 'menu'));
         //add_action('admin_init', array(&$this, 'admin_init')); //This call has been moved inside 'init' function
-        
+
         add_action('init', array(&$this, 'init'));
-        
+
         add_filter('the_content', array(&$this, 'filter_content'));
         add_filter('widget_text', 'do_shortcode');
-        add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));        
+        add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));
         add_filter('comment_text', array(&$this, 'filter_comment'));
+        add_filter('wp_get_attachment_url', array(&$this, 'filter_attachment'));
+        add_filter('wp_get_attachment_metadata', array(&$this, 'filter_attachment'));
+        add_filter('attachment_fields_to_save', array(&$this,'save_attachment_extra'), 10, 2);
         //add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
-        
+
         add_shortcode("swpm_registration_form", array(&$this, 'registration_form'));
         add_shortcode('swpm_profile_form', array(&$this, 'profile_form'));
         add_shortcode('swpm_login_form', array(&$this, 'login'));
         add_shortcode('swpm_reset_form', array(&$this, 'reset'));
-        
+
         add_action('save_post', array(&$this, 'save_postdata'));
         add_action('admin_notices', array(&$this, 'notices'));
         add_action('wp_enqueue_scripts', array(&$this, 'front_library'));
@@ -62,10 +65,22 @@ class SimpleWpMembership {
         add_action('admin_init', array(&$this, 'admin_init_hook'));
 
     }
+    public function save_attachment_extra($post, $attachment) {
+        $this->save_postdata($post['ID']);
+        return $post;
+    }
+    public function filter_attachment($content){
+        $acl = BAccessControl::get_instance();
+        global $post;
+        return $acl->filter_post($post->ID, $content);
+    }
     public function admin_init_hook(){
         BSettings::get_instance()->init_config_hooks();
     }
     public function hide_adminbar(){
+        if (!is_user_logged_in()){//Never show admin bar if the user is not even logged in
+            return false;
+        }
         $hide = BSettings::get_instance()->get_value('hide-adminbar');
         return $hide? FALSE: TRUE;
     }
@@ -337,7 +352,7 @@ class SimpleWpMembership {
         //Set up localisation. First loaded ones will override strings present in later loaded file.
         //Allows users to have a customized language in a different folder.
         $locale = apply_filters( 'plugin_locale', get_locale(), 'swpm' );
-        load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );       
+        load_textdomain( 'swpm', WP_LANG_DIR . "/swpm-$locale.mo" );
 	load_plugin_textdomain('swpm', false, SIMPLE_WP_MEMBERSHIP_DIRNAME. '/languages/');
 
         if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.

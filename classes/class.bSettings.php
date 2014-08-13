@@ -323,7 +323,7 @@ class BSettings {
             return '<span style="color:red;">Simple Membership is not configured correctly.'
             . 'Please contact <a href="mailto:' . get_option('admin_email'). '">Admin</a>';
         }
-        return 'Please <a href="' . $login . '">Login</a>. Not a Member? <a href="' . $joinus . '">Join Us</a>';
+        return BUtils::_('Please'). ' <a href="' . $login . '">' . BUtils::_('Login') . '</a>. '. BUtils::_('Not a Member?').' <a href="' . $joinus . '">'.BUtils::_('Join Us').'</a>';
     }
 
 }

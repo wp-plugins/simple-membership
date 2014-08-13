@@ -39,7 +39,8 @@ class BFrontRegistration extends BRegistration {
             BUtils::e('Free membership is disabled on this site. Please make a payment from the ' . $joinuspage_link . ' page to pay for a premium membership.');
             return;
         }
-
+        $form = apply_filters('swpm_registration_form_override', '', $membership_level);
+        if (!empty($form)) {return $form;}
         $query = "SELECT alias FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = $membership_level";
         $result = $wpdb->get_row($query);
         if (empty($result)) {

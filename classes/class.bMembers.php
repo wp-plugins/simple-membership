@@ -62,7 +62,9 @@ class BMembers extends WP_List_Table {
         $query .= " LEFT JOIN " . $wpdb->prefix . "swpm_membership_tbl";
         $query .= " ON ( membership_level = id ) ";
         if (isset($_POST['s'])){
-            $query .= " WHERE = user_name = '" . strip_tags($_POST['s']) . "' ";
+            $query .= " WHERE  user_name LIKE '%" . strip_tags($_POST['s']) . "%' "
+                    . " OR first_name LIKE '%" . strip_tags($_POST['s']) . "%' "
+                    . " OR last_name LIKE '%" . strip_tags($_POST['s']) . "%' ";
         }
         $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
         $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
@@ -105,6 +107,8 @@ class BMembers extends WP_List_Table {
     }
 
     function add() {
+        $form = apply_filters('swpm_admin_registration_form_override', '');
+        if (!empty($form)) {echo $form;return;}
         global $wpdb;
         $member = BTransfer::$default_fields;
         $member['member_since'] = date('Y-m-d');

@@ -60,9 +60,9 @@ jQuery(document).ready(function($){
     $('.tog:radio').on('update_deps click',function(){
         if($(this).attr('checked')){
             $("#swpm-create-level").validationEngine('detach');
-            if($(this).val() === 0)
+            if($(this).val() === '0')
                 $('#subscription_period').removeClass('validate[required]');
-            else if($(this).val() === 1)
+            else if($(this).val() === '1')
                 $('#subscription_period').addClass('validate[required]');
             $("#swpm-create-level").validationEngine('attach');
         }

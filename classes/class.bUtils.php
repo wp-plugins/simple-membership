@@ -196,4 +196,7 @@ class BUtils {
     public static function e($msg){
         _e($msg, 'swpm');
     }
+    public static function is_admin(){
+        return current_user_can('manage_options');
+    }
 }

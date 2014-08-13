@@ -66,6 +66,7 @@ class BAdminRegistration extends BRegistration {
             unset($member['plain_password']);
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member, array('member_id' => $id));
             $message = array('succeeded' => true, 'message' => 'Updated Successfully.');
+            do_action('swpm_admin_edit_custom_fields', $member+array('member_id'=>$id));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership');
         }
