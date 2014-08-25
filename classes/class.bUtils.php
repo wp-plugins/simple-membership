@@ -199,4 +199,29 @@ class BUtils {
     public static function is_admin(){
         return current_user_can('manage_options');
     }
+    public static function get_expire_date($start_date, $subscription_duration, $duration_unit){
+        if (($subscription_duration == 0) && !empty($duration_unit)) { //will expire after a fixed date.
+            return date(get_option( 'date_format' ), strtotime($duration_unit));
+        }
+        switch (strtolower($duration_unit)) {
+            case 'days':
+                break;
+            case 'weeks':
+                $subscription_duration *=   7;
+                break;
+            case 'months':
+                $subscription_duration *=  30;
+                break;
+            case 'years':
+                $subscription_duration *=  365;
+                break;
+        }
+        if ($subscription_duration == 0) {// its set to no expiry until cancelled
+            return BUtils::_('Never');
+        }
+        //Using duration value - lets calculate the expiry
+        $d = ($subscription_duration == 1) ? ' day' : ' days';
+        return date(get_option( 'date_format' ) ,
+                strtotime(" + " . abs($subscription_duration) . $d, strtotime($start_date)));
+    }
 }

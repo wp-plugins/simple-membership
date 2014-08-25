@@ -33,6 +33,7 @@ class BAuth {
         global $wpdb;
         $swpm_user_name = filter_input(INPUT_POST, 'swpm_user_name');
         $swpm_password = filter_input(INPUT_POST, 'swpm_password');
+        $swpm_user_name = apply_filters('swpm_user_name', $swpm_user_name);
         Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
@@ -84,7 +85,7 @@ class BAuth {
             return false;
         }
         //:todo check if account expired and update db if it did.
-        $this->userData->permitted = $permission;
+        $this->permitted = $permission;
         $this->lastStatusMsg = BUtils::_("You are logged in as:") . $this->userData->user_name;
         $this->isLoggedIn = true;
         return true;
@@ -207,14 +208,22 @@ class BAuth {
         if (isset($this->userData->$key)){
             return $this->userData->$key;
         }
-        if (isset($this->userData->permitted->$key)){
-            return $this->userData->permitted->$key;
+        if (isset($this->permitted->$key)){
+            return $this->permitted->$key;
         }
-        return $default;
+        return $this->permitted->get($key, $default);
     }
 
     public function get_message() {
         return $this->lastStatusMsg;
     }
-
+    public function get_expire_date(){
+        if ($this->isLoggedIn){
+            return BUtils::get_expire_date(
+                    $this->get('subscription_starts'),
+                    $this->get('subscription_period'),
+                    $this->get('subscription_unit'));
+        }
+        return "";
+    }
 }

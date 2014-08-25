@@ -24,8 +24,6 @@ include_once('class.bMembershipLevelUtils.php');
 
 class SimpleWpMembership {
     public function __construct() {
-        BAuth::get_instance();
-
         add_action('admin_menu', array(&$this, 'menu'));
         //add_action('admin_init', array(&$this, 'admin_init')); //This call has been moved inside 'init' function
 
@@ -168,8 +166,10 @@ class SimpleWpMembership {
         $auth = BAuth::get_instance();
         $this->notices();
         if ($auth->is_logged_in()) {
+            $out = apply_filters('swpm_profile_form_override', '');
+            if (!empty($out)){return $out;}
             $user_data = (array) $auth->userData;
-            $user_data['membership_level_alias'] = $auth->userData->permitted->get('alias');
+            $user_data['membership_level_alias'] = $auth->get('alias');
             ob_start();
             extract($user_data, EXTR_SKIP);
             include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/edit.php');

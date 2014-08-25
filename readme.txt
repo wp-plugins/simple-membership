@@ -3,8 +3,8 @@ Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content, admin, access control, subscription
 Requires at least: 3.3
-Tested up to: 3.9.1
-Stable tag: 1.7.6
+Tested up to: 3.9.2
+Stable tag: 1.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.7.7 =
+- The plugin will now show the member account expiry date in the login widget (when a user is logged into the site).
+- Added a couple of filters to the plugin.
 
 = 1.7.6 =
 - Fixed an issue with hiding the admin-bar. It will never be shown to non-members.

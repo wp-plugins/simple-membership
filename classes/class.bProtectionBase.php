@@ -250,10 +250,11 @@ abstract class BProtectionBase {
         $wpdb->update($wpdb->prefix . "swpm_membership_tbl", $data, array('id' => $this->owning_level_id));
     }
 
-    public function get($key) {
-        if (isset($this->details[$key]))
+    public function get($key, $default = '') {
+        if (isset($this->details[$key])){
             return $this->details[$key];
-        return "";
+        }
+        return $default;
     }
 
 }
