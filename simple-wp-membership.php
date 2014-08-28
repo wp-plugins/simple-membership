@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple WordPress Membership
-Version: v1.7.7
+Version: v1.7.8
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -10,18 +10,19 @@ Description: A flexible, well-supported, and easy-to-use WordPress membership pl
 
 //Direct access to this file is not permitted
 if (realpath (__FILE__) === realpath ($_SERVER["SCRIPT_FILENAME"])){
-	exit("Do not access this file directly.");
+    exit("Do not access this file directly.");
 }
 
 include_once('classes/class.simple-wp-membership.php');
 
+define('SIMPLE_WP_MEMBERSHIP_VER', '1.7.8');
 define('SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL', home_url());
-define('SIMPLE_WP_MEMBERSHIP_VER', '1.7.7');
 define('SIMPLE_WP_MEMBERSHIP_PATH', dirname(__FILE__) . '/');
 define('SIMPLE_WP_MEMBERSHIP_URL', plugins_url('',__FILE__));
 define('SIMPLE_WP_MEMBERSHIP_DIRNAME', dirname(plugin_basename(__FILE__)));
 define('SIMPLE_WP_MEMBERSHIP_AUTH', 'simple_wp_membership_'. COOKIEHASH);
 define('SIMPLE_WP_MEMBERSHIP_SEC_AUTH', 'simple_wp_membership_sec_'. COOKIEHASH);
+
 register_activation_hook( SIMPLE_WP_MEMBERSHIP_PATH .'simple-wp-membership.php', 'SimpleWpMembership::activate' );
 register_deactivation_hook( SIMPLE_WP_MEMBERSHIP_PATH . 'simple-wp-membership.php', 'SimpleWpMembership::deactivate' );
 add_action('swpm_login','SimpleWpMembership::swpm_login', 10,3);

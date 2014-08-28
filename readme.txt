@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content protection, paypal, restrict access, Restrict content, admin, access control, subscription
 Requires at least: 3.3
 Tested up to: 3.9.2
-Stable tag: 1.7.7
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ You can create a free forum user account and ask your questions.
 * Comments on your protected posts will also be protected automatically.
 * There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
 * Membership management side is handled by the plugin.
+* Ability to import WordPress users as members.
 * Can be translated to any language.
 * Hide the admin toolbar from the frontend of your site.
 * The login and registration widgets will be responsive if you are using a responsive theme.
@@ -71,6 +72,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.7.8 =
+- Architecture improvement for the [WP User import addon](https://simple-membership-plugin.com/import-existing-wordpress-users-simple-membership-plugin/)
+- Updated the POT file with the new translation strings
 
 = 1.7.7 =
 - The plugin will now show the member account expiry date in the login widget (when a user is logged into the site).

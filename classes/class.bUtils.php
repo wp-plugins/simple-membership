@@ -28,7 +28,12 @@ class BUtils {
                 '<option ' . ((strtolower($selected) == 'female') ? 'selected="selected"' : "") . ' value="female">Female</option>' .
                 '<option ' . ((strtolower($selected) == 'not specified') ? 'selected="selected"' : "") . ' value="not specified">Not Specified</option>';
     }
-
+    public static function account_state_dropdown($selected = 'active'){
+        return '<option ' . ((strtolower($selected) == 'active') ? 'selected="selected"' : "") . '  value="active"> ' . BUtils::_('Active') . '</option>'
+                . '<option ' . ((strtolower($selected) == 'inactive') ? 'selected="selected"' : "") . '  value="inactive"> ' . BUtils::_('Inactive') . '</option>'
+                . '<option ' . ((strtolower($selected) == 'pending') ? 'selected="selected"' : "") . '  value="pending"> ' . BUtils::_('Pending') . '</option>'
+                . '<option ' . ((strtolower($selected) == 'expired') ? 'selected="selected"' : "") . '  value="expired"> ' . BUtils::_('Expired') . '</option>';
+    }
     public static function subscription_unit_dropdown($selected = 'days') {
         return '<option ' . ((strtolower($selected) == 'days') ? 'selected="selected"' : "") . ' value="days">Days</option>' .
                 '<option ' . ((strtolower($selected) == 'weeks') ? 'selected="selected"' : "") . ' value="weeks">Weeks</option>' .
@@ -223,5 +228,12 @@ class BUtils {
         $d = ($subscription_duration == 1) ? ' day' : ' days';
         return date(get_option( 'date_format' ) ,
                 strtotime(" + " . abs($subscription_duration) . $d, strtotime($start_date)));
+    }
+    function swpm_username_exists($user_name) {
+        global $wpdb;
+        $member_table = $wpdb->prefix. 'swpm_members_tbl';
+        $query = $wpdb->prepare('SELECT member_id FROM ' . $member_table  . 'WHERE user_name=%s', $user_name);
+
+        return $wpdb->get_var($query);
     }
 }
