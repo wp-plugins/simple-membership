@@ -121,8 +121,8 @@ class BAuth {
         if (!$this->isLoggedIn){
             return;
         }
-        setcookie(SIMPLE_WP_MEMBERSHIP_AUTH, ' ', time() - YEAR_IN_SECONDS, "/", COOKIE_DOMAIN);
-        setcookie(SIMPLE_WP_MEMBERSHIP_SEC_AUTH, ' ', time() - YEAR_IN_SECONDS, "/", COOKIE_DOMAIN);
+        setcookie(SIMPLE_WP_MEMBERSHIP_AUTH, ' ', time() - YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+        setcookie(SIMPLE_WP_MEMBERSHIP_SEC_AUTH, ' ', time() - YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
         $this->userData = null;
         $this->isLoggedIn = false;
         $this->lastStatusMsg = BUtils::_("Logged Out Successfully.");
@@ -146,7 +146,7 @@ class BAuth {
         $auth_cookie = $this->userData->user_name . '|' . $expire . '|' . $hash;
         $auth_cookie_name = $secure ? SIMPLE_WP_MEMBERSHIP_SEC_AUTH : SIMPLE_WP_MEMBERSHIP_AUTH;
         //setcookie($auth_cookie_name, $auth_cookie, $expire, PLUGINS_COOKIE_PATH, COOKIE_DOMAIN, $secure, true);
-        setcookie($auth_cookie_name, $auth_cookie, $expire, "/", COOKIE_DOMAIN, $secure, true);
+        setcookie($auth_cookie_name, $auth_cookie, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure, true);
     }
 
     private function validate() {
