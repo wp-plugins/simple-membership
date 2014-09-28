@@ -61,7 +61,7 @@ class BFrontRegistration extends BRegistration {
             do_action('swpm_front_end_registration_complete');
 
             $login_page_url = BSettings::get_instance()->get_value('login-page-url');
-            $after_rego_msg = '<p>'. BUtils::_('Registration Successful.'). BUtils::_('Please').' <a href="' . $login_page_url . '">'.BUtils::_('Login').'</a></p>';
+            $after_rego_msg = '<p>'. BUtils::_('Registration Successful. '). BUtils::_('Please').' <a href="' . $login_page_url . '">'.BUtils::_('Login').'</a></p>';
             $message = array('succeeded' => true, 'message' => $after_rego_msg);
             BTransfer::get_instance()->set('status', $message);
             return;

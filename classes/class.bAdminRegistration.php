@@ -45,7 +45,7 @@ class BAdminRegistration extends BRegistration {
             if (!empty($send_notification)){
                 $this->send_reg_email();
             }
-            $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful.'));
+            $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful. '));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership');
             return;

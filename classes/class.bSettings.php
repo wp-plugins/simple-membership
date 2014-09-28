@@ -37,6 +37,10 @@ class BSettings {
                 array(&$this, 'textfield_small_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'free-membership-id',
                       'message'=> BUtils::_('Assign free membership level ID')));
+        add_settings_field('enable-moretag', BUtils::_('Enable More Tag Protection'),
+                array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
+                array('item' => 'enable-moretag',
+                      'message'=> BUtils::_('Enables or disables "more" tag protection in the posts and pages. Anything after the More tag is protected. Anything before the more tag is teaser content.')));        
         add_settings_field('hide-adminbar',  BUtils::_('Hide Adminbar'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'hide-adminbar',
@@ -237,6 +241,12 @@ class BSettings {
         }
         else{
             $output['enable-free-membership'] = "";
+        }
+        if (isset($input['enable-moretag'])){
+            $output['enable-moretag'] = esc_url($input['enable-moretag']);
+        }
+        else{
+            $output['enable-moretag'] = "";
         }
         if (isset($input['enable-debug'])){
             $output['enable-debug'] = esc_url($input['enable-debug']);

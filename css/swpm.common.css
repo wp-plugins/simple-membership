@@ -1,3 +1,14 @@
+/* General CSS */
+.swpm-margin-10{
+margin: 10px;
+}
+.swpm-margin-top-10{
+margin-top: 10px;
+}
+.swpm-margin-bottom-10{
+margin-bottom: 10px;
+}
+
 /* Login form CSS */
 .swpm-login-widget-form input,.swpm-login-widget-form checkbox{
 width: auto;

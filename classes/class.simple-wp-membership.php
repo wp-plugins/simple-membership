@@ -36,7 +36,7 @@ class SimpleWpMembership {
         add_filter('wp_get_attachment_url', array(&$this, 'filter_attachment'));
         add_filter('wp_get_attachment_metadata', array(&$this, 'filter_attachment'));
         add_filter('attachment_fields_to_save', array(&$this,'save_attachment_extra'), 10, 2);
-        //add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
+        add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
 
         add_shortcode("swpm_registration_form", array(&$this, 'registration_form'));
         add_shortcode('swpm_profile_form', array(&$this, 'profile_form'));
@@ -312,7 +312,6 @@ class SimpleWpMembership {
         $acl = BAccessControl::get_instance();
         global $comment;
         return $acl->filter_post($comment->comment_post_ID, $content);
-        //return $acl->filter_comment($comment->comment_ID, $content);
     }
 
     public function filter_content($content) {
@@ -322,8 +321,11 @@ class SimpleWpMembership {
     }
 
     public function filter_moretag($more_link, $more_link_text = "More") {
+        $moretag = BSettings::get_instance()->get_value('enable-moretag');
+        if (empty($moretag)) {return $more_link;}
         $acl = BAccessControl::get_instance();
-        //return $acl->filter_post_with_moretag($post->post_ID, $);
+        global $post;
+        return $acl->filter_post_with_moretag($post->ID, $more_link, $more_link_text);
     }
 
     public function admin_init() {
