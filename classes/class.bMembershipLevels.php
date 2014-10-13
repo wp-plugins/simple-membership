@@ -105,10 +105,9 @@ class BMembershipLevels extends WP_List_Table{
     }
     function edit($id){
         global $wpdb;
-        $id = absint($id);
-        $query = "SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE id = $id";
-        $member = $wpdb->get_row($query, ARRAY_A);
-        extract($member, EXTR_SKIP);
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE id = %d", absint($id));
+        $membership = $wpdb->get_row($query, ARRAY_A);
+        extract($membership, EXTR_SKIP);
         $noexpire = bUtils::calculate_subscription_period($subscription_period,$subscription_unit) == 'noexpire';
         include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_edit_level.php');
         return false;
@@ -117,7 +116,7 @@ class BMembershipLevels extends WP_List_Table{
         global $wpdb;
         if(isset($_REQUEST['id'])){
             $id = absint($_REQUEST['id']);
-            $query = "DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = $id";
+            $query = $wpdb->prepare("DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $id);
             $wpdb->query($query);
         }
         else if (isset($_REQUEST['ids'])){

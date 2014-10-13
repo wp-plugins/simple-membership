@@ -39,7 +39,7 @@ class BMembershipLevel {
 
     public function edit($id) {
         global $wpdb;
-        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = $id";
+        $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $id);
         $level = $wpdb->get_row($query, ARRAY_A);
         $form = new BLevelForm($level);
         if ($form->is_valid()) {

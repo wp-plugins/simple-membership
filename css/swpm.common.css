@@ -38,3 +38,8 @@ border: none;
 .swpm-registration-widget-form td{
 min-width: 100px;
 }
+
+.swpm-restricted{
+    font-weight: bold;
+    color:red;
+}

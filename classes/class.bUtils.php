@@ -53,7 +53,7 @@ class BUtils {
 
     public static function get_user_by_id($swpm_id) {
         global $wpdb;
-        $query = "SELECT user_name FROM {$wpdb->prefix}swpm_members_tbl WHERE member_id = $swpm_id";
+        $query = $wpdb->prepare("SELECT user_name FROM {$wpdb->prefix}swpm_members_tbl WHERE member_id = %d", $swpm_id);
         return $wpdb->get_var($query);
     }
 
@@ -65,7 +65,7 @@ class BUtils {
                 if (empty($member_id)) {
                     return array();
                 }
-                $query = "SELECT * FROM  {$wpdb->prefix}swpm_members_tbl WHERE member_id = $member_id ";
+                $query = $wpdb->prepare("SELECT * FROM  {$wpdb->prefix}swpm_members_tbl WHERE member_id =  %d", $member_id);
                 $members = $wpdb->get_results($query);
                 break;
             case 'all':
@@ -229,11 +229,39 @@ class BUtils {
         return date(get_option( 'date_format' ) ,
                 strtotime(" + " . abs($subscription_duration) . $d, strtotime($start_date)));
     }
-    function swpm_username_exists($user_name) {
+    public static function swpm_username_exists($user_name) {
         global $wpdb;
         $member_table = $wpdb->prefix. 'swpm_members_tbl';
         $query = $wpdb->prepare('SELECT member_id FROM ' . $member_table  . 'WHERE user_name=%s', $user_name);
 
         return $wpdb->get_var($query);
+    }
+    public static function get_free_level(){
+        $encrypted = filter_input(INPUT_POST, 'level_identifier');
+        global $wpdb;
+        if (!empty($encrypted)){
+            return BPermission::get_instance($encrypted)->get('id');
+        }
+        
+        $is_free = BSettings::get_instance()->get_value('enable-free-membership');
+        $free_level = absint(BSettings::get_instance()->get_value('free-membership-id'));
+        
+        return ($is_free)? $free_level : null;
+    }
+    public static function is_paid_registration(){
+        $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
+        $code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);        
+        return !empty($member_id) && !empty($code);
+    }
+    public static function get_paid_member_info(){
+        $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
+        $code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
+        global $wpdb;
+        if (!empty($member_id) && !empty($code)){
+            $query = 'SELECT * FROM ' . $wpdb->prefix . 'swpm_members_tbl WHERE member_id= %d AND reg_code=%s';
+            $query = $wpdb->prepare($query, $member_id, $code);
+            return $wpdb->get_row($query);
+        }
+        return null;
     }
 }

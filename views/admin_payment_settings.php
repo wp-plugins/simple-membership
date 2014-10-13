@@ -13,7 +13,7 @@ if(isset($_POST['swpm_generate_adv_code']))
 {
 	$paypal_ipn_url = SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL.'/?swpm_process_ipn=1';
     $mem_level = trim($_POST['swpm_paypal_adv_member_level']);
-    $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id =". $mem_level;
+    $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id !=1 AND id =%d", $mem_level);
     $membership_level_resultset = $wpdb->get_row($query);
     if($membership_level_resultset){
     	$pp_av_code = 'notify_url='.$paypal_ipn_url.'<br /> '.'custom=subsc_ref='.$mem_level;

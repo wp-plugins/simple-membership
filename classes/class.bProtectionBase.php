@@ -19,8 +19,10 @@ abstract class BProtectionBase {
     protected function init($level_id) {
         global $wpdb;
         $this->owning_level_id = $level_id;
-        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id =" . $level_id;
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE "
+                . (is_numeric($level_id)? 'id = %d': 'md5(id) = %s' ), $level_id);
         $result = $wpdb->get_row($query);
+        
         $this->bitmap = isset($result->permissions) ? $result->permissions : 0;
         $this->posts = isset($result->post_list) ? (array) unserialize($result->post_list) : array();
         $this->pages = isset($result->page_list) ? (array) unserialize($result->page_list) : array();

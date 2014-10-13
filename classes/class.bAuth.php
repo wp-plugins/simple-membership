@@ -38,9 +38,8 @@ class BAuth {
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
             $pass = trim($swpm_password);
-            $query = " SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
-            $query.= " WHERE user_name = '" . $user . "'";
-            $userData = $wpdb->get_row($query);
+            $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE user_name = %s";
+            $userData = $wpdb->get_row($wpdb->prepare($query, $user));
             $this->userData = $userData;
             if (!$userData) {
                 $this->isLoggedIn = false;
@@ -172,9 +171,8 @@ class BAuth {
         }
         Blog::log_simple_debug("validate:Session Expired",true);
         global $wpdb;
-        $query = " SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
-        $query.= " WHERE user_name = '" . $username . "'";
-        $user = $wpdb->get_row($query);
+        $query = " SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE user_name = %s";
+        $user = $wpdb->get_row($wpdb->prepare($query, $username));
         if (empty($user)) {
             $this->lastStatusMsg = BUtils::_("Invalid User Name");
             return false;

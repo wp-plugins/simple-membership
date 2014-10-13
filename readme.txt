@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,12 @@ https://simple-membership-plugin.com/
 
 == Changelog ==
 
+= 1.8.1 =
+- MySQL database character set and collation values are read from the system when creating the tables.
+- Added German language translation file to the plugin.
+- Some code refactoring work.
+- Added a new feature to allow admins to create a registration form for a particular membership level.
+
 = 1.8.0 =
 - Added a new feature called "more tag protection" to enable teaser content. Read the [teaser content documentation](https://simple-membership-plugin.com/creating-teaser-content-membership-site/) for more info.
 - Added Portuguese (Brazil) language translation to the plugin. The translation was submitted by Rachel Oakes.
@@ -165,9 +171,7 @@ http://wordpress.org/plugins/simple-membership-after-login-redirection/
 - First commit to WordPress repository.
 
 == Upgrade Notice ==
-
-None
+If you are using the form builder adddon, then that addon will need to be upgraded to v1.1 also.
 
 == Arbitrary section ==
-
 None

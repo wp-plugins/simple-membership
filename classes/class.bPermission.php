@@ -2,15 +2,20 @@
 include_once('class.bProtectionBase.php');
 class BPermission extends bProtectionBase{
     private static $_this = array();
-
-    private function __construct($level_id) {
+    private function __construct($level_id) {       
         $this->init($level_id);
     }
 
     public static function get_instance($level_id) {
-        if (!isset(self::$_this[$level_id]))
-            self::$_this[$level_id] = new BPermission($level_id);
-        return self::$_this[$level_id];
+        if ($level_id ==1 || $level_id == md5(1)){           
+            wp_die('Invalid Membership level!');
+        }        
+        $key = is_numeric($level_id)? md5($level_id): $level_id;
+        if (!isset(self::$_this[$key])){
+            self::$_this[$key] = new BPermission($level_id);
+        }
+                       
+        return self::$_this[$key];
     }
 
     public function is_permitted($id) {

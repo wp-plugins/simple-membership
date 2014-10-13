@@ -41,9 +41,8 @@ class BForm {
             return;
         }
         $saned = sanitize_text_field($user_name);
-        $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE user_name= '" .
-                strip_tags($saned) . "'";
-        $result = $wpdb->get_var($query);
+        $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE user_name= %s";
+        $result = $wpdb->get_var($wpdb->prepare($query, strip_tags($saned)));
         if ($result > 0) {
             if ($saned != $this->fields['user_name']) {
                 $this->errors['user_name'] = BUtils::_('User name already exists.');
@@ -100,13 +99,16 @@ class BForm {
             return;
         }
         $saned = sanitize_email($email);
-        $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE email= '" .
-                strip_tags($saned) . "'";
+        $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE email= %s";
         $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
         if (!empty($member_id)) {
-            $query .= ' AND member_id !=' . $member_id;
+            $query .= ' AND member_id !=%d';
+            $result = $wpdb->get_var($wpdb->prepare($query, strip_tags($saned), $member_id));
         }
-        $result = $wpdb->get_var($query);
+        else{            
+            $result = $wpdb->get_var($wpdb->prepare($query, strip_tags($saned)));
+        }
+        
         if ($result > 0) {
             if ($saned != $this->fields['email']) {
                 $this->errors['email'] = BUtils::_('Email is already used.');
@@ -213,6 +215,11 @@ class BForm {
 
     protected function membership_level() {
         $membership_level = filter_input(INPUT_POST, 'membership_level', FILTER_SANITIZE_NUMBER_INT);
+        if ($membership_level == 1){
+            $this->errors['membership_level'] = BUtils::_('Invalid membership level');
+            return;
+        }
+        
         if (empty($membership_level)) {return;}
         $this->sanitized['membership_level'] = $membership_level;
     }

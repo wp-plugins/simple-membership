@@ -27,6 +27,17 @@ class BInstallation {
     public static function installer() {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        
+        $charset_collate = '';
+        if (!empty($wpdb->charset)){
+            $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+        }else{
+            $charset_collate = "DEFAULT CHARSET=utf8";
+        }
+        if (!empty($wpdb->collate)){
+            $charset_collate .= " COLLATE $wpdb->collate";
+        }
+
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_members_tbl (
 			member_id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 			user_name varchar(32) NOT NULL,
@@ -59,7 +70,7 @@ class BInstallation {
 			notes text DEFAULT NULL,
 			flags int(11) DEFAULT '0',
 			profile_image varchar(255) DEFAULT ''
-          )ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+          )" . $charset_collate . ";";
         dbDelta($sql);
 
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_membership_tbl (
@@ -79,7 +90,7 @@ class BInstallation {
 			disable_bookmark_list longtext,
 			options longtext,
 			campaign_name varchar(60) NOT NULL DEFAULT ''
-          ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+          )" . $charset_collate . " AUTO_INCREMENT=1 ;";
         dbDelta($sql);
         $sql = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = 1";
         $results = $wpdb->get_row($sql);
@@ -113,7 +124,7 @@ class BInstallation {
                         meta_context varchar(255) NOT NULL DEFAULT 'default',
                         KEY level_id (level_id),
                         UNIQUE KEY meta_key_id (level_id,meta_key)
-          ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+          )" . $charset_collate . " AUTO_INCREMENT=1 ;";
         dbDelta($sql);
     }
 

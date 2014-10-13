@@ -1,5 +1,6 @@
 <div class="swpm-registration-widget-form">
 <form id="swpm-registration-form" name="swpm-registration-form" method="post" action="">
+    <input type ="hidden" name="level_identifier" value="<?= $level_identifier?>" />
 	<table>
 		<tr>
 			<td><label for="user_name"><?= BUtils::_('User Name') ?></label></td>
@@ -25,41 +26,6 @@
 			<td><label for="last_name"><?= BUtils::_('Last Name') ?></label></td>
 			<td><input type="text" id="last_name" value="<?php echo $last_name;?>" tabindex="6" size="50" name="last_name" /></td>
 		</tr>
-                <!--<tr>
-                    <td><label for="gender"><?= BUtils::_('Gender'); ?></label></td>
-		<td><select name="gender" id="gender">
-				<?= BUtils::gender_dropdown() ?>
-			</select>
-		</td>
-                </tr>
-		<tr>
-			<td><label for="phone"><?= BUtils::_('Phone') ?></label></td>
-			<td><input type="text" id="phone" value="<?php echo $phone;?>" tabindex="7" size="50" name="phone" /></td>
-		</tr>
-		<tr>
-			<td><label for="address_street"><?= BUtils::_('Street') ?></label></td>
-			<td><input type="text" id="address_street" value="<?php echo $address_street;?>" tabindex="8" size="50" name="address_street" /></td>
-		</tr>
-		<tr>
-			<td><label for="address_city"><?= BUtils::_('City') ?> </label></td>
-			<td><input type="text" id="address_city" value="<?php echo $address_city;?>" tabindex="9" size="50" name="address_city" /></td>
-		</tr>
-		<tr>
-			<td><label for="address_state"><?= BUtils::_('State') ?></label></td>
-			<td><input type="text" id="address_state" value="<?php echo $address_state;?>" tabindex="10" size="50" name="address_state" /></td>
-		</tr>
-		<tr>
-			<td><label for="address_zipcode"><?= BUtils::_('Zipcode') ?></label></td>
-			<td><input type="text" id="address_zipcode" value="<?php echo $address_zipcode;?>" tabindex="11" size="50" name="address_zipcode" /></td>
-		</tr>
-		<tr>
-			<td><label for="country"><?= BUtils::_('Country') ?></label></td>
-			<td><input type="text" id="country" value="<?php echo $country;?>" tabindex="12" size="50" name="country" /></td>
-		</tr>
-                <tr>
-                    <td ><label for="company_name"><?= BUtils::_('Company') ?></label></td>
-                        <td><input name="company_name" type="text" id="company_name" tabindex="13" size="50"  value="<?php echo esc_attr($company_name); ?>" /></td>
-                </tr>-->
 		<tr>
 			<td><label for="membership_level"><?= BUtils::_('Membership Level') ?></label></td>
 			<td>

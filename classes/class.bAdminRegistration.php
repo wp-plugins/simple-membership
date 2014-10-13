@@ -25,7 +25,7 @@ class BAdminRegistration extends BRegistration {
             unset($member_info['plain_password']);
             $wpdb->insert($wpdb->prefix . "swpm_members_tbl", $member_info);
             /*             * ******************** register to wordpress ********** */
-            $query = "SELECT role FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = " . $member_info['membership_level'];
+            $query = $wpdb->prepare("SELECT role FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $member_info['membership_level']) ;
             $wp_user_info = array();
             $wp_user_info['user_nicename'] = implode('-', explode(' ', $member_info['user_name']));
             $wp_user_info['display_name'] = $member_info['user_name'];
@@ -55,7 +55,7 @@ class BAdminRegistration extends BRegistration {
     }
     public function edit($id){
         global $wpdb;
-        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
+        $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = %d", $id);
         $member = $wpdb->get_row($query, ARRAY_A);
         unset($member['member_id']);
         unset($member['email']);

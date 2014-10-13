@@ -122,7 +122,7 @@ class SimpleWpMembership {
     public function sync_with_wp_profile($wp_user_id) {
         global $wpdb;
         $wp_user_data = get_userdata($wp_user_id);
-        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE " . ' user_name=\'' . $wp_user_data->user_login . '\'';
+        $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE " . ' user_name=%s', $wp_user_data->user_login);
         $profile = $wpdb->get_row($query, ARRAY_A);
         $profile = (array) $profile;
         if (empty($profile)){
@@ -445,12 +445,15 @@ class SimpleWpMembership {
         wp_enqueue_script('jquery.validationEngine', SIMPLE_WP_MEMBERSHIP_URL . '/js/jquery.validationEngine.js');
     }
 
-    public function registration_form() {
+    public function registration_form($atts) {
         $succeeded = $this->notices();
         if($succeeded){
             return;
         }
-        return BFrontRegistration::get_instance()->regigstration_ui();
+        $is_free = BSettings::get_instance()->get_value('enable-free-membership');
+        $free_level = absint(BSettings::get_instance()->get_value('free-membership-id'));        
+        $level = isset($atts['level'])? absint($atts['level']): ($is_free? $free_level: null);
+        return BFrontRegistration::get_instance()->regigstration_ui($level);
     }
 
     private function register_member() {

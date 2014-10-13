@@ -19,8 +19,7 @@ abstract class BRegistration {
         $from_address = $settings->get_value('email-from');
         $login_link = $settings->get_value('login-page-url');
         $headers = 'From: ' . $from_address . "\r\n";
-        $query = "SELECT alias FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = " . $member_info['membership_level'];
-        $member_info['membership_level_name'] = $wpdb->get_var($query);
+        $member_info['membership_level_name'] = BPermission::get_instance($member_info['membership_level'])->get('alias');
         $member_info['password'] = $member_info['plain_password'];
         $member_info['login_link'] = $login_link;
         $values = array_values($member_info);
