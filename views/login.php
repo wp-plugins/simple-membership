@@ -23,14 +23,14 @@
 	    </tr>
         <tr>
 	        <td colspan="2">
-	        <a id="forgot_pass" href="<?php echo $password_reset_url;?>"><?= BUtils::_('Forgot Password')?>?</a>
+	        <a id="forgot_pass" href="<?= $password_reset_url;?>"><?= BUtils::_('Forgot Password')?>?</a>
 	        </td>
 	    </tr>
 	    <tr>
-	        <td colspan="2"><a id="register" class="register_link" href="<?php echo $join_url; ?>"><?= BUtils::_('Join Us')?></a></td>
+	        <td colspan="2"><a id="register" class="register_link" href="<?= $join_url; ?>"><?= BUtils::_('Join Us')?></a></td>
 	    </tr>
 	    <tr>
-	    	<td colspan="2"><span> <?php echo $auth->get_message();?> </span></td>
+	    	<td colspan="2"><span class="swpm-login-widget-action-msg"><?= $auth->get_message();?></span></td>
 	    </tr>
 	</table>
 </form>

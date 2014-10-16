@@ -72,19 +72,33 @@ class BAuth {
         if (empty($this->userData)){
             return false;
         }
-        $permission = BPermission::get_instance($this->userData->membership_level);
-        $valid = true;
+
         if ($this->userData->account_state != 'active') {
             $this->lastStatusMsg = BUtils::_('Account is inactive.');
-            $valid = false;
-        }
-        if (!$valid) {
             $this->isLoggedIn = false;
             $this->userData = null;
             return false;
         }
-        //:todo check if account expired and update db if it did.
-        $this->permitted = $permission;
+        $expiration_timestamp = BUtils::get_expiration_timestamp($this->userData);
+
+        if ($expiration_timestamp < time()){
+            if ($this->userData->account_state == 'active'){
+                global $wpdb;
+                $wpdb->update( 
+                    $wpdb->prefix . 'swpm_members_tbl', 
+                    array( 'account_state' => 'expired'), 
+                    array( 'member_id' => $this->userData->member_id ), 
+                    array( '%s'), 
+                    array( '%d' ) 
+                );
+            }
+            $this->lastStatusMsg = BUtils::_('Account has expired.');
+            $this->isLoggedIn = false;
+            $this->userData = null;
+            return false;
+        }
+        
+        $this->permitted = BPermission::get_instance($this->userData->membership_level);        
         $this->lastStatusMsg = BUtils::_("You are logged in as:") . $this->userData->user_name;
         $this->isLoggedIn = true;
         return true;
@@ -135,6 +149,11 @@ class BAuth {
         else{
             $expire = time() + 172800;
         }
+        
+        $expiration_timestamp = BUtils::get_expiration_timestamp($this->userData);
+        
+        // make sure cookie doesn't live beyond account expiration date.
+        $expire = min ($expire,$expiration_timestamp);
         $pass_frag = substr($this->userData->password, 8, 4);
         $scheme = 'auth';
         if (!$secure){

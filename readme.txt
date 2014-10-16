@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,7 @@ The following language translations are already available:
 
 * English
 * Spanish
+* German
 * French
 * Chinese
 * Portuguese (Brazil)
@@ -85,6 +86,9 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.8.2 =
+- Updated the members expiry check code at the time of login and made it more robust.
 
 = 1.8.1 =
 - MySQL database character set and collation values are read from the system when creating the tables.
