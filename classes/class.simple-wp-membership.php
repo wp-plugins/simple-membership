@@ -21,12 +21,9 @@ include_once('class.bAdminRegistration.php');
 include_once('class.bMembershipLevel.php');
 include_once('class.bMembershipLevelCustom.php');
 include_once('class.bMembershipLevelUtils.php');
-
 class SimpleWpMembership {
     public function __construct() {
-        add_action('admin_menu', array(&$this, 'menu'));
-        //add_action('admin_init', array(&$this, 'admin_init')); //This call has been moved inside 'init' function
-
+        add_action('admin_menu', array(&$this, 'menu'));        
         add_action('init', array(&$this, 'init'));
 
         add_filter('the_content', array(&$this, 'filter_content'));
@@ -51,8 +48,8 @@ class SimpleWpMembership {
         add_action('profile_update', array(&$this, 'sync_with_wp_profile'), 10, 2);
         add_action('wp_logout', array(&$this, 'wp_logout'));
         add_action('wp_authenticate', array(&$this, 'wp_login'), 1, 2);
-        add_action('swpm_logout', array(&$this, 'swpm_logout'));
-
+        add_action('swpm_logout', array(&$this, 'swpm_logout'));        
+        
         //AJAX hooks
         add_action('wp_ajax_swpm_validate_email', 'BAjax::validate_email_ajax');
         add_action('wp_ajax_nopriv_swpm_validate_email', 'BAjax::validate_email_ajax');
@@ -94,7 +91,9 @@ class SimpleWpMembership {
         }
         wp_signon(array('user_login' => $user, 'user_password' => $pass, 'remember' => $rememberme), is_ssl() ? true : false);
         do_action('swpm_after_login');
-        wp_redirect(site_url());
+        if (!BUtils::is_ajax()) {
+            wp_redirect(site_url());
+        }
     }
 
     public function swpm_logout() {
@@ -475,7 +474,9 @@ class SimpleWpMembership {
                 'manage_options', 'simple_wp_membership_levels', array(&$this, "admin_membership_levels"));
         add_submenu_page($menu_parent_slug, __("Settings", 'swpm'), __("Settings", 'swpm'),
                 'manage_options', 'simple_wp_membership_settings', array(&$this, "admin_settings"));
-
+        add_submenu_page($menu_parent_slug, __("Add-ons", 'swpm'), __("Add-ons", 'swpm'),
+                'manage_options', 'simple_wp_membership_addons', array(&$this, "add_ons_menu"));
+        
         do_action('swpm_after_main_admin_menu', $menu_parent_slug);
 
         $this->meta_box();
@@ -541,8 +542,13 @@ class SimpleWpMembership {
                 break;
         }
     }
+    
+    public function add_ons_menu(){
+         include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_add_ons_page.php');
+    }
 
     public static function activate() {
+        wp_schedule_event(time(), 'daily', 'swpm_account_status_event');
         include_once('class.bInstallation.php');
         global $wpdb;
         if (BUtils::is_multisite_install()) {
@@ -552,6 +558,6 @@ class SimpleWpMembership {
         BInstallation::initdb();
     }
     public function deactivate() {
-
+        wp_clear_scheduled_hook('swpm_account_status_event');
     }
 }

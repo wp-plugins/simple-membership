@@ -43,7 +43,7 @@
 	</tr>
 	<tr class="form-required">
 		<th scope="row"><label for="password"><?= BUtils::_('Password'); ?> <span class="description"><?php /* translators: password input field */_e('(twice, required)'); ?></span></label></th>
-		<td><input class="regular-text" name="password" type="password" id="pass1" autocomplete="off" />
+		<td><input class="regular-text"  name="password" type="password" id="pass1" autocomplete="off" />
 		<br />
 		<input class="regular-text" name="password_re" type="password" id="pass2" autocomplete="off" />
 		<br />

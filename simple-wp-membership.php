@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple WordPress Membership
-Version: v1.8.2
+Version: v1.8.3
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -14,8 +14,9 @@ if (realpath (__FILE__) === realpath ($_SERVER["SCRIPT_FILENAME"])){
 }
 
 include_once('classes/class.simple-wp-membership.php');
+include_once('classes/class.bCronJob.php');
 
-define('SIMPLE_WP_MEMBERSHIP_VER', '1.8.2');
+define('SIMPLE_WP_MEMBERSHIP_VER', '1.8.3');
 define('SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL', home_url());
 define('SIMPLE_WP_MEMBERSHIP_PATH', dirname(__FILE__) . '/');
 define('SIMPLE_WP_MEMBERSHIP_URL', plugins_url('',__FILE__));
@@ -30,6 +31,7 @@ add_action('swpm_login','SimpleWpMembership::swpm_login', 10,3);
 add_action('plugins_loaded', "swpm_plugins_loaded");
 function swpm_plugins_loaded(){
     new SimpleWpMembership();
+    new BCronJob();
 }
 //Add settings link in plugins listing page
 function swpm_add_settings_link($links, $file) {

@@ -1,6 +1,9 @@
 <?php
 
 class BUtils {
+    public static function is_ajax(){
+        return defined('DOING_AJAX') && DOING_AJAX;
+    }
 
     public static function calculate_subscription_period_days($subcript_period, $subscript_unit) {
         if (($subcript_period == 0) && !empty($subscript_unit)) {//will expire after a fixed date.

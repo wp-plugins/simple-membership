@@ -2,13 +2,13 @@
 <form id="swpm-login-form" name="swpm-login-form" method="post" action="">
 <table width="95%" border="0" cellpadding="3" cellspacing="5" class="forms">
 	    <tr>
-	    	<td colspan="2"><label for="login_user_name" class="eMember_label"><?= BUtils::_('User Name')?></label></td>
+	    	<td colspan="2"><label for="swpm_user_name" class="eMember_label"><?= BUtils::_('User Name')?></label></td>
 	    </tr>
 	    <tr>
 	        <td colspan="2"><input type="text" class="swpm_text_field" id="swpm_user_name"  value="" size="30" name="swpm_user_name" /></td>
 	    </tr>
 	    <tr>
-	    	<td colspan="2"><label for="login_pwd" class="eMember_label"><?= BUtils::_('Password')?></label></td>
+	    	<td colspan="2"><label for="swpm_password" class="eMember_label"><?= BUtils::_('Password')?></label></td>
 		</tr>
 	    <tr>
 	        <td colspan="2"><input type="password" class="swpm_text_field" id="swpm_password" value="" size="30" name="swpm_password" /></td>

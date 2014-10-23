@@ -12,11 +12,11 @@
 		</tr>
 		<tr>
 			<td><label for="password"><?= BUtils::_('Password') ?></label></td>
-			<td><input type="password" id="password" value="" tabindex="3" size="50" name="password" /></td>
+			<td><input type="password" autocomplete="off" id="password" value="" tabindex="3" size="50" name="password" /></td>
 		</tr>
 		<tr>
 			<td><label for="password_re"><?= BUtils::_('Repeat Password') ?></label></td>
-			<td><input type="password" id="password_re" value="" tabindex="4" size="50" name="password_re" /></td>
+			<td><input type="password" autocomplete="off" id="password_re" value="" tabindex="4" size="50" name="password_re" /></td>
 		</tr>
 		<tr>
 			<td><label for="first_name"><?= BUtils::_('First Name') ?></label></td>
