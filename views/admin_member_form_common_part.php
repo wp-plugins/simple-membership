@@ -41,16 +41,6 @@
 		<th scope="row"><label for="company_name"><?= BUtils::_('Company') ?></label></th>
 		<td><input name="company_name" type="text" id="company_name" class="code regular-text" value="<?php echo esc_attr($company_name); ?>" /></td>
 	</tr>
-	<tr class="form-required">
-		<th scope="row"><label for="password"><?= BUtils::_('Password'); ?> <span class="description"><?php /* translators: password input field */_e('(twice, required)'); ?></span></label></th>
-		<td><input class="regular-text"  name="password" type="password" id="pass1" autocomplete="off" />
-		<br />
-		<input class="regular-text" name="password_re" type="password" id="pass2" autocomplete="off" />
-		<br />
-		<div id="pass-strength-result"><?= BUtils::_('Strength indicator'); ?></div>
-		<p class="description indicator-hint"><?= BUtils::_('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
-		</td>
-	</tr>
 	<tr>
 		<th scope="row"><label for="membership_level"><?= BUtils::_('Membership Level'); ?></label></th>
 		<td><select class="regular-text" name="membership_level" id="membership_level">

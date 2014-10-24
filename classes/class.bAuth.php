@@ -31,9 +31,8 @@ class BAuth {
 
     private function authenticate() {
         global $wpdb;
-        $swpm_user_name = filter_input(INPUT_POST, 'swpm_user_name');
         $swpm_password = filter_input(INPUT_POST, 'swpm_password');
-        $swpm_user_name = apply_filters('swpm_user_name', $swpm_user_name);
+        $swpm_user_name = apply_filters('swpm_user_name', filter_input(INPUT_POST, 'swpm_user_name'));
         Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
@@ -201,7 +200,7 @@ class BAuth {
         $key = BAuth::b_hash($username . $pass_frag . '|' . $expiration);
         $hash = hash_hmac('md5', $username . '|' . $expiration, $key);
         if ($hmac != $hash) {
-            $this->lastStatusMsg = BUtils::_("Bad Cookie Hash");
+            $this->lastStatusMsg = BUtils::_("Sorry! Something went wrong");
             return false;
         }
         Blog::log_simple_debug("validate:bad hash",true);
