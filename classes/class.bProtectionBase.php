@@ -230,6 +230,28 @@ abstract class BProtectionBase {
             } else {
                 $list = array_diff($list, $ids);
             }
+            switch ($type) {
+                case 'page':
+                    $this->pages = $list;
+                    break;
+                case 'post':
+                    $this->posts = $list;
+                    break;
+                case 'attachment':
+                    $this->attachments = $list;
+                    break;
+                case 'comment':
+                    $this->comments = $list;
+                    break;
+                case 'category':
+                    $this->categories = $list;
+                    break;
+                case 'custom_post':
+                    $this->custom_posts = $list;
+                    break;
+                default:
+                    break;
+            }
             $this->details[$index] = $list;
         }
         return $this;

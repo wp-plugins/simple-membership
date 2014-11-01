@@ -46,3 +46,7 @@ min-width: 100px;
     font-weight: bold;
     color:red;
 }
+.swpm-select-box-left{
+    margin: 0;
+    padding-bottom: 5px;
+}

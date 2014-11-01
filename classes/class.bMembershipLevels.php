@@ -137,5 +137,11 @@ class BMembershipLevels extends WP_List_Table{
         $selected = 2;
          include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_manage.php');
     }
+    function manage_categroy(){
+        $selected = 3;
+        include_once('class.bCategoryList.php');
+        $category_list = new BCategoryList();        
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_category_list.php');
+    }    
 }
 

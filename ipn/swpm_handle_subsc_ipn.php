@@ -6,6 +6,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     $settings = BSettings::get_instance();
     $members_table_name = $wpdb->prefix . "swpm_members_tbl";
     $membership_level_table = $wpdb->prefix . "swpm_membership_tbl";
+    $membership_level = $subsc_ref;
 
     if(empty($swpm_id))
     {
@@ -34,8 +35,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         //This is payment from an existing member/user. Update the existing member account
         swpm_debug_log_subsc("Modifying the existing membership profile... Member ID: ".$swpm_id,true);
         // upgrade the member account
-        $account_state = 'active';
-        $membership_level = $subsc_ref;
+        $account_state = 'active';        
         $subscription_starts = (date ("Y-m-d"));
         $subscr_id = $unique_ref;
        
@@ -79,11 +79,11 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $data['first_name'] = $ipn_data['first_name'];
         $data['last_name'] = $ipn_data['last_name'];
         $data['email'] = $ipn_data['payer_email'];
-        $data['membership_level'] = $subsc_ref;
+        $data['membership_level'] = $membership_level;
         $data['subscr_id'] = $unique_ref;
         $data['gender'] = 'not specified';
 
-        swpm_debug_log_subsc("Membership level ID: ".$membership_level,true);
+        swpm_debug_log_subsc("Creating new member account. Membership level ID: ".$membership_level,true);
 
         $data['address_street'] = $ipn_data['address_street'];
         $data['address_city'] = $ipn_data['address_city'];
@@ -93,11 +93,12 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $data['member_since']  = $data['subscription_starts'] = $data['last_accessed'] = date ("Y-m-d");
         $data['account_state'] = 'active';
         $reg_code = uniqid();//rand(10, 1000);
-        $data['reg_code'] = md5($reg_code);
+        $md5_code = md5($reg_code);
+        $data['reg_code'] = $md5_code;
         $data['referrer'] = $data['extra_info'] = $data['txn_id'] = '';
         $data['subscr_id']= $subscr_id;
 
-        $wpdb->insert($members_table_name,  $data);
+        $wpdb->insert($members_table_name,  $data);//Create the member record
         $results = $wpdb->get_row($wpdb->prepare("SELECT * FROM $members_table_name where subscr_id=%s and reg_code=%s",$subscr_id, $md5_code), OBJECT);
         $id = $results->member_id; //Alternatively use $wpdb->insert_id;
         if(empty($id)){

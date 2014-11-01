@@ -428,6 +428,8 @@ class SimpleWpMembership {
         $this->common_library();
         wp_enqueue_script('password-strength-meter');
         wp_enqueue_script('swpm.password-meter', SIMPLE_WP_MEMBERSHIP_URL . '/js/swpm.password-meter.js');
+        wp_enqueue_style('jquery.tools.dateinput', SIMPLE_WP_MEMBERSHIP_URL . '/css/jquery.tools.dateinput.css');
+        wp_enqueue_script('jquery.tools', SIMPLE_WP_MEMBERSHIP_URL . '/js/jquery.tools18.min.js');        
     }
 
     public function front_library() {
@@ -438,8 +440,6 @@ class SimpleWpMembership {
         wp_enqueue_script('jquery');
         wp_enqueue_style('swpm.common', SIMPLE_WP_MEMBERSHIP_URL . '/css/swpm.common.css');
         wp_enqueue_style('validationEngine.jquery', SIMPLE_WP_MEMBERSHIP_URL . '/css/validationEngine.jquery.css');
-        wp_enqueue_style('jquery.tools.dateinput', SIMPLE_WP_MEMBERSHIP_URL . '/css/jquery.tools.dateinput.css');
-        wp_enqueue_script('jquery.tools', SIMPLE_WP_MEMBERSHIP_URL . '/js/jquery.tools18.min.js');
         wp_enqueue_script('jquery.validationEngine-en', SIMPLE_WP_MEMBERSHIP_URL . '/js/jquery.validationEngine-en.js');
         wp_enqueue_script('jquery.validationEngine', SIMPLE_WP_MEMBERSHIP_URL . '/js/jquery.validationEngine.js');
     }
@@ -495,6 +495,9 @@ class SimpleWpMembership {
                 break;
             case 'manage':
                 $levels->manage();
+                break;
+            case 'category_list':
+                $levels->manage_categroy();
                 break;
             case 'delete':
             case 'bulk_delete':

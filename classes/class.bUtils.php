@@ -61,7 +61,7 @@ class BUtils {
         $query = "SELECT alias, id FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id != 1";
         $levels = $wpdb->get_results($query);
         foreach($levels as $level){
-            $options .= '<option '.($selected == $level->id ? 'select="selected"':'').' value="'.$level->id.'" >' . $level->alias . '</option>';
+            $options .= '<option '.($selected == $level->id ? 'selected="selected"':'').' value="'.$level->id.'" >' . $level->alias . '</option>';
         }
         return $options;
     }
