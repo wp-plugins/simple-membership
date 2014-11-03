@@ -16,7 +16,7 @@ class BAuth {
     }
     private function init(){
         $valid = $this->validate();
-        Blog::log_simple_debug("init:". ($valid? "valid": "invalid"), true);
+        //Blog::log_simple_debug("init:". ($valid? "valid": "invalid"), true);
         if (!$valid){
             $this->authenticate();
         }
@@ -33,7 +33,7 @@ class BAuth {
         global $wpdb;
         $swpm_password = filter_input(INPUT_POST, 'swpm_password');
         $swpm_user_name = apply_filters('swpm_user_name', filter_input(INPUT_POST, 'swpm_user_name'));
-        Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
+        //Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
             $pass = trim($swpm_password);

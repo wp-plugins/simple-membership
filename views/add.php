@@ -43,6 +43,7 @@
 jQuery(document).ready(function($){
     $.validationEngineLanguage.allRules['ajaxUserCall']['url']= '<?php echo admin_url('admin-ajax.php');?>';
     $.validationEngineLanguage.allRules['ajaxEmailCall']['url']= '<?php echo admin_url('admin-ajax.php');?>';
+    $.validationEngineLanguage.allRules['ajaxEmailCall']['extraData'] = '&action=swpm_validate_email&member_id=<?= filter_input(INPUT_GET, 'member_id');?>';
     $("#swpm-registration-form").validationEngine('attach');
 });
 </script>

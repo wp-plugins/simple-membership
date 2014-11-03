@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ You can create a free forum user account and ask your questions.
 * Show teaser content to convert visitors into members.
 * Comments on your protected posts will also be protected automatically.
 * There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
+* Ability to customize the content protection message that gets shown to non-members.
 * Membership management side is handled by the plugin.
 * Ability to import WordPress users as members.
 * Can be translated to any language.
@@ -87,6 +88,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.8.6 =
+- Fixed an email validation issue with paid membership registration process.
+- Added a new free addon to customize the protected content message.
 
 = 1.8.5 =
 - Added category protection feature under the membership level menu.

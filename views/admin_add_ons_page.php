@@ -47,7 +47,15 @@ echo '<link type="text/css" rel="stylesheet" href="' . SIMPLE_WP_MEMBERSHIP_URL 
         'page_url' => 'https://simple-membership-plugin.com/simple-membership-form-builder-addon/',
     );
     array_push($addons_data, $addon_5);
-
+    
+    $addon_6 = array(
+        'name' => 'Custom Messages',
+        'thumbnail' => SIMPLE_WP_MEMBERSHIP_URL . '/images/addons/swpm-custom-messages.png',
+        'description' => 'Custom Messages addon allows you to customize the content protection message that gets output from the membership plugin',
+        'page_url' => 'https://simple-membership-plugin.com/simple-membership-custom-messages-addon/',
+    );
+    array_push($addons_data, $addon_6);
+    
     foreach ($addons_data as $addon) {
         $output .= '<div class="swpm_addon_item_canvas">';
 

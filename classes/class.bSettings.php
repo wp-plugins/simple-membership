@@ -190,9 +190,9 @@ class BSettings {
     public function swpm_documentation_callback() {
         ?>
         <div style="background: none repeat scroll 0 0 #FFF6D5;border: 1px solid #D1B655;color: #3F2502;margin: 10px 0;padding: 5px 5px 5px 10px;text-shadow: 1px 1px #FFFFFF;">
-        <p>Please visit the
+        <p>Visit the
         <a target="_blank" href="https://simple-membership-plugin.com/">Simple Membership Plugin Site</a>
-        to read setup and configuration documentation.
+        to read setup and configuration documentation. Please <a href="https://wordpress.org/support/view/plugin-reviews/simple-membership?filter=5" target="_blank">give us a rating</a> if you like the plugin.
         </p>
         </div>
         <?php
