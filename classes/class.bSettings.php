@@ -5,7 +5,7 @@ class BSettings {
     private static $_this;
     private $settings;
     public $current_tab;
-
+    private $tabs;
     private function __construct() {
         $this->settings = (array) get_option('swpm-settings');
     }
@@ -16,6 +16,8 @@ class BSettings {
             $tab = filter_input(INPUT_GET, 'tab');
             $tab = empty($tab)?filter_input(INPUT_POST, 'tab'):$tab;
             $this->current_tab = empty($tab) ? 1 : $tab;
+            $this->tabs = array(1=> 'General Settings', 2=> 'Payment Settings',
+                                3=> 'Email Settings', 4=> 'Tools', 5=> 'Addons Settings');                    
             add_action('swpm-draw-tab', array(&$this, 'draw_tabs'));
             $method = 'tab_' . $this->current_tab;
             if (method_exists($this, $method)){
@@ -83,9 +85,6 @@ class BSettings {
     }
 
     private function tab_2() {
-        //register_setting( 'swpm-settings-tab-2', 'swpm-settings' , array(&$this, 'sanitize_tab_2'));
-        //add_settings_section('paypal-settings', 'PayPal Settings', array(&$this,'pp_payment_settings_callback'), 'simple_wp_membership_settings');
-        //add_settings_field( 'paypal-email', 'PayPal Email', array(&$this, 'textfield_callback'), 'simple_wp_membership_settings', 'paypal-settings' ,array('item'=>'paypal-email'));
     }
 
     private function tab_3() {
@@ -141,7 +140,8 @@ class BSettings {
     }
     private function tab_4(){
     }
-
+    private function tab_5(){
+    }
     public static function get_instance() {
         self::$_this = empty(self::$_this) ? new BSettings() : self::$_this;
         return self::$_this;
@@ -318,10 +318,9 @@ class BSettings {
         $current = $this->current_tab;
         ?>
         <h3 class="nav-tab-wrapper">
-            <a class="nav-tab <?php echo ($current == 1) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings">General Settings</a>
-            <a class="nav-tab <?php echo ($current == 2) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=2">Payment Settings</a>
-            <a class="nav-tab <?php echo ($current == 3) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=3">Email Settings</a>
-            <a class="nav-tab <?php echo ($current == 4) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=4">Tools</a>
+            <?php foreach ($this->tabs as $id=>$label):?>
+            <a class="nav-tab <?php echo ($current == $id) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=<?= $id?>"><?= $label?></a>
+            <?php endforeach;?>
         </h3>
         <?php
     }

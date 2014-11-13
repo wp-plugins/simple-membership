@@ -9,7 +9,7 @@
     <tbody>
 	<tr class="form-required">
             <th scope="row"><label for="user_name"><?= BUtils::_('User name'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label></th>
-            <td><input class="regular-text validate[required,custom[SWPMUserName],minSize[4],ajax[ajaxUserCall]]" name="user_name" type="text" id="user_name" value="<?php echo esc_attr($user_name); ?>" aria-required="true" /></td>
+            <td><input class="regular-text validate[required,custom[noapostrophe],custom[SWPMUserName],minSize[4],ajax[ajaxUserCall]]" name="user_name" type="text" id="user_name" value="<?php echo esc_attr(stripslashes($user_name)); ?>" aria-required="true" /></td>
 	</tr>
 	<tr class="form-required">
             <th scope="row"><label for="email"><?= BUtils::_('E-mail'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label></th>

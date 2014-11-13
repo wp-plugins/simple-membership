@@ -40,6 +40,10 @@ class BForm {
             $this->errors['user_name'] = BUtils::_('User name is required');
             return;
         }
+        if (preg_match("/^[a-zA-Z0-9!@#$%&*+\/=?^_`{|}~\.-]+$/", $user_name) === 0) {
+            $this->errors['user_name'] = BUtils::_('User name contains invalid character');
+            return;
+        }
         $saned = sanitize_text_field($user_name);
         $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE user_name= %s";
         $result = $wpdb->get_var($wpdb->prepare($query, strip_tags($saned)));

@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,12 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.8.7 =
+- Updated the registration form validation code to not accept apostrophe character in the username field.
+- Added a new tab for showing addon settings options (some of the addons will be able to utilize this settings tab).
+- Added a new action hook in the addon settings tab.
+- Moved the plugin's main class initialization code outside of the plugins_loaded hook.
 
 = 1.8.6 =
 - Fixed an email validation issue with paid membership registration process.

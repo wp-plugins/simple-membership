@@ -58,7 +58,10 @@ class SimpleWpMembership {
 
         //init is too early for settings api.
         add_action('admin_init', array(&$this, 'admin_init_hook'));
-
+        add_action('plugins_loaded', array(&$this, "plugins_loaded"));
+    }
+    public function plugins_loaded(){
+        
     }
     public function save_attachment_extra($post, $attachment) {
         $this->save_postdata($post['ID']);
@@ -71,6 +74,10 @@ class SimpleWpMembership {
     }
     public function admin_init_hook(){
         BSettings::get_instance()->init_config_hooks();
+        $addon_saved = filter_input(INPUT_POST, 'swpm-addon-settings');
+        if(!empty($addon_saved)){
+            do_action('swpm_addon_settings_save');
+        }
     }
     public function hide_adminbar(){
         if (!is_user_logged_in()){//Never show admin bar if the user is not even logged in
@@ -530,6 +537,9 @@ class SimpleWpMembership {
     public function admin_settings() {
         $current_tab = BSettings::get_instance()->current_tab;
         switch ($current_tab) {
+            case 5:
+                include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_addon_settings.php');
+                break;                        
             case 4:
                 $link_for = filter_input(INPUT_POST, 'swpm_link_for',FILTER_SANITIZE_STRING);
                 $member_id = filter_input(INPUT_POST, 'member_id',FILTER_SANITIZE_NUMBER_INT);

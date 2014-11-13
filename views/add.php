@@ -4,7 +4,7 @@
     <table>
         <tr>
             <td><label for="user_name"><?= BUtils::_('User Name') ?></label></td>
-            <td><input type="text" id="user_name" class="validate[required,custom[SWPMUserName],minSize[4],ajax[ajaxUserCall]]" value="<?php echo $user_name;?>" tabindex="1" size="50" name="user_name" /></td>
+            <td><input type="text" id="user_name" class="validate[required,custom[noapostrophe],custom[SWPMUserName],minSize[4],ajax[ajaxUserCall]]" value="<?php echo $user_name;?>" tabindex="1" size="50" name="user_name" /></td>
         </tr>
         <tr>
             <td><label for="email"><?= BUtils::_('Email') ?></label></td>
