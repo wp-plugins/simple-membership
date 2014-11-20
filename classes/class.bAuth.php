@@ -78,9 +78,8 @@ class BAuth {
             $this->userData = null;
             return false;
         }
-        $expiration_timestamp = BUtils::get_expiration_timestamp($this->userData);
 
-        if ($expiration_timestamp < time()){
+        if (BUtils::is_subscription_expired($this->userData)){
             if ($this->userData->account_state == 'active'){
                 global $wpdb;
                 $wpdb->update( 

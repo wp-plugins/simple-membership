@@ -61,19 +61,20 @@ class BMembers extends WP_List_Table {
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
         $query .= " LEFT JOIN " . $wpdb->prefix . "swpm_membership_tbl";
         $query .= " ON ( membership_level = id ) ";
-        if (isset($_POST['s'])){
-            $query .= " WHERE  user_name LIKE '%" . strip_tags($_POST['s']) . "%' "
-                    . " OR first_name LIKE '%" . strip_tags($_POST['s']) . "%' "
-                    . " OR last_name LIKE '%" . strip_tags($_POST['s']) . "%' ";
+        $s = filter_input(INPUT_POST, 's');
+        if (!empty($s)){
+            $query .= " WHERE  user_name LIKE '%" . strip_tags($s) . "%' "
+                    . " OR first_name LIKE '%" . strip_tags($s) . "%' "
+                    . " OR last_name LIKE '%" . strip_tags($s) . "%' ";
         }
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'ASC';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : '';
-        if (!empty($orderby) & !empty($order)) {
-            $query.=' ORDER BY ' . $orderby . ' ' . $order;
-        }
+        $orderby = filter_input(INPUT_GET, 'orderby');
+        $orderby = empty($orderby) ? 'user_name' : $orderby ;
+        $order = filter_input(INPUT_GET, 'orger');
+        $order = empty($order) ? 'ASC' : $order;
+        $query.=' ORDER BY ' . $orderby . ' ' . $order;
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         $perpage = 20;
-        $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+        $paged  = filter_input(INPUT_GET, 'paged');
         if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
@@ -102,7 +103,7 @@ class BMembers extends WP_List_Table {
 
     function process_form_request() {
         if (isset($_REQUEST['member_id']))
-            return $this->edit($_REQUEST['member_id']);
+            return $this->edit(absint($_REQUEST['member_id']));
         return $this->add();
     }
 
@@ -153,7 +154,7 @@ class BMembers extends WP_List_Table {
             if (!empty($members)) {
                 $members = array_map('absint', $members);
                 foreach ($members as $swpm_id) {
-                    $user_name = BUtils::get_user_by_id($swpm_id);
+                    $user_name = BUtils::get_user_by_id(absint($swpm_id));
                     $this->delete_wp_user($user_name);
                 }
                 $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id IN (" . implode(',', $members) . ")";

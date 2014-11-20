@@ -11,15 +11,15 @@ class BUtils {
         }
         
         switch (strtolower($subscript_unit)) {
-            case 'Days':
+            case 'days':
                 break;
-            case 'Weeks':
+            case 'weeks':
                 $subcript_period = $subcript_period * 7;
                 break;
-            case 'Months':
+            case 'months':
                 $subcript_period = $subcript_period * 30;
                 break;
-            case 'Years':
+            case 'years':
                 $subcript_period = $subcript_period * 365;
                 break;
         }
@@ -35,8 +35,11 @@ class BUtils {
         if ($days == 'noexpire'){
             return PHP_INT_MAX; // which is equivalent to 
         }
-        
         return strtotime($user->subscription_starts . ' ' . $days . ' days');
+    }
+    public static function is_subscription_expired($user){
+        $expiration_timestamp = BUtils::get_expiration_timestamp($user);        
+        return $expiration_timestamp < time();
     }
     public static function gender_dropdown($selected = 'not specified') {
         return '<option ' . ((strtolower($selected) == 'male') ? 'selected="selected"' : "") . ' value="male">Male</option>' .
@@ -65,7 +68,11 @@ class BUtils {
         }
         return $options;
     }
-
+    public static function get_all_membership_level_ids(){
+        global $wpdb;
+        $query = "SELECT id FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id != 1";
+        return $wpdb->get_col($query);        
+    }
     public static function get_user_by_id($swpm_id) {
         global $wpdb;
         $query = $wpdb->prepare("SELECT user_name FROM {$wpdb->prefix}swpm_members_tbl WHERE member_id = %d", $swpm_id);
