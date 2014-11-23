@@ -52,11 +52,11 @@ You can create a free forum user account and ask your questions.
 * There is an option to enable debug logging so you can troubleshoot membership payment related issues easily (if any).
 * Ability to customize the content protection message that gets shown to non-members.
 * Membership management side is handled by the plugin.
+* Ability to manually approve your members.
 * Ability to import WordPress users as members.
 * Can be translated to any language.
 * Hide the admin toolbar from the frontend of your site.
 * The login and registration widgets will be responsive if you are using a responsive theme.
-* Ability to manually approve your members.
 
 = Language Translations =
 
