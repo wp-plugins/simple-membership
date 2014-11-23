@@ -46,11 +46,19 @@ class BUtils {
                 '<option ' . ((strtolower($selected) == 'female') ? 'selected="selected"' : "") . ' value="female">Female</option>' .
                 '<option ' . ((strtolower($selected) == 'not specified') ? 'selected="selected"' : "") . ' value="not specified">Not Specified</option>';
     }
+    public static function get_account_state_options(){
+        return array('active' =>BUtils::_('Active'),
+                     'inactive' =>BUtils::_('Inactive'),
+                     'pending' =>BUtils::_('Pending'),
+                     'expired' =>BUtils::_('Expired'),);
+    }
     public static function account_state_dropdown($selected = 'active'){
-        return '<option ' . ((strtolower($selected) == 'active') ? 'selected="selected"' : "") . '  value="active"> ' . BUtils::_('Active') . '</option>'
-                . '<option ' . ((strtolower($selected) == 'inactive') ? 'selected="selected"' : "") . '  value="inactive"> ' . BUtils::_('Inactive') . '</option>'
-                . '<option ' . ((strtolower($selected) == 'pending') ? 'selected="selected"' : "") . '  value="pending"> ' . BUtils::_('Pending') . '</option>'
-                . '<option ' . ((strtolower($selected) == 'expired') ? 'selected="selected"' : "") . '  value="expired"> ' . BUtils::_('Expired') . '</option>';
+        $options = self::get_account_state_options();
+        $html = '';
+        foreach($options as $key => $value){
+            $html .= '<option ' . ((strtolower($selected) == $key) ? 'selected="selected"' : "") . '  value="'.$key.'"> ' . $value . '</option>';
+        }
+        return $html;
     }
     public static function subscription_unit_dropdown($selected = 'days') {
         return '<option ' . ((strtolower($selected) == 'days') ? 'selected="selected"' : "") . ' value="days">Days</option>' .

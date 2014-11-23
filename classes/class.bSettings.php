@@ -47,6 +47,13 @@ class BSettings {
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'hide-adminbar',
                       'message'=>BUtils::_('WordPress shows an admin toolbar to the logged in users of the site. Check this box if you want to hide that admin toolbar in the fronend of your site.')));
+        
+        add_settings_field('default-account-status',  BUtils::_('Default Account Status'),
+                array(&$this, 'selectbox_callback'), 'simple_wp_membership_settings', 'general-settings',
+                array('item' => 'default-account-status',
+                      'options'=>  BUtils::get_account_state_options(),
+                      'default'=>'active',
+                      'message'=>BUtils::_('Select the default account status for newly registered users. If you want to manually approve the members then you can set the status to "Pending".')));
 
         add_settings_section('pages-settings', BUtils::_('Pages Settings'),
                 array(&$this, 'pages_settings_callback'), 'simple_wp_membership_settings');
@@ -146,7 +153,20 @@ class BSettings {
         self::$_this = empty(self::$_this) ? new BSettings() : self::$_this;
         return self::$_this;
     }
-
+    public function selectbox_callback($args){
+        $item = $args['item'];
+        $options = $args['options'];
+        $default = $args['default'];
+        $msg = isset($args['message'])?$args['message']: '';
+        $selected = esc_attr($this->get_value($item), $default);
+        echo "<select name='swpm-settings[" . $item . "]' >";
+        foreach($options as $key => $value){
+            $is_selected = ($key == $selected)? 'selected="selected"': '';
+            echo '<option ' . $is_selected . ' value="'. esc_attr($key) . '">' . esc_attr($value) . '</option>';
+        }
+        echo '</select>';
+        echo '<br/><i>'.$msg.'</i>';        
+    }
     public function checkbox_callback($args) {
         $item = $args['item'];
         $msg = isset($args['message'])?$args['message']: '';
@@ -266,6 +286,7 @@ class BSettings {
         $output['profile-page-url'] = esc_url($input['profile-page-url']);
         $output['reset-page-url'] = esc_url($input['reset-page-url']);
         $output['join-us-page-url'] = esc_url($input['join-us-page-url']);
+        $output['default-account-status'] = esc_attr($input['default-account-status']);
         return $output;
     }
 

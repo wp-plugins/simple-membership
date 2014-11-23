@@ -78,11 +78,11 @@ class BFrontRegistration extends BRegistration {
         
         $member_info = $form->get_sanitized();
         $free_level = BUtils::get_free_level();
-        
+        $account_status = BSettings::get_instance()->get_value('default-account-status', 'active');
         $member_info['last_accessed_from_ip'] = BTransfer::get_real_ip_addr();
         $member_info['member_since'] = date("Y-m-d");
         $member_info['subscription_starts'] = date("Y-m-d");
-        $member_info['account_state'] = 'active';
+        $member_info['account_state'] = $account_status;
         $plain_password = $member_info['plain_password'];
         unset($member_info['plain_password']);
         

@@ -71,6 +71,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     }// End of existing user account upgrade
     else
     {
+        $default_account_status = $settings->get_value('default-account-status', 'active');
         // create new member account
         $data = array();
         $data['user_name'] ='';
@@ -91,7 +92,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $data['address_zipcode'] = $ipn_data['address_zip'];
         $data['country'] = $ipn_data['address_country'];
         $data['member_since']  = $data['subscription_starts'] = $data['last_accessed'] = date ("Y-m-d");
-        $data['account_state'] = 'active';
+        $data['account_state'] = $default_account_status;
         $reg_code = uniqid();//rand(10, 1000);
         $md5_code = md5($reg_code);
         $data['reg_code'] = $md5_code;
