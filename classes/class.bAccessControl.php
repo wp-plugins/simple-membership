@@ -14,44 +14,52 @@ class BAccessControl {
 
     public function can_i_read_post($id){
         $this->lastError = '';
-        $protected = BProtection::get_instance();
-        if ($protected->is_protected($id)){
-            $auth = BAuth::get_instance();
-            if($auth->is_logged_in()){
-                $perms = BPermission::get_instance($auth->get('membership_level'));
-                if($perms->is_permitted($id)) {return true;}
-                $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
-                return false;
-            }
+        global $post;
+        $auth = BAuth::get_instance();
+        $protect_everything = BSettings::get_instance()->get_value('protect-everything');
+        if(!empty($protect_everything)){ 
             $error_msg = BUtils::_( 'You need to login to view this content. ' ) . BSettings::get_instance()->get_login_link();
             $this->lastError = apply_filters('swpm_not_logged_in_post_msg', $error_msg);
+            return false;                       
+        }
+        $protected = BProtection::get_instance();
+        if (!$protected->is_protected($id)){ return true;}        
+        if(!$auth->is_logged_in()){
+            $error_msg = BUtils::_( 'You need to login to view this content. ' ) . BSettings::get_instance()->get_login_link();
+            $this->lastError = apply_filters('swpm_not_logged_in_post_msg', $error_msg);
+            return false;            
+        }
+        $perms = BPermission::get_instance($auth->get('membership_level'));
+        $protect_older_posts = $perms->get('protect_older_posts');
+        if (!empty($protect_older_posts) && (strtotime($post->post_date) < strtotime($auth->get('subscription_starts')))){
+            $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
             return false;
         }
-        return true;
+        if($perms->is_permitted($id)) {return true;}
+        $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
+        return false;
     }
     public function can_i_read_comment($id){
         $this->lastError = '';
         $protected = BProtection::get_instance();
-        if ($protected->is_protected_comment($id)){
-            $auth = BAuth::get_instance();
-            if($auth->is_logged_in()){
-                $perms = BPermission::get_instance($auth->get('membership_level'));
-                if($perms->is_permitted_comment($id)) {return true; }
-                $this->lastError = apply_filters ('swpm_restricted_comment_msg', BUtils::_("You are not allowed to view this content") );
-                return false;
-            }
+        if (!$protected->is_protected_comment($id)){ return true;}
+        $auth = BAuth::get_instance();
+        if(!$auth->is_logged_in()){
             $this->lastError = apply_filters('swpm_not_logged_in_comment_msg', BUtils::_("You need to login to view this content. ")
                     . BSettings::get_instance()->get_login_link());
-            return false;
+            return false;            
         }
-        return true;
+        $perms = BPermission::get_instance($auth->get('membership_level'));
+        if($perms->is_permitted_comment($id)) {return true; }
+        $this->lastError = apply_filters ('swpm_restricted_comment_msg', BUtils::_("You are not allowed to view this content") );
+        return false;
     }
     public function why(){
         return $this->lastError;
     }
     public function filter_post($id,$content){
         if(in_array($id, $this->moretags)) {return $content; }
-        if($this->can_i_read_post($id)) {return $content; }
+        if($this->can_i_read_post($id)) {return $content; } 
         $moretag = BSettings::get_instance()->get_value('enable-moretag');
         if (empty($moretag)){
             return $this->lastError;

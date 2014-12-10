@@ -89,6 +89,7 @@ class BInstallation {
 			custom_post_list longtext,
 			disable_bookmark_list longtext,
 			options longtext,
+                        protect_older_posts  tinyint(1) NOT NULL DEFAULT '0',
 			campaign_name varchar(60) NOT NULL DEFAULT ''
           )" . $charset_collate . " AUTO_INCREMENT=1 ;";
         dbDelta($sql);

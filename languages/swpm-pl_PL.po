@@ -1,0 +1,708 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simple membership\n"
+"POT-Creation-Date: 2014-08-28 19:28+1000\n"
+"PO-Revision-Date: 2014-12-09 14:05+0100\n"
+"Last-Translator: Przemysław Maj <maytki@o2.pl>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/class.bAccessControl.php:23 classes/class.bAccessControl.php:40
+msgid "You are not allowed to view this content"
+msgstr "Nie masz uprawnień, aby zobaczyć treść posta."
+
+#: classes/class.bAccessControl.php:26 classes/class.bAccessControl.php:43
+msgid "You need to login to view this content. "
+msgstr "Musisz się zalogować aby zobaczyć treść posta."
+
+#: classes/class.bAdminRegistration.php:48
+#: classes/class.bFrontRegistration.php:64
+msgid "Registration Successful."
+msgstr "Instalacja zakończona powodzeniem"
+
+#: classes/class.bAdminRegistration.php:53
+#: classes/class.bAdminRegistration.php:73
+#: classes/class.bMembershipLevel.php:36 classes/class.bMembershipLevel.php:54
+msgid "Please correct the following:"
+msgstr "Popraw następujące:"
+
+#: classes/class.bAjax.php:16 classes/class.bAjax.php:28
+msgid "Aready taken"
+msgstr "Zajęte"
+
+#: classes/class.bAjax.php:29
+msgid "Available"
+msgstr "Dostępny"
+
+#: classes/class.bAuth.php:48 classes/class.bFrontRegistration.php:179
+msgid "User Not Found."
+msgstr "Nie znaleziono użytkownika"
+
+#: classes/class.bAuth.php:55
+msgid "Password Empty or Invalid."
+msgstr "Zle wpisane hasło"
+
+#: classes/class.bAuth.php:79
+msgid "Account is inactive."
+msgstr "Konto jest nieaktywne."
+
+#: classes/class.bAuth.php:89
+msgid "You are logged in as:"
+msgstr "Jesteś zalogowany jako:"
+
+#: classes/class.bAuth.php:128
+msgid "Logged Out Successfully."
+msgstr "Wylogowano poprawnie"
+
+#: classes/class.bAuth.php:170
+msgid "Session Expired."
+msgstr "Sesja wygasła"
+
+#: classes/class.bAuth.php:179
+msgid "Invalid User Name"
+msgstr "Zła nazwa użytkownika"
+
+#: classes/class.bAuth.php:187
+msgid "Bad Cookie Hash"
+msgstr "Złe ciasteczko :/"
+
+#: classes/class.bForm.php:26
+msgid ""
+"Wordpress account exists with given user name. But given email doesn't match."
+msgstr "Użytkownik o takiej nazwie istnieje, ale ma inny adres email"
+
+#: classes/class.bForm.php:31
+msgid ""
+"Wordpress account exists with given email. But given user name doesn't match."
+msgstr ""
+"Użytkownik o takim adresie email istnieje, ale ma inną nazwę użytkownika"
+
+#: classes/class.bForm.php:40
+msgid "User name is required"
+msgstr "Nazwa użytkownika wymagana"
+
+#: classes/class.bForm.php:49
+msgid "User name already exists."
+msgstr "Podaj inną nazwę użytkownika (ta jest zajęta)"
+
+#: classes/class.bForm.php:72
+msgid "Password is required"
+msgstr "Wymagane hasło"
+
+#: classes/class.bForm.php:79
+msgid "Password mismatch"
+msgstr "Podano różne hasła!"
+
+#: classes/class.bForm.php:95
+msgid "Email is required"
+msgstr "Wymagany email"
+
+#: classes/class.bForm.php:99
+msgid "Email is invalid"
+msgstr "Błędny email"
+
+#: classes/class.bForm.php:112
+msgid "Email is already used."
+msgstr "Taki adres email jest już użyty"
+
+#: classes/class.bForm.php:178
+msgid "Member since field is invalid"
+msgstr "Pole \"użytkownik\" jest nieprawidłowe"
+
+#: classes/class.bForm.php:189
+msgid "Subscription starts field is invalid"
+msgstr "Pole \"subskrybcja od\" jest nierawidłowe"
+
+#: classes/class.bForm.php:199
+msgid "Gender field is invalid"
+msgstr "Pole \"płeć\" jest nieprawidłowa"
+
+#: classes/class.bForm.php:210
+msgid "Account state field is invalid"
+msgstr "Pole \"Account State\" jest nieprawidłowe"
+
+#: classes/class.bFrontRegistration.php:64 classes/class.bSettings.php:326
+msgid "Please"
+msgstr "Proszę"
+
+#: classes/class.bFrontRegistration.php:64 classes/class.bSettings.php:326
+#: views/login.php:21
+msgid "Login"
+msgstr "Login"
+
+#: classes/class.bFrontRegistration.php:79
+#: classes/class.bFrontRegistration.php:158
+msgid "Please correct the following"
+msgstr "Proszę poprawić następujące"
+
+#: classes/class.bFrontRegistration.php:92
+msgid "Membership Level Couldn't be found."
+msgstr "Pozim członkowstwa nie znaleziony"
+
+#: classes/class.bFrontRegistration.php:168
+msgid "Email Address Not Valid."
+msgstr "Adres email jest nieważny"
+
+#: classes/class.bFrontRegistration.php:199
+msgid "New password has been sent to your email address."
+msgstr "Nowe hasło zostało wysłane na podany adres email"
+
+#: classes/class.bLevelForm.php:31
+msgid "Subscriptoin duration must be > 0."
+msgstr "Czas trwania subskrybcji musi być większy od 0"
+
+#: classes/class.bMembers.php:7
+msgid "Member"
+msgstr "Członek"
+
+#: classes/class.bMembers.php:8 classes/class.simple-wp-membership.php:467
+msgid "Members"
+msgstr "Członkowie"
+
+#: classes/class.bMembers.php:16 classes/class.bMembershipLevels.php:16
+msgid "ID"
+msgstr "ID"
+
+#: classes/class.bMembers.php:17 views/add.php:5 views/edit.php:4
+#: views/login.php:5
+msgid "User Name"
+msgstr "Nazwa użytkownika"
+
+#: classes/class.bMembers.php:18 views/add.php:21
+#: views/admin_member_form_common_part.php:2 views/edit.php:20
+msgid "First Name"
+msgstr "Imię"
+
+#: classes/class.bMembers.php:19 views/add.php:25
+#: views/admin_member_form_common_part.php:6 views/edit.php:24
+msgid "Last Name"
+msgstr "Nazwisko"
+
+#: classes/class.bMembers.php:20 views/add.php:9 views/edit.php:8
+msgid "Email"
+msgstr "email"
+
+#: classes/class.bMembers.php:21 classes/class.bMembershipLevels.php:8
+#: classes/class.bMembershipLevels.php:17 views/add.php:64
+#: views/admin_member_form_common_part.php:55 views/edit.php:52
+msgid "Membership Level"
+msgstr "Poziom dostępu"
+
+#: classes/class.bMembers.php:22 views/admin_member_form_common_part.php:78
+msgid "Subscription Starts"
+msgstr "Subskrybcja od"
+
+#: classes/class.bMembers.php:23
+msgid "Account State"
+msgstr "Account State"
+
+#: classes/class.bMembers.php:35 classes/class.bMembershipLevels.php:29
+msgid "Delete"
+msgstr "Skasuj"
+
+#: classes/class.bMembers.php:100
+msgid "No Member found."
+msgstr "Niue ma takiego użytkownika"
+
+#: classes/class.bMembershipLevel.php:31
+msgid "Membership Level Creation Successful."
+msgstr "Dodano nowy poziom członkowstwa"
+
+#: classes/class.bMembershipLevel.php:50
+msgid "Updated Successfully."
+msgstr "Aktualizacja pomyślna"
+
+#: classes/class.bMembershipLevels.php:9
+#: classes/class.simple-wp-membership.php:469
+msgid "Membership Levels"
+msgstr "Poziom członkowstwa"
+
+#: classes/class.bMembershipLevels.php:18
+msgid "Role"
+msgstr "Uprawnienia"
+
+#: classes/class.bMembershipLevels.php:19
+msgid "Subscription Valid For"
+msgstr "Subskrybcja ważna przez"
+
+#: classes/class.bSettings.php:28
+msgid "Plugin Documentation"
+msgstr "Plugin Documentation"
+
+#: classes/class.bSettings.php:30
+msgid "General Settings"
+msgstr "Główne ustawienia"
+
+#: classes/class.bSettings.php:32
+msgid "Enable Free Membership"
+msgstr "Pozwól na darmowe członkostwo"
+
+#: classes/class.bSettings.php:35
+msgid "Enable/disable registration for free membership level"
+msgstr "Włącz / wyłącz rejestrację dla darmowyego członkowstwa"
+
+#: classes/class.bSettings.php:36
+msgid "Free Membership Level ID"
+msgstr "Level ID darmowego członkowstwa"
+
+#: classes/class.bSettings.php:39
+msgid "Assign free membership level ID"
+msgstr "Przyciel Level ID do darmowego członkowstwa"
+
+#: classes/class.bSettings.php:40
+msgid "Hide Adminbar"
+msgstr "Showaj Adminibar"
+
+#: classes/class.bSettings.php:43
+msgid ""
+"WordPress shows an admin toolbar to the logged in users of the site. Check "
+"this box if you want to hide that admin toolbar in the fronend of your site."
+msgstr ""
+"WordPress pokazuje pasek narzędzi administratora dla zalogowanych "
+"użytkowników witryny . Zaznacz to pole, jeśli chcesz ukryć ten pasek na "
+"swojej stronie"
+
+#: classes/class.bSettings.php:45
+msgid "Pages Settings"
+msgstr "Ustawienia strony"
+
+#: classes/class.bSettings.php:47
+msgid "Login Page URL"
+msgstr "Strona logowania"
+
+#: classes/class.bSettings.php:51
+msgid "Registration Page URL"
+msgstr "Strona rejestracji"
+
+#: classes/class.bSettings.php:55
+msgid "Join Us Page URL"
+msgstr "Strona dołącz do nas"
+
+#: classes/class.bSettings.php:59
+msgid "Edit Profile Page URL"
+msgstr "Strona edycji profilu"
+
+#: classes/class.bSettings.php:63
+msgid "Password Reset Page URL"
+msgstr "Strona zmiany hasła"
+
+#: classes/class.bSettings.php:68
+msgid "Test & Debug Settings"
+msgstr "Ustawienia testów i debugowania"
+
+#: classes/class.bSettings.php:74
+msgid "Enable Sandbox Testing"
+msgstr "Włącz testy sandbox "
+
+#: classes/class.bSettings.php:77
+msgid "Enable this option if you want to do sandbox payment testing."
+msgstr "Włącz tę opcję, jeśli chcesz zrobić testy płatności  (sandbox)"
+
+#: classes/class.bSettings.php:90
+msgid "Email Misc. Settings"
+msgstr "Różne ustawienia email"
+
+#: classes/class.bSettings.php:92
+msgid "From Email Address"
+msgstr "z adresu email"
+
+#: classes/class.bSettings.php:97
+msgid "Email Settings (Prompt to Complete Registration )"
+msgstr "Ustawienia poczty e-mail (Podpowiedź do zakończenia rejestracji )"
+
+#: classes/class.bSettings.php:99 classes/class.bSettings.php:110
+#: classes/class.bSettings.php:129
+msgid "Email Subject"
+msgstr "Temat email"
+
+#: classes/class.bSettings.php:103 classes/class.bSettings.php:114
+#: classes/class.bSettings.php:133
+msgid "Email Body"
+msgstr "Treść email"
+
+#: classes/class.bSettings.php:108
+msgid "Email Settings (Registration Complete)"
+msgstr "Ustawienia email (rejestracja zakończona)"
+
+#: classes/class.bSettings.php:118
+msgid "Send Notification To Admin"
+msgstr "Wyślij powiadomienie do administratora"
+
+#: classes/class.bSettings.php:122
+msgid "Send Email to Member When Added via Admin Dashboard"
+msgstr "Wyślij email to dodanego użytkownika przez panel administratora"
+
+#: classes/class.bSettings.php:127
+msgid " Email Settings (Account Upgrade Notification)"
+msgstr ""
+
+#: classes/class.bSettings.php:326
+msgid "Not a Member?"
+msgstr "Nie masz konta?"
+
+#: classes/class.bSettings.php:326 views/login.php:30
+msgid "Join Us"
+msgstr "Dołącz do nas."
+
+#: classes/class.bUtils.php:32 views/admin_member_form_common_part.php:66
+msgid "Active"
+msgstr "Aktywuj"
+
+#: classes/class.bUtils.php:33 views/admin_member_form_common_part.php:67
+msgid "Inactive"
+msgstr "Nieaktywny"
+
+#: classes/class.bUtils.php:34 views/admin_member_form_common_part.php:68
+msgid "Pending"
+msgstr "Oczekuje"
+
+#: classes/class.bUtils.php:35 views/admin_member_form_common_part.php:69
+msgid "Expired"
+msgstr "Wygasło"
+
+#: classes/class.bUtils.php:225
+msgid "Never"
+msgstr "Nigdy"
+
+#: classes/class.miscUtils.php:51
+msgid "Registration"
+msgstr "Rejestracja"
+
+#: classes/class.miscUtils.php:74
+msgid "Member Login"
+msgstr "Strona logowania"
+
+#: classes/class.miscUtils.php:97
+msgid "Profile"
+msgstr "Twój profil"
+
+#: classes/class.miscUtils.php:120
+msgid "Password Reset"
+msgstr "Reset hasła"
+
+#: classes/class.simple-wp-membership.php:178
+msgid "You are not logged in."
+msgstr "Nie jesteś zalogowany"
+
+#: classes/class.simple-wp-membership.php:209
+msgid "Simple WP Membership Protection"
+msgstr "Simple WP Membership Protection"
+
+#: classes/class.simple-wp-membership.php:222
+msgid "Simple Membership Protection options"
+msgstr "Simple Membership Protection options"
+
+#: classes/class.simple-wp-membership.php:238
+msgid "Do you want to protect this content?"
+msgstr "Czy chcesz "
+
+#: classes/class.simple-wp-membership.php:243
+msgid "Select the membership level that can access this content:"
+msgstr "Wybierz poziom dostępu do tej zawartości"
+
+#: classes/class.simple-wp-membership.php:375
+msgid "Display SWPM Login."
+msgstr "Wyświetl SWPM Login"
+
+#: classes/class.simple-wp-membership.php:377
+msgid "SWPM Login"
+msgstr "SWPM Login"
+
+#: classes/class.simple-wp-membership.php:464
+msgid "WP Membership"
+msgstr "WP Membership"
+
+#: classes/class.simple-wp-membership.php:471
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: views/add.php:13 views/admin_member_form_common_part.php:45
+#: views/edit.php:12 views/login.php:11
+msgid "Password"
+msgstr "Hasło"
+
+#: views/add.php:17 views/edit.php:16
+msgid "Repeat Password"
+msgstr "Powtórz hasło"
+
+#: views/add.php:29 views/admin_member_form_common_part.php:10
+msgid "Gender"
+msgstr "Płeć"
+
+#: views/add.php:36 views/admin_member_form_common_part.php:17
+#: views/edit.php:28
+msgid "Phone"
+msgstr "Nr telefonu"
+
+#: views/add.php:40 views/admin_member_form_common_part.php:21
+#: views/edit.php:32
+msgid "Street"
+msgstr "Ulica"
+
+#: views/add.php:44 views/admin_member_form_common_part.php:25
+#: views/edit.php:36
+msgid "City"
+msgstr "Miasto"
+
+#: views/add.php:48 views/admin_member_form_common_part.php:29
+#: views/edit.php:40
+msgid "State"
+msgstr "Województwo"
+
+#: views/add.php:52 views/admin_member_form_common_part.php:33
+#: views/edit.php:44
+msgid "Zipcode"
+msgstr "Kod pocztowy"
+
+#: views/add.php:56 views/admin_member_form_common_part.php:37
+#: views/edit.php:48
+msgid "Country"
+msgstr "Kraj"
+
+#: views/add.php:60 views/admin_member_form_common_part.php:41
+msgid "Company"
+msgstr "Firma"
+
+#: views/add.php:71
+msgid "Register"
+msgstr "Rejestruj"
+
+#: views/admin_add.php:6
+msgid "Add Member"
+msgstr "Dodaj użytkownika"
+
+#: views/admin_add.php:7
+msgid "Create a brand new user and add it to this site."
+msgstr "Dodaj nowego użytkownika do tej strony"
+
+#: views/admin_add.php:11
+msgid "User name"
+msgstr "Nazwa użytkownika"
+
+#: views/admin_add.php:11 views/admin_add.php:15 views/admin_add_level.php:11
+#: views/admin_add_level.php:15 views/admin_add_level.php:19
+#: views/admin_edit.php:9 views/admin_edit.php:13
+#: views/admin_edit_level.php:10 views/admin_edit_level.php:14
+#: views/admin_edit_level.php:18
+msgid "(required)"
+msgstr "(wymagane)"
+
+#: views/admin_add.php:15 views/admin_edit.php:13
+msgid "E-mail"
+msgstr "E-mail"
+
+#: views/admin_add.php:19
+msgid "Add New Member "
+msgstr "Dodaj nowego członka"
+
+#: views/admin_add_level.php:6
+msgid "Create new membership level."
+msgstr "Stwórz nowy poziom dostępu"
+
+#: views/admin_add_level.php:11 views/admin_edit_level.php:10
+msgid "Membership Level Name"
+msgstr "Nazwa poziomu dostępu"
+
+#: views/admin_add_level.php:15 views/admin_edit_level.php:14
+msgid "Default WordPress Role"
+msgstr "Domyślna uprawnienia WordPress"
+
+#: views/admin_add_level.php:19 views/admin_edit_level.php:18
+msgid "Subscription Duration"
+msgstr "Czas trwania subskrybcji"
+
+#: views/admin_add_level.php:26 views/admin_edit_level.php:27
+msgid "No Expiry"
+msgstr "Nie wygasło"
+
+#: views/admin_add_level.php:55
+msgid "Add New Membership Level "
+msgstr "Dodaj nowy pozim dostępu"
+
+#: views/admin_edit.php:5
+msgid "Edit Member"
+msgstr "Edycja użytkownika"
+
+#: views/admin_edit.php:6
+msgid "Edit existing member details."
+msgstr "Edytuj istniejącego użytkownika"
+
+#: views/admin_edit.php:9
+msgid "Username"
+msgstr "Użytkownik"
+
+#: views/admin_edit.php:18
+msgid "Edit User "
+msgstr "Edycja użytkownika"
+
+#: views/admin_edit_level.php:5
+msgid "Edit membership level"
+msgstr "Edycja poziomu dostępu"
+
+#: views/admin_edit_level.php:6
+msgid "Edit membership level."
+msgstr "Edycja poziomu dostępu"
+
+#: views/admin_edit_level.php:54
+msgid "Edit Membership Level "
+msgstr "Edycja poziomu dostępu"
+
+#: views/admin_members.php:2
+msgid "Simple WP Membership::Members"
+msgstr "Simple WP Membership::Użytkownicy"
+
+#: views/admin_members.php:3 views/admin_members.php:19
+#: views/admin_membership_levels.php:21
+msgid "Add New"
+msgstr "Dodaj nowy"
+
+#: views/admin_members.php:9 views/admin_membership_levels.php:11
+msgid "search"
+msgstr "Szukaj"
+
+#: views/admin_membership_levels.php:3
+msgid "Simple WP Membership::Membership Levels"
+msgstr "Simple WP Membership::Poziom członkowstwa"
+
+#: views/admin_membership_level_menu.php:2
+msgid "Membership level"
+msgstr "Poziom dostępu"
+
+#: views/admin_membership_level_menu.php:3
+msgid "Manage Content Production"
+msgstr "Zarządzanie ustawieniami ochrony zawartości"
+
+#: views/admin_membership_manage.php:17
+msgid "Example Content Protection Settings"
+msgstr "Przykład ustawienia ochrony zawartości"
+
+#: views/admin_member_form_common_part.php:45
+msgid "(twice, required)"
+msgstr "(dwukrotnie, wymagane)"
+
+#: views/admin_member_form_common_part.php:50
+msgid "Strength indicator"
+msgstr "Wskaźnik siły"
+
+#: views/admin_member_form_common_part.php:51
+msgid ""
+"Hint: The password should be at least seven characters long. To make it "
+"stronger, use upper and lower case letters, numbers and symbols like ! \" ? "
+"$ % ^ &amp; )."
+msgstr ""
+"Podpowiedź: Hasło powinno mieć conajmniej 7 znaków. Aby było silniejsze "
+"można używać dużych i małych liter, znaków, symboli takich jak  ! \" ? $ % ^ "
+"&amp; )"
+
+#: views/admin_member_form_common_part.php:64 views/loggedin.php:7
+#: views/login_widget_logged.php:6
+msgid "Account Status"
+msgstr "Status konta"
+
+#: views/admin_member_form_common_part.php:74
+msgid "Member Since"
+msgstr "Użytkownik od"
+
+#: views/admin_payment_settings.php:2 views/admin_settings.php:2
+#: views/admin_tools_settings.php:2
+msgid "Simple WP Membership::Settings"
+msgstr "Simple WP Membership::Ustawienia"
+
+#: views/admin_payment_settings.php:33
+msgid "PayPal Integration Settings"
+msgstr "PayPal Ustawienia integracyjne"
+
+#: views/admin_payment_settings.php:36
+msgid "Generate the \"Advanced Variables\" Code for your PayPal button"
+msgstr "Genrowany  \"Advanced Variables\" kod dla twojego przycisku PayPal"
+
+#: views/admin_payment_settings.php:39
+msgid "Enter the Membership Level ID"
+msgstr "Wpisz ID poziomu "
+
+#: views/admin_payment_settings.php:41
+msgid "Generate Code"
+msgstr "Wygeneruj kod"
+
+#: views/admin_tools_settings.php:9
+msgid "Generate a Registration Completion link"
+msgstr "Generowanie linku zakończenia rejestracji"
+
+#: views/admin_tools_settings.php:12
+msgid ""
+"You can manually generate a registration completion link here and give it to "
+"your customer if they have missed the email that was automatically sent out "
+"to them after the payment."
+msgstr ""
+"Tutaj można ręcznie wygenerować link zakończenia rejestracji i wysłać go do "
+"klienta , jeśli nie został pominięty e-mail , który został automatycznie "
+"wysłany po dokonaniu płatności ."
+
+#: views/admin_tools_settings.php:17
+msgid "Generate Registration Completion Link"
+msgstr "Generowanie linku zakończenia rejestracji"
+
+#: views/admin_tools_settings.php:20
+msgid "OR"
+msgstr "lub"
+
+#: views/admin_tools_settings.php:21
+msgid "For All Pending Registrations"
+msgstr "Dla wszystkich oczekujących rejestracji"
+
+#: views/admin_tools_settings.php:24
+msgid "Registration Completion Links Will Appear Below:"
+msgstr "Link zakończenia rejestracji pojawi się poniżej :"
+
+#: views/admin_tools_settings.php:31
+msgid "Send Registration Reminder Email too"
+msgstr "Wyślij przypomnienie o rejestracji na email"
+
+#: views/admin_tools_settings.php:34
+msgid "Submit"
+msgstr "Wyślij"
+
+#: views/edit.php:58
+msgid "Update"
+msgstr "Aktualizacja"
+
+#: views/forgot_password.php:5
+msgid "Email Address"
+msgstr "adres email"
+
+#: views/forgot_password.php:12
+msgid "Reset Password"
+msgstr "Reset hasła"
+
+#: views/loggedin.php:3 views/login_widget_logged.php:3
+msgid "Logged in as"
+msgstr "Jesteś zalogowany jako"
+
+#: views/loggedin.php:11 views/login_widget_logged.php:9
+msgid "Membership"
+msgstr "Członkostwo"
+
+#: views/loggedin.php:15 views/login_widget_logged.php:12
+msgid "Account Expiry"
+msgstr "Konto straciło ważność"
+
+#: views/loggedin.php:19 views/login_widget_logged.php:16
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: views/login.php:17
+msgid "Remember Me"
+msgstr "Pamiętaj mnie"
+
+#: views/login.php:26
+msgid "Forgot Password"
+msgstr "Zapomniałeś hasła"

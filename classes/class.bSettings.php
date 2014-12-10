@@ -54,7 +54,11 @@ class BSettings {
                       'options'=>  BUtils::get_account_state_options(),
                       'default'=>'active',
                       'message'=>BUtils::_('Select the default account status for newly registered users. If you want to manually approve the members then you can set the status to "Pending".')));
-
+        /*add_settings_field('protect-everything',  BUtils::_('Protect Everything'),
+                array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings', 
+                array('item' => 'protect-everything',
+                      'message'=>BUtils::_('Check this box if you want to protect all posts/pages by default.')));*/
+        
         add_settings_section('pages-settings', BUtils::_('Pages Settings'),
                 array(&$this, 'pages_settings_callback'), 'simple_wp_membership_settings');
         add_settings_field('login-page-url', BUtils::_('Login Page URL'),
@@ -256,6 +260,13 @@ class BSettings {
         else{
             $output['hide-adminbar'] = "";
         }
+        if (isset($input['protect-everything'])){
+            $output['protect-everything'] = esc_url($input['protect-everything']);
+        }
+        else{
+            $output['protect-everything'] = "";
+        }        
+        
         if (isset($input['enable-free-membership'])){
             $output['enable-free-membership'] = esc_url($input['enable-free-membership']);
         }

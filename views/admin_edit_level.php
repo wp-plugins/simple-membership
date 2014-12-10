@@ -48,7 +48,17 @@
 
         </td>
     </tr>
-     <?= apply_filters('swpm_admin_edit_membership_level_ui', '', $id);?>
+    <?php if(function_exists('swpm_protect_older_posts_addon')){ ?>
+    <tr class="form-field">
+        <th scope="row"><label for="role"><?= BUtils::_('Protect Older Posts (optional)'); ?></span></label></th>
+        <td>
+            <input type="checkbox" <?= empty($protect_older_posts)? "": "checked='checked'"?>  value="1"  name="protect_older_posts" id="protect_older_posts" />
+            <p class="description">Only allow access to protected posts published after the members's join date.</p>
+        </td>
+    </tr>
+    <?php } ?>
+    
+    <?= apply_filters('swpm_admin_edit_membership_level_ui', '', $id);?>
 </tbody>
 </table>
 <?php submit_button(BUtils::_('Edit Membership Level '), 'primary', 'editswpmlevel', true, array( 'id' => 'editswpmlevelsub' ) ); ?>

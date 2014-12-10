@@ -20,7 +20,8 @@ class BAdminRegistration extends BRegistration {
         $form = new BForm($member);
         if ($form->is_valid()) {
             $member_info = $form->get_sanitized();
-            $member_info['account_state'] = 'active';
+            $account_status = BSettings::get_instance()->get_value('default-account-status', 'active');
+            $member_info['account_state'] = $account_status;
             $plain_password = $member_info['plain_password'];
             unset($member_info['plain_password']);
             $wpdb->insert($wpdb->prefix . "swpm_members_tbl", $member_info);
@@ -31,7 +32,7 @@ class BAdminRegistration extends BRegistration {
             $wp_user_info['display_name'] = $member_info['user_name'];
             $wp_user_info['user_email'] = $member_info['email'];
             $wp_user_info['nickname'] = $member_info['user_name'];
-            $wp_user_info['first_name'] = $member_info['first_name'];
+            $wp_user_info['first_name'] = $member_info['first_name']; 
             $wp_user_info['last_name'] = $member_info['last_name'];
             $wp_user_info['user_login'] = $member_info['user_name'];
             $wp_user_info['password'] = $plain_password;
@@ -47,7 +48,7 @@ class BAdminRegistration extends BRegistration {
             }
             $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful. '));
             BTransfer::get_instance()->set('status', $message);
-            wp_redirect('admin.php?page=simple_wp_membership');
+            wp_redirect('admin.php?page=simple_wp_membership'); 
             return;
         }
         $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());

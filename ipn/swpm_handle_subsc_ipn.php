@@ -34,8 +34,8 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     {
         //This is payment from an existing member/user. Update the existing member account
         swpm_debug_log_subsc("Modifying the existing membership profile... Member ID: ".$swpm_id,true);
-        // upgrade the member account
-        $account_state = 'active';        
+        // upgrade the member account        
+        $account_state = BSettings::get_instance()->get_value('default-account-status', 'active');        
         $subscription_starts = (date ("Y-m-d"));
         $subscr_id = $unique_ref;
        
@@ -173,6 +173,7 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
     $membership_level_table = $wpdb->prefix . "swpm_membership_tbl";
     $email = $ipn_data['payer_email'];
     $subscr_id = $ipn_data['subscr_id'];
+    $account_state = BSettings::get_instance()->get_value('default-account-status', 'active');
     swpm_debug_log_subsc("Updating subscription start date if applicable for this subscription payment. Subscriber ID: ".$subscr_id." Email: ".$email,true);
 
     //We can also query using the email address
@@ -184,7 +185,6 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
 
         $level_query = $wpdb->get_row($wpdb->prepare("SELECT * FROM $membership_level_table where id=%d", $current_primary_level), OBJECT);
         if(!empty($level_query->subscription_period) && !empty($level_query->subscription_unit)){//Duration value is used
-            $account_state = "active";
             $subscription_starts = (date ("Y-m-d"));
 
             $updatedb = $wpdb->prepare("UPDATE $members_table_name SET account_state=%s,subscription_starts=%s WHERE member_id=%d", $account_state, $subscription_starts, $swpm_id);
@@ -198,7 +198,7 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
     }
 }
 
-function swpm_debug_log_subsc($message,$success,$end=false)
+function swpm_debug_log_subsc($message,$success,$end=false) 
 {
     $settings = BSettings::get_instance();
     $debug_enabled = $settings->get_value('enable-debug');

@@ -49,6 +49,13 @@
             </div>
             </td>
         </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="role"><?= BUtils::_('Access to older posts.'); ?></span></label></th>
+        <td>
+            <input type="checkbox" name="protect_older_posts" value="1" id="protect_older_posts" />
+            <p class="description">Only allow access to posts published after the user's join date.</p>
+        </td>
+    </tr>                                        
         <?= apply_filters('swpm_admin_add_membership_level_ui', '');?>
 </tbody>
 </table>

@@ -76,7 +76,7 @@ class BFrontRegistration extends BRegistration {
         }
         
         
-        $member_info = $form->get_sanitized();
+        $member_info = $form->get_sanitized(); 
         $free_level = BUtils::get_free_level();
         $account_status = BSettings::get_instance()->get_value('default-account-status', 'active');
         $member_info['last_accessed_from_ip'] = BTransfer::get_real_ip_addr();
