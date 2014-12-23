@@ -7,7 +7,7 @@
                 search:</label>
             <input id="search_id-search-input" type="text" name="s" value="" />
             <input id="search-submit" class="button" type="submit" name="" value="<?= BUtils::_('search')?>" />
-            <input type="hidden" name="page" value="my_list_test" />
+            <input type="hidden" name="page" value="simple_wp_membership" />
         </p>
     </form>
     <?php $this->prepare_items(); ?>

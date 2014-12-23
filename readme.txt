@@ -1,10 +1,10 @@
 === Simple Membership ===
-Contributors: smp7, wp.insider
+Contributors: smp7, wp.insider, amijanina
 Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,9 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.9.2 =
+- Fixed the edit link in the member search interface.
 
 = 1.9.1 =
 - Added Turkish language translation to the plugin. The translation was submitted by Murat SEYISOGLU.
