@@ -70,7 +70,7 @@ class SimpleWpMembership {
     public function filter_attachment($content){
         $acl = BAccessControl::get_instance();
         global $post;
-        return $acl->filter_post($post->ID, $content);
+        return has_post_thumbnail($post->ID)? $content:$acl->filter_post($post->ID, $content);
     }
     public function admin_init_hook(){
         BSettings::get_instance()->init_config_hooks();
