@@ -94,7 +94,7 @@ https://simple-membership-plugin.com/
 == Changelog ==
 
 = 1.9.3 =
-- Fixed an issue with the featured image not showing properly for protected blog posts.
+- Fixed an issue with the featured image not showing properly for some protected blog posts.
 
 = 1.9.2 =
 - Fixed the edit link in the member search interface.
