@@ -161,6 +161,14 @@ class BInstallation {
                 "\n\nUser name: {user_name}" .
                 "\n\nPassword: {password}" .
                 "\n\nThank You";
+
+        $status_change_email_subject = "Account Updated!";
+        $status_change_email_body = "Dear {first_name} {last_name}\n\n" .
+                "Your account status has been updated!\n\n" .
+                "Please login to the member area at the following URL:\n\n" .
+                "{login_link}\n\n" .
+                "Thank You";
+        
         if (empty($installed_version)) {
             //Do fresh install tasks
 
@@ -175,6 +183,8 @@ class BInstallation {
                     ->set_value('upgrade-complete-mail-body', stripslashes($upgrade_email_body))
                     ->set_value('reset-mail-subject', stripslashes($reset_email_subject))
                     ->set_value('reset-mail-body', stripslashes($reset_email_body))
+                    ->set_value('account-change-email-subject', stripslashes($status_change_email_subject))
+                    ->set_value('account-change-email-body', stripslashes($status_change_email_body))                    
                     ->set_value('email-from', trim(get_option('admin_email')));
         }
         if (version_compare($installed_version, SIMPLE_WP_MEMBERSHIP_VER) == -1) {

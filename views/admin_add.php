@@ -24,6 +24,13 @@
             <div id="pass-strength-result"><?= BUtils::_('Strength indicator'); ?></div>
             <p class="description indicator-hint"><?= BUtils::_('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
             </td>
+	</tr> 
+	<tr>
+            <th scope="row"><label for="account_state"><?= BUtils::_('Account Status'); ?></label></th>
+            <td><select class="regular-text" name="account_state" id="account_state">
+                    <?= BUtils::account_state_dropdown('active');?>
+                    </select>
+            </td>
 	</tr>        
 <?php include('admin_member_form_common_part.php');?>
 <?php submit_button( BUtils::_('Add New Member '), 'primary', 'createswpmuser', true, array( 'id' => 'createswpmusersub' ) ); ?>

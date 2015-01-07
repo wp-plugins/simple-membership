@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,10 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.9.4 =
+- Added a new feature to send an email notification to a member when you edit a user's record. This will be helpful to notify members when you activate their account.
+- Fixed an issue with "pending" member account getting set to active when the record is edited from admin side.
 
 = 1.9.3 =
 - Fixed an issue with the featured image not showing properly for some protected blog posts.

@@ -1,4 +1,17 @@
 	<tr>
+		<th scope="row"><label for="membership_level"><?= BUtils::_('Membership Level'); ?></label></th>
+		<td><select class="regular-text" name="membership_level" id="membership_level">
+            <?php foreach ($levels as $level):?>
+            <option <?php echo ($level['id'] == $membership_level)? "selected='selected'": "";?> value="<?php echo $level['id'];?>"> <?php echo $level['alias']?></option>
+            <?php endforeach;?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="subscription_starts"><?= BUtils::_('Subscription Starts') ?> </label></th>
+		<td><input class="regular-text" name="subscription_starts" type="text" id="subscription_starts" value="<?php echo esc_attr($subscription_starts); ?>" /></td>
+	</tr>  
+        <tr>
 		<th scope="row"><label for="first_name"><?= BUtils::_('First Name') ?> </label></th>
 		<td><input class="regular-text" name="first_name" type="text" id="first_name" value="<?php echo esc_attr($first_name); ?>" /></td>
 	</tr>
@@ -40,33 +53,10 @@
 	<tr>
 		<th scope="row"><label for="company_name"><?= BUtils::_('Company') ?></label></th>
 		<td><input name="company_name" type="text" id="company_name" class="code regular-text" value="<?php echo esc_attr($company_name); ?>" /></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="membership_level"><?= BUtils::_('Membership Level'); ?></label></th>
-		<td><select class="regular-text" name="membership_level" id="membership_level">
-            <?php foreach ($levels as $level):?>
-            <option <?php echo ($level['id'] == $membership_level)? "selected='selected'": "";?> value="<?php echo $level['id'];?>"> <?php echo $level['alias']?></option>
-            <?php endforeach;?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="account_state"><?= BUtils::_('Account Status'); ?></label></th>
-		<td><select class="regular-text" name="account_state" id="account_state">
-				<option value="active"><?= BUtils::_('Active') ?></option>
-				<option value="inactive"><?= BUtils::_('Inactive') ?></option>
-				<option value="pending"><?= BUtils::_('Pending') ?></option>
-				<option value="expired"><?= BUtils::_('Expired') ?></option>
-			</select>
-		</td>
-	</tr>
+	</tr>      
 	<tr>
 		<th scope="row"><label for="member_since"><?= BUtils::_('Member Since') ?> </label></th>
 		<td><input class="regular-text" name="member_since" type="text" id="member_since" value="<?php echo esc_attr($member_since); ?>" /></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="subscription_starts"><?= BUtils::_('Subscription Starts') ?> </label></th>
-		<td><input class="regular-text" name="subscription_starts" type="text" id="subscription_starts" value="<?php echo esc_attr($subscription_starts); ?>" /></td>
 	</tr>
 </tbody>
 </table>

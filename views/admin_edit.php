@@ -21,7 +21,20 @@
             <div id="pass-strength-result"><?= BUtils::_('Strength indicator'); ?></div>
             <p class="description indicator-hint"><?= BUtils::_('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
             </td>
+	</tr> 
+	<tr>
+            <th scope="row"><label for="account_state"><?= BUtils::_('Account Status'); ?></label></th>
+            <td><select class="regular-text" name="account_state" id="account_state">
+                        <?= BUtils::account_state_dropdown($account_state);?>
+                    </select>
+            </td>
 	</tr>        
+	<tr>
+            <th scope="row"><label for="account_state_change"><?= BUtils::_('Notify User'); ?></label></th>
+            <td><input type="checkbox" id="account_status_change" name="account_status_change" />
+                <p class="description indicator-hint">You can use this option to send a quick notification email to this member (the email will be sent when you hit the save button below).</p>
+            </td>
+	</tr>
     <?php include('admin_member_form_common_part.php');?>
     <?= apply_filters('swpm_admin_custom_fields', '',$membership_level);?>
     <?php submit_button( BUtils::_('Edit User '), 'primary', 'editswpmuser', true, array( 'id' => 'createswpmusersub' ) ); ?>
@@ -30,5 +43,21 @@
 <script>
 jQuery(document).ready(function($){
     $("#swpm-edit-user").validationEngine('attach');
+    $('#account_status_change').change(function(){
+        var target = $(this).closest('tr');
+        var $body = '<textarea rows="5" cols="60" id="notificationmailbody" name="notificationmailbody">' + SwpmSettings.statusChangeEmailHead + '</textarea>';
+        var $head = '<input type="text" size="60" id="notificationmailhead" name="notificationmailhead" value="' + SwpmSettings.statusChangeEmailBody + '" />';
+        var content = '<tr><th scope="row">Mail Subject</th><td>' + $head + '</td></tr>';
+        content += '<tr><th scope="row">Mail Body</th><td>' + $body + '</td></tr>';
+        if (this.checked) {
+            target.after(content);
+        }
+        else {
+            if (target.next('tr').find('#notificationmailhead').length > 0) {
+                target.next('tr').remove();
+                target.next('tr').remove();
+            }
+        }
+    });
 });
 </script>

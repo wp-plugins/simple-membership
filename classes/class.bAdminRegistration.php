@@ -46,7 +46,7 @@ class BAdminRegistration extends BRegistration {
             if (!empty($send_notification)){
                 $this->send_reg_email();
             }
-            $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful. '));
+            $message = array('succeeded' => true, 'message' => BUtils::_('Registration Successful.'));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership'); 
             return;
@@ -58,6 +58,7 @@ class BAdminRegistration extends BRegistration {
         global $wpdb;
         $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = %d", $id);
         $member = $wpdb->get_row($query, ARRAY_A);
+        $email_address = $member['email'];
         unset($member['member_id']);
         unset($member['email']);
         unset($member['user_name']);
@@ -67,10 +68,24 @@ class BAdminRegistration extends BRegistration {
             unset($member['plain_password']);
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member, array('member_id' => $id));
             $message = array('succeeded' => true, 'message' => 'Updated Successfully.');
-            do_action('swpm_admin_edit_custom_fields', $member+array('member_id'=>$id));
+            do_action('swpm_admin_edit_custom_fields', $member + array('member_id'=>$id));
             BTransfer::get_instance()->set('status', $message);
+            $send_notification = filter_input(INPUT_POST, 'account_status_change');
+            if (!empty($send_notification)){
+                $settings = BSettings::get_instance();
+                $from_address = $settings->get_value('email-from');
+                $headers = 'From: ' . $from_address . "\r\n";
+                $subject = filter_input(INPUT_POST,'notificationmailhead');
+                $body = filter_input(INPUT_POST, 'notificationmailbody');
+                $member['login_link'] = $settings->get_value('login-page-url');
+                $values = array_values($member);
+                $keys = array_map('swpm_enclose_var', array_keys($member));
+                $body = str_replace($keys, $values, $body);                
+                wp_mail($email_address, $subject, $body, $headers);
+                $settings->set_value('account-change-email-body', $body)->set_value('account-change-email-subject', $subject)->save();                
+            }
             wp_redirect('admin.php?page=simple_wp_membership');
-        }
+        }               
         $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);
     }
