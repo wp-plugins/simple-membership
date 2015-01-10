@@ -77,12 +77,12 @@ class BAdminRegistration extends BRegistration {
                 $headers = 'From: ' . $from_address . "\r\n";
                 $subject = filter_input(INPUT_POST,'notificationmailhead');
                 $body = filter_input(INPUT_POST, 'notificationmailbody');
+                $settings->set_value('account-change-email-body', $body)->set_value('account-change-email-subject', $subject)->save();                
                 $member['login_link'] = $settings->get_value('login-page-url');
                 $values = array_values($member);
                 $keys = array_map('swpm_enclose_var', array_keys($member));
                 $body = str_replace($keys, $values, $body);                
-                wp_mail($email_address, $subject, $body, $headers);
-                $settings->set_value('account-change-email-body', $body)->set_value('account-change-email-subject', $subject)->save();                
+                wp_mail($email_address, $subject, $body, $headers);                
             }
             wp_redirect('admin.php?page=simple_wp_membership');
         }               

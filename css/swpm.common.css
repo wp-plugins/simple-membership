@@ -13,17 +13,17 @@ margin-bottom: 10px;
 .swpm-login-widget-form input,.swpm-login-widget-form checkbox{
 width: auto;
 }
-.swpm-login-widget-form table{
-border: none;
+.swpm-username-input, .swpm-password-input{
+margin-bottom: 10px;
 }
-.swpm-login-widget-form tr{
-border: none;
-}
-.swpm-login-widget-form td{
-border: none;
+.swpm-login-submit{
+margin-bottom: 10px;    
 }
 .swpm-login-widget-action-msg{
 font-weight: bold;    
+}
+.swpm-logged-label{
+font-weight: bold;
 }
 
 /* Password reset form CSS */

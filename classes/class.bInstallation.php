@@ -163,11 +163,11 @@ class BInstallation {
                 "\n\nThank You";
 
         $status_change_email_subject = "Account Updated!";
-        $status_change_email_body = "Dear {first_name} {last_name}\n\n" .
-                "Your account status has been updated!\n\n" .
-                "Please login to the member area at the following URL:\n\n" .
-                "{login_link}\n\n" .
-                "Thank You";
+        $status_change_email_body = "Dear {first_name} {last_name}," .
+                "\n\n Your account status has been updated!" .
+                " Please login to the member area at the following URL:" .
+                "\n\n {login_link}" .
+                "\n\nThank You";
         
         if (empty($installed_version)) {
             //Do fresh install tasks

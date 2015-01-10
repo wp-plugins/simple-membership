@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple WordPress Membership
-Version: v1.9.4
+Version: v1.9.5
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -16,7 +16,7 @@ if (realpath (__FILE__) === realpath ($_SERVER["SCRIPT_FILENAME"])){
 include_once('classes/class.simple-wp-membership.php');
 include_once('classes/class.bCronJob.php');
 
-define('SIMPLE_WP_MEMBERSHIP_VER', '1.9.4');
+define('SIMPLE_WP_MEMBERSHIP_VER', '1.9.5');
 define('SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL', home_url());
 define('SIMPLE_WP_MEMBERSHIP_PATH', dirname(__FILE__) . '/');
 define('SIMPLE_WP_MEMBERSHIP_URL', plugins_url('',__FILE__));

@@ -45,8 +45,8 @@ jQuery(document).ready(function($){
     $("#swpm-edit-user").validationEngine('attach');
     $('#account_status_change').change(function(){
         var target = $(this).closest('tr');
-        var $body = '<textarea rows="5" cols="60" id="notificationmailbody" name="notificationmailbody">' + SwpmSettings.statusChangeEmailHead + '</textarea>';
-        var $head = '<input type="text" size="60" id="notificationmailhead" name="notificationmailhead" value="' + SwpmSettings.statusChangeEmailBody + '" />';
+        var $body = '<textarea rows="5" cols="60" id="notificationmailbody" name="notificationmailbody">' + SwpmSettings.statusChangeEmailBody + '</textarea>';
+        var $head = '<input type="text" size="60" id="notificationmailhead" name="notificationmailhead" value="' + SwpmSettings.statusChangeEmailHead + '" />';
         var content = '<tr><th scope="row">Mail Subject</th><td>' + $head + '</td></tr>';
         content += '<tr><th scope="row">Mail Body</th><td>' + $body + '</td></tr>';
         if (this.checked) {

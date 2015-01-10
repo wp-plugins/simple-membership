@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,7 @@ You can create a free forum user account and ask your questions.
 * Ability to import WordPress users as members.
 * Can be translated to any language.
 * Hide the admin toolbar from the frontend of your site.
+* Send quick notification email to your members.
 * The login and registration widgets will be responsive if you are using a responsive theme.
 
 = Language Translations =
@@ -92,6 +93,11 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.9.5 =
+- Added a check to show the content of a protected post/page if the admin is previewing the post or page.
+- Fixed an issue with the quick notification email feature not filtering the email shortcodes.
+- Improved the login form's HTML and CSS.
 
 = 1.9.4 =
 - Added a new feature to send an email notification to a member when you edit a user's record. This will be helpful to notify members when you activate their account.

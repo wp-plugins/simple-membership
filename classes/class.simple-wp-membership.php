@@ -321,6 +321,7 @@ class SimpleWpMembership {
     }
 
     public function filter_content($content) {
+        if (is_preview()) {return $content;}
         $acl = BAccessControl::get_instance();
         global $post;
         return $acl->filter_post($post->ID, $content);
@@ -379,11 +380,6 @@ class SimpleWpMembership {
                 BAuth::get_instance()->logout();
                 wp_redirect(site_url());
             }
-            $widget_options = array('classname' => 'swpm_widget',
-                'description' => __("Display SWPM Login."));
-            wp_register_sidebar_widget('swpm_login_widget',
-                    __('SWPM Login'), 'SimpleWpMembership::login_widget',
-                    $widget_options);
             $this->process_password_reset();
             $this->register_member();
             $this->edit_profile();
@@ -406,21 +402,6 @@ class SimpleWpMembership {
         if (!empty($swpm_reset)) {
             BFrontRegistration::get_instance()->reset_password($swpm_reset_email);
         }
-    }
-
-    public static function login_widget($args) {
-        extract($args);
-        $auth = BAuth::get_instance();
-        $widget_title = "User Login";
-        echo $before_widget;
-        echo $before_title . $widget_title . $after_title;
-        if ($auth->is_logged_in()){
-            include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/login_widget_logged.php');
-        }
-        else{
-            include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/login_widget.php');
-        }
-        echo $after_widget;
     }
 
     private function edit_profile() {
