@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ The following language translations are already available:
 * Macedonian
 * Polish
 * Turkish
+* Russian
+* Dutch (Netherlands)
+* Romanian
 
 You can translate the plugin using the language [translation documentation](https://simple-membership-plugin.com/translate-simple-membership-plugin/).
 
@@ -93,6 +96,13 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 1.9.6 =
+- Added a new feature to allow fixed expiry date for membership levels.
+- Added Russian language translation to the plugin. The translation was submitted by Vladimir Vaulin.
+- Added Dutch language translation to the plugin. The translation was submitted by Henk Rostohar.
+- Added Romanian language translation to the plugin. The translation was submitted by Iulian Cazangiu.
+- Some minor code refactoring.
 
 = 1.9.5 =
 - Added a check to show the content of a protected post/page if the admin is previewing the post or page.

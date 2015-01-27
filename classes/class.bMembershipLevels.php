@@ -16,7 +16,7 @@ class BMembershipLevels extends WP_List_Table{
             ,'id'=>BUtils::_('ID')
             ,'alias'=>BUtils::_('Membership Level')
             ,'role'=>BUtils::_('Role')
-            ,'valid_for'=>BUtils::_('Subscription Valid For')
+            ,'valid_for'=>BUtils::_('Access Valid For/Until')
             );
     }
     function get_sortable_columns(){
@@ -32,11 +32,13 @@ class BMembershipLevels extends WP_List_Table{
     }
     function column_default($item, $column_name){
         if($column_name == 'valid_for'){
-            if(empty($item['subscription_period'])) return 'No Expiry';
-            return $item['subscription_period'] ." " . $item['subscription_unit']; //bUtils::calculate_subscription_period($item['subscription_period'],
-                   //                                      $item['subscription_unit']);
+            if($item['subscription_duration_type'] == BMembershipLevel::NO_EXPIRY) {return 'No Expiry';}
+            if($item['subscription_duration_type'] == BMembershipLevel::FIXED_DATE) {return date(get_option('date_format'), strtotime($item['subscription_period']));}
+            if($item['subscription_duration_type'] == BMembershipLevel::DAYS) {return $item['subscription_period'] ." Day(s)";}
+            if($item['subscription_duration_type'] == BMembershipLevel::MONTHS) {return $item['subscription_period'] ." Month(s)";}
+            if($item['subscription_duration_type'] == BMembershipLevel::YEARS) {return $item['subscription_period'] ." Year(s)";}
         }
-        if($column_name == 'role') return ucfirst($item['role']);
+        if($column_name == 'role') {return ucfirst($item['role']);}
     	return stripslashes($item[$column_name]);
     }
     function column_id($item){
@@ -108,7 +110,6 @@ class BMembershipLevels extends WP_List_Table{
         $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE id = %d", absint($id));
         $membership = $wpdb->get_row($query, ARRAY_A);
         extract($membership, EXTR_SKIP);
-        $noexpire = bUtils::calculate_subscription_period_days($subscription_period,$subscription_unit) == 'noexpire';
         include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_edit_level.php');
         return false;
     }

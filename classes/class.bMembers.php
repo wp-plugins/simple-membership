@@ -19,7 +19,7 @@ class BMembers extends WP_List_Table {
             , 'last_name' => BUtils::_('Last Name')
             , 'email' => BUtils::_('Email')
             , 'alias' => BUtils::_('Membership Level')
-            , 'subscription_starts' => BUtils::_('Subscription Starts')
+            , 'subscription_starts' => BUtils::_('Access Starts')
             , 'account_state' => BUtils::_('Account State')
         );
     }

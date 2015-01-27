@@ -192,7 +192,7 @@ class BForm {
             $this->sanitized['subscription_starts'] =  sanitize_text_field($subscription_starts);
             return;
         }
-        $this->errors['subscription_starts'] = BUtils::_('Subscription starts field is invalid');
+        $this->errors['subscription_starts'] = BUtils::_('Access starts field is invalid');
     }
 
     protected function gender() {

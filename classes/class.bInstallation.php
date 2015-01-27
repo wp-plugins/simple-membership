@@ -78,8 +78,9 @@ class BInstallation {
 			alias varchar(127) NOT NULL,
 			role varchar(255) NOT NULL DEFAULT 'subscriber',
 			permissions tinyint(4) NOT NULL DEFAULT '0',
-			subscription_period int(11) NOT NULL DEFAULT '-1',
-			subscription_unit   VARCHAR(20)        NULL,
+			subscription_period varchar(11) NOT NULL DEFAULT '-1',
+                        subscription_duration_type tinyint NOT NULL default 0,
+			subscription_unit   VARCHAR(20)        NULL, 
 			loginredirect_page  text NULL,
 			category_list longtext,
 			page_list longtext,
@@ -114,6 +115,17 @@ class BInstallation {
 			)VALUES (1 , 'Content Protection', 'administrator', '15', '0',NULL,NULL, NULL , NULL , NULL , NULL,NULL,NULL,'');";
             $wpdb->query($sql);
         }
+        $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 1 WHERE subscription_unit='days' AND subscription_duration_type = 0";
+        $wpdb->query($sql);
+
+        $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 2 WHERE subscription_unit='weeks' AND subscription_duration_type = 0";
+        $wpdb->query($sql);        
+        
+        $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 3 WHERE subscription_unit='months' AND subscription_duration_type = 0";
+        $wpdb->query($sql);                
+        
+        $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 4 WHERE subscription_unit='years' AND subscription_duration_type = 0";
+        $wpdb->query($sql);
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_membership_meta_tbl (
                         id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                         level_id int(11) NOT NULL,

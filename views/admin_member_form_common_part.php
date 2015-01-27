@@ -8,7 +8,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row"><label for="subscription_starts"><?= BUtils::_('Subscription Starts') ?> </label></th>
+		<th scope="row"><label for="subscription_starts"><?= BUtils::_('Access Starts') ?> </label></th>
 		<td><input class="regular-text" name="subscription_starts" type="text" id="subscription_starts" value="<?php echo esc_attr($subscription_starts); ?>" /></td>
 	</tr>  
         <tr>

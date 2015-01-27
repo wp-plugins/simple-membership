@@ -15,7 +15,7 @@ class BTransfer {
         'membership_level' => '2');
     public static $default_level_fields = array(
         'alias' => '', 'role' => '',
-        'subscription_period' => '', 'subscription_unit' => 'days');
+        'subscription_period' => '', 'subscription_duration_type' => BMembershipLevel::NO_EXPIRY);
     public static $admin_messages = array();
     private static $_this;
     private $message;

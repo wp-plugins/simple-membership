@@ -33,30 +33,38 @@ class BLevelForm {
     }
 
     protected function subscription_period() {
-        $subscript_duration_type = filter_input(INPUT_POST, 'subscript_duration_type');
-        $subscription_period = filter_input(INPUT_POST, 'subscription_period');
-        if ($subscript_duration_type == 0) {
-            $this->sanitized['subscription_period'] = 0;
+        $subscript_duration_type = filter_input(INPUT_POST, 'subscription_duration_type');
+        
+        if ($subscript_duration_type == BMembershipLevel::NO_EXPIRY) {
+            $this->sanitized['subscription_period'] = "";
             return;
         }
-
-        if (empty($subscription_period)) {
-            $this->errors['subscription_period'] = BUtils::_("Subscription duration must be > 0.");
+        
+        $subscription_period = filter_input(INPUT_POST, 'subscription_period_'. $subscript_duration_type);
+        if (($subscript_duration_type == BMembershipLevel::FIXED_DATE)){
+            $dateinfo = date_parse($subscription_period);
+            if ($dateinfo['warning_count']|| $dateinfo['error_count']){
+                $this->errors['subscription_period'] = BUtils::_("Date format is not valid.");
+                return;
+            }
+            $this->sanitized['subscription_period'] = sanitize_text_field($subscription_period);
             return;
         }
-        $this->sanitized['subscription_period'] = absint($subscription_period);
+        if (!is_numeric($subscription_period)) {
+            $this->errors['subscription_period'] = BUtils::_("Access duration must be > 0.");
+            return;
+        }
+        $this->sanitized['subscription_period'] = sanitize_text_field($subscription_period);
     }
 
-    protected function subscription_unit() {
-        $subscript_duration_type = filter_input(INPUT_POST, 'subscript_duration_type');
-        $subscription_unit = filter_input(INPUT_POST, 'subscription_unit');        
-        if ($subscript_duration_type == 0) {
-            $this->sanitized['subscription_unit'] = null;
-            return;
-        }
-        $this->sanitized['subscription_unit'] = sanitize_text_field($subscription_unit);
+    protected function subscription_duration_type(){
+        $subscription_duration_type = filter_input(INPUT_POST, 'subscription_duration_type');
+        $this->sanitized['subscription_duration_type'] = $subscription_duration_type;
+        return;
     }
-
+    protected function subscription_unit(){
+        
+    }
     protected function loginredirect_page() {
         
     }

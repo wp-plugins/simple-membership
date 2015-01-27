@@ -6,7 +6,13 @@
  * @author nur
  */
 class BMembershipLevel {
-
+    const NO_EXPIRY  = 0;
+    const DAYS       = 1;
+    const WEEKS      = 2; 
+    const MONTHS     = 3;
+    const YEARS      = 4;
+    const FIXED_DATE = 5;
+    
     private static $_instance = null;
 
     private function __construct() {

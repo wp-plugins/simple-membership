@@ -183,16 +183,11 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
         $current_primary_level = $query_db->membership_level;
         swpm_debug_log_subsc("Found a record in the member table. The Member ID of the account to check is: ".$swpm_id." Membership Level: ".$current_primary_level,true);
 
-        $level_query = $wpdb->get_row($wpdb->prepare("SELECT * FROM $membership_level_table where id=%d", $current_primary_level), OBJECT);
-        if(!empty($level_query->subscription_period) && !empty($level_query->subscription_unit)){//Duration value is used
-            $subscription_starts = (date ("Y-m-d"));
+        $subscription_starts = (date ("Y-m-d"));
 
-            $updatedb = $wpdb->prepare("UPDATE $members_table_name SET account_state=%s,subscription_starts=%s WHERE member_id=%d", $account_state, $subscription_starts, $swpm_id);
-            $resultset = $wpdb->query($updatedb);
-            swpm_debug_log_subsc("Updated the member profile with current date as the subscription start date.",true);
-        }else{
-            swpm_debug_log_subsc("This membership level is not using a duration/interval value as the subscription duration.",true);
-        }
+        $updatedb = $wpdb->prepare("UPDATE $members_table_name SET account_state=%s,subscription_starts=%s WHERE member_id=%d", $account_state, $subscription_starts, $swpm_id);
+        $resultset = $wpdb->query($updatedb);
+        swpm_debug_log_subsc("Updated the member profile with current date as the subscription start date.",true);                
     }else{
         swpm_debug_log_subsc("Did not find a record in the members table for subscriber ID: ".$subscr_id,true);
     }

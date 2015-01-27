@@ -237,7 +237,7 @@ class BAuth {
             return BUtils::get_expire_date(
                     $this->get('subscription_starts'),
                     $this->get('subscription_period'),
-                    $this->get('subscription_unit'));
+                    $this->get('subscription_duration_type'));
         }
         return "";
     }

@@ -74,9 +74,9 @@ abstract class BProtectionBase {
 
     public function is_bookmark_disabled($id) {
         $posts = isset($this->disable_bookmark['posts']) ?
-                $this->disable_bookmark['posts'] : array();
+                (array)$this->disable_bookmark['posts'] : array();
         $pages = isset($this->disable_bookmark['pages']) ?
-                $this->disable_bookmark['pages'] : array();
+                (array)$this->disable_bookmark['pages'] : array();
         return in_array($id, $pages) || in_array($id, $posts);
     }
 

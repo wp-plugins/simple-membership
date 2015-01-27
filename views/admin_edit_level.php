@@ -15,45 +15,32 @@
 		<td><select  class="regular-text" name="role"><?php wp_dropdown_roles( $role ); ?></select></td>
 	</tr>
     <tr>
-        <th scope="row"><label for="subscription_unit"><?= BUtils::_('Subscription Duration'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label>
+        <th scope="row"><label for="subscription_period"><?= BUtils::_('Access Duration'); ?> <span class="description"><?= BUtils::_('(required)'); ?></span></label>
         </th>
         <td>
-            <fieldset>
-            <div class="color-option">
-                <input name="subscript_duration_type" id="subscript_duration_noexpire"
-                <?php echo $noexpire?'checked="checked"': ""; ?>   type="radio" value="0" class="tog">
-	            <table class="color-palette">
-	            <tbody><tr>
-		            <td style="width: 60px;"><b><?= BUtils::_('No Expiry') ?></b></td>
-		            </tr>
-	            </tbody></table>
-            </div>
-	            <div class="color-option">
-                <input name="subscript_duration_type" id="subscript_duration_expire"
-                <?php echo !$noexpire?'checked="checked"': ""; ?> type="radio" value="1" class="tog">
-	            <table class="color-palette">
-	            <tbody><tr>
-		            <td style="background-color: #d1e5ee" title="fresh">
-                    <input type="text" class="validate[required]" size="3" id="subscription_period" name="subscription_period"
-                        value="<?php echo $noexpire?'':$subscription_period;?>"></td>
-		            <td style="background-color: #cfdfe9" title="fresh">
-                    <select id="subscription_unit" name="subscription_unit">
-                   <?= BUtils::subscription_unit_dropdown($subscription_unit)?>
-                    </select>
-                    </td>
-		            </tr>
-	            </tbody></table>
-            </div>
-	            </fieldset>
-
-        </td>
+                <p><input type="radio" <?= checked(BMembershipLevel::NO_EXPIRY,$subscription_duration_type,false)?> value="<?= BMembershipLevel::NO_EXPIRY?>" name="subscription_duration_type" /> <?= BUtils::_('No Expiry (Access for this level will not expire until cancelled)')?></p>                                
+                <p><input type="radio" <?= checked(BMembershipLevel::DAYS,$subscription_duration_type,false)?> value="<?= BMembershipLevel::DAYS ?>" name="subscription_duration_type" /> <?= BUtils::_('Expire After')?> 
+                    <input type="text" value="<?= checked(BMembershipLevel::DAYS,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::DAYS ?>"> <?= BUtils::_('Days (Access expires after given number of days)')?></p>
+                
+                <p><input type="radio" <?= checked(BMembershipLevel::WEEKS,$subscription_duration_type,false)?> value="<?= BMembershipLevel::WEEKS?>" name="subscription_duration_type" /> <?= BUtils::_('Expire After')?> 
+                    <input type="text" value="<?= checked(BMembershipLevel::WEEKS,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::WEEKS ?>"> <?= BUtils::_('Weeks (Access expires after given number of weeks)')?></p>
+                
+                <p><input type="radio" <?= checked(BMembershipLevel::MONTHS,$subscription_duration_type,false)?> value="<?= BMembershipLevel::MONTHS?>" name="subscription_duration_type" /> <?= BUtils::_('Expire After')?> 
+                    <input type="text" value="<?= checked(BMembershipLevel::MONTHS,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::MONTHS?>"> <?= BUtils::_('Months (Access expires after given number of months)')?></p>
+                
+                <p><input type="radio" <?= checked(BMembershipLevel::YEARS,$subscription_duration_type,false)?> value="<?= BMembershipLevel::YEARS?>" name="subscription_duration_type" /> <?= BUtils::_('Expire After')?> 
+                    <input type="text" value="<?= checked(BMembershipLevel::YEARS,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::YEARS?>"> <?= BUtils::_('Years (Access expires after given number of years)')?></p>                
+                
+                <p><input type="radio" <?= checked(BMembershipLevel::FIXED_DATE,$subscription_duration_type,false)?> value="<?= BMembershipLevel::FIXED_DATE?>" name="subscription_duration_type" /> <?= BUtils::_('Fixed Date Expiry')?> 
+                    <input type="text" class="swpm-date-picker" value="<?= checked(BMembershipLevel::FIXED_DATE,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::FIXED_DATE?>" id="subscription_period_<?= BMembershipLevel::FIXED_DATE?>"> <?= BUtils::_('(Access expires on a fixed date)')?></p>                                
+        </td>        
     </tr>
     <?php if(function_exists('swpm_protect_older_posts_addon')){ ?>
     <tr class="form-field">
         <th scope="row"><label for="role"><?= BUtils::_('Protect Older Posts (optional)'); ?></span></label></th>
         <td>
             <input type="checkbox" <?= empty($protect_older_posts)? "": "checked='checked'"?>  value="1"  name="protect_older_posts" id="protect_older_posts" />
-            <p class="description">Only allow access to protected posts published after the members's join date.</p>
+            <p class="description"><?= BUtils::_('Only allow access to protected posts published after the members\'s join date.')?></p>
         </td>
     </tr>
     <?php } ?>
@@ -66,16 +53,7 @@
 </div>
 <script>
 jQuery(document).ready(function($){
-    $('.tog:radio').on('update_deps click',function(){
-        if($(this).attr('checked')){
-            $("#swpm-edit-level").validationEngine('detach');
-            if($(this).val()==0)
-                $('#subscription_period').removeClass('validate[required]');
-            else if($(this).val()==1)
-                $('#subscription_period').addClass('validate[required]');
-            $("#swpm-edit-level").validationEngine('attach');
-        }
-    });
-    $('.tog:radio').trigger('update_deps');
+    $('.swpm-date-picker').dateinput({'format':'yyyy-mm-dd',selectors: true,yearRange:[-100,100]});
+    $("#swpm-edit-level").validationEngine('attach');
 });
 </script>

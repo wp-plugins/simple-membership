@@ -4,34 +4,47 @@ class BUtils {
     public static function is_ajax(){
         return defined('DOING_AJAX') && DOING_AJAX;
     }
-
-    public static function calculate_subscription_period_days($subcript_period, $subscript_unit) {
-        if (($subcript_period == 0) && !empty($subscript_unit)) {//will expire after a fixed date.
-            return date(get_option('date_format'), strtotime($subscript_unit));
+    public function subscription_type_dropdown($selected){
+        return '<option ' . (($selected == BMembershipLevel::NO_EXPIRY) ? 'selected="selected"' : "") . ' value="' . BMembershipLevel::NO_EXPIRY . '">No Expiry</option>' .
+                '<option ' . (($selected == BMembershipLevel::DAYS) ? 'selected="selected"' : "") . ' value="' . BMembershipLevel::DAYS . '">Day(s)</option>' .
+                '<option ' . (($selected == BMembershipLevel::WEEKS) ? 'selected="selected"' : "") . ' value="' . BMembershipLevel::WEEKS . '">Week(s)</option>' .
+                '<option ' . (($selected == BMembershipLevel::MONTHS) ? 'selected="selected"' : "") . ' value="' . BMembershipLevel::MONTHS . '">Month(s)</option>' .
+                '<option ' . (($selected == BMembershipLevel::YEARS) ? 'selected="selected"' : "") . ' value="'  . BMembershipLevel::YEARS . '">Year(s)</option>' .
+                '<option ' . (($selected == BMembershipLevel::FIXED_DATE) ? 'selected="selected"' : "") . ' value="' . BMembershipLevel::FIXED_DATE . '">Fixed Date</option>';        
+    }
+    // $subscript_period must be integer.
+    public static function calculate_subscription_period_days($subcript_period, $subscription_duration_type) {
+        if (!is_numeric($subcript_period)) {
+            throw  new Exception (" subcript_period parameter must be integer in BUtils::calculate_subscription_period_days method");            
+        }
+        if ($subscription_duration_type == BMembershipLevel::NO_EXPIRY){
+            return 'noexpire';
         }
         
-        switch (strtolower($subscript_unit)) {
-            case 'days':
+        switch (strtolower($subscription_duration_type)) {
+            case BMembershipLevel::DAYS:
                 break;
-            case 'weeks':
+            case BMembershipLevel::WEEKS:
                 $subcript_period = $subcript_period * 7;
                 break;
-            case 'months':
+            case BMembershipLevel::MONTHS:
                 $subcript_period = $subcript_period * 30;
                 break;
-            case 'years':
+            case BMembershipLevel::YEARS:
                 $subcript_period = $subcript_period * 365;
-                break;
+                break;            
         }
-        if ($subcript_period == 0)// its set to no expiry until cancelled
-            return 'noexpire';
         return $subcript_period ;
     }
+    
     public static function get_expiration_timestamp($user){
         $permission = BPermission::get_instance($user->membership_level);
+        if (BMembershipLevel::FIXED_DATE == $permission->get('subscription_duration_type')){
+            return strtotime($permission->get('subscription_period'));
+        }
         $days = self::calculate_subscription_period_days(
                 $permission->get('subscription_period'), 
-                $permission->get('subscription_unit'));
+                $permission->get('subscription_duration_type'));
         if ($days == 'noexpire'){
             return PHP_INT_MAX; // which is equivalent to 
         }
@@ -60,12 +73,7 @@ class BUtils {
         }
         return $html;
     }
-    public static function subscription_unit_dropdown($selected = 'days') {
-        return '<option ' . ((strtolower($selected) == 'days') ? 'selected="selected"' : "") . ' value="days">Days</option>' .
-                '<option ' . ((strtolower($selected) == 'weeks') ? 'selected="selected"' : "") . ' value="weeks">Weeks</option>' .
-                '<option ' . ((strtolower($selected) == 'months') ? 'selected="selected"' : "") . ' value="months">Months</option>' .
-                '<option ' . ((strtolower($selected) == 'years') ? 'selected="selected"' : "") . ' value="years">Years</option>';
-    }
+
     public static function membership_level_dropdown($selected = 0){
         $options = '';
         global $wpdb;
@@ -234,11 +242,11 @@ class BUtils {
     public static function is_admin(){
         return current_user_can('manage_options');
     }
-    public static function get_expire_date($start_date, $subscription_duration, $duration_unit){
-        if (($subscription_duration == 0) && !empty($duration_unit)) { //will expire after a fixed date.
-            return date(get_option( 'date_format' ), strtotime($duration_unit));
+    public static function get_expire_date($start_date, $subscription_duration, $subscription_duration_type){
+        if ($subscription_duration_type == BMembershipLevel::FIXED_DATE) { //will expire after a fixed date.
+            return date(get_option( 'date_format' ), strtotime($subscription_duration));
         }
-        $expires = self::calculate_subscription_period_days($subscription_duration, $duration_unit);
+        $expires = self::calculate_subscription_period_days($subscription_duration, $subscription_duration_type);
         if ($expires == 'noexpire') {// its set to no expiry until cancelled
             return BUtils::_('Never');
         }
