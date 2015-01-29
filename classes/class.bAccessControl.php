@@ -29,12 +29,13 @@ class BAccessControl {
             $this->lastError = apply_filters('swpm_not_logged_in_post_msg', $error_msg);
             return false;            
         }
-        $perms = BPermission::get_instance($auth->get('membership_level'));
-        $protect_older_posts = $perms->get('protect_older_posts');
-        if (!empty($protect_older_posts) && (strtotime($post->post_date) < strtotime($auth->get('subscription_starts')))){
+        
+        $protect_older_posts = apply_filters('swpm_should_protect_older_post', false, $id);
+        if ($protect_older_posts){
             $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
             return false;
         }
+        $perms = BPermission::get_instance($auth->get('membership_level'));
         if($perms->is_permitted($id)) {return true;}
         $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
         return false;

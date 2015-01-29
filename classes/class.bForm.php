@@ -125,7 +125,8 @@ class BForm {
     protected function phone() {
         $phone = filter_input(INPUT_POST, 'phone', FILTER_UNSAFE_RAW);
         if (empty($phone)) {return;}
-        
+        $saned = wp_kses($phone, array());
+        $this->sanitized['phone'] = $saned;        
         return;
         //Not doing phone number validation
         

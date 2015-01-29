@@ -35,16 +35,6 @@
                     <input type="text" class="swpm-date-picker" value="<?= checked(BMembershipLevel::FIXED_DATE,$subscription_duration_type,false)? $subscription_period: "";?>" name="subscription_period_<?= BMembershipLevel::FIXED_DATE?>" id="subscription_period_<?= BMembershipLevel::FIXED_DATE?>"> <?= BUtils::_('(Access expires on a fixed date)')?></p>                                
         </td>        
     </tr>
-    <?php if(function_exists('swpm_protect_older_posts_addon')){ ?>
-    <tr class="form-field">
-        <th scope="row"><label for="role"><?= BUtils::_('Protect Older Posts (optional)'); ?></span></label></th>
-        <td>
-            <input type="checkbox" <?= empty($protect_older_posts)? "": "checked='checked'"?>  value="1"  name="protect_older_posts" id="protect_older_posts" />
-            <p class="description"><?= BUtils::_('Only allow access to protected posts published after the members\'s join date.')?></p>
-        </td>
-    </tr>
-    <?php } ?>
-    
     <?= apply_filters('swpm_admin_edit_membership_level_ui', '', $id);?>
 </tbody>
 </table>

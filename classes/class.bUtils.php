@@ -14,13 +14,12 @@ class BUtils {
     }
     // $subscript_period must be integer.
     public static function calculate_subscription_period_days($subcript_period, $subscription_duration_type) {
-        if (!is_numeric($subcript_period)) {
-            throw  new Exception (" subcript_period parameter must be integer in BUtils::calculate_subscription_period_days method");            
-        }
         if ($subscription_duration_type == BMembershipLevel::NO_EXPIRY){
             return 'noexpire';
         }
-        
+        if (!is_numeric($subcript_period)) {
+            throw  new Exception (" subcript_period parameter must be integer in BUtils::calculate_subscription_period_days method");            
+        }        
         switch (strtolower($subscription_duration_type)) {
             case BMembershipLevel::DAYS:
                 break;

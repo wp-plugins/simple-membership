@@ -143,13 +143,7 @@ class BMembers extends WP_List_Table {
 
     function delete() {
         global $wpdb;
-        if (isset($_REQUEST['member_id'])) {
-            $id = absint($_REQUEST['member_id']);
-            $user_name = BUtils::get_user_by_id($id);
-            $this->delete_wp_user($user_name);
-            $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
-            $wpdb->query($query);
-        } else if (isset($_REQUEST['members'])) {
+        if (isset($_REQUEST['members'])) {
             $members = $_REQUEST['members'];
             if (!empty($members)) {
                 $members = array_map('absint', $members);
@@ -160,6 +154,13 @@ class BMembers extends WP_List_Table {
                 $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id IN (" . implode(',', $members) . ")";
                 $wpdb->query($query);
             }
+        }
+        else if (isset($_REQUEST['member_id'])) {
+            $id = absint($_REQUEST['member_id']);
+            $user_name = BUtils::get_user_by_id($id);
+            $this->delete_wp_user($user_name);
+            $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
+            $wpdb->query($query);
         }
     }
 

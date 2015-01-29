@@ -115,12 +115,7 @@ class BMembershipLevels extends WP_List_Table{
     }
     function delete(){
         global $wpdb;
-        if(isset($_REQUEST['id'])){
-            $id = absint($_REQUEST['id']);
-            $query = $wpdb->prepare("DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $id);
-            $wpdb->query($query);
-        }
-        else if (isset($_REQUEST['ids'])){
+        if (isset($_REQUEST['ids'])){
             $members = $_REQUEST['ids'];
             if(!empty($members)){
                 $members = array_map('absint', $members);
@@ -129,6 +124,11 @@ class BMembershipLevels extends WP_List_Table{
                 $wpdb->query($query);
             }
         }
+        else if(isset($_REQUEST['id'])){
+            $id = absint($_REQUEST['id']);
+            $query = $wpdb->prepare("DELETE FROM " .$wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $id);
+            $wpdb->query($query);
+        }        
     }
     function show(){
         $selected = 1;
