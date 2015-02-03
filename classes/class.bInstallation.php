@@ -17,8 +17,8 @@ class BInstallation {
             $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
             foreach ($blogids as $blog_id) {
                 switch_to_blog($blog_id);
-                SimpleWpMembership::installer();
-                SimpleWpMembership::initdb();
+                BInstallation::installer();
+                BInstallation::initdb();
             }
             switch_to_blog($old_blog);
             return;
