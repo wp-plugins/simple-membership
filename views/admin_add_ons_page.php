@@ -56,6 +56,14 @@ echo '<link type="text/css" rel="stylesheet" href="' . SIMPLE_WP_MEMBERSHIP_URL 
     );
     array_push($addons_data, $addon_6);
     
+    $addon_7 = array(
+        'name' => 'Protect Older Posts',
+        'thumbnail' => SIMPLE_WP_MEMBERSHIP_URL . '/images/addons/swpm-older-posts-protection.png',
+        'description' => 'The protect older posts addon allows you to control protection of posts that were published before a member\'s access start date.',
+        'page_url' => 'https://simple-membership-plugin.com/simple-membership-protect-older-posts-addon/',
+    );
+    array_push($addons_data, $addon_7);
+    
     foreach ($addons_data as $addon) {
         $output .= '<div class="swpm_addon_item_canvas">';
 

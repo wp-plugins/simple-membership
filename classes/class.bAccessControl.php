@@ -32,12 +32,13 @@ class BAccessControl {
         
         $protect_older_posts = apply_filters('swpm_should_protect_older_post', false, $id);
         if ($protect_older_posts){
-            $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
+            $this->lastError = apply_filters ('swpm_restricted_post_msg_older_post', 
+                    BUtils::_('This content can only be viewed by members who joined on or before ' . date(get_option( 'date_format' ), strtotime($post->post_date)))) ;
             return false;
         }
         $perms = BPermission::get_instance($auth->get('membership_level'));
         if($perms->is_permitted($id)) {return true;}
-        $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('You are not allowed to view this content')) ;
+        $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('This content is not permitted for your membership level.')) ;
         return false;
     }
     public function can_i_read_comment($id){
@@ -52,7 +53,7 @@ class BAccessControl {
         }
         $perms = BPermission::get_instance($auth->get('membership_level'));
         if($perms->is_permitted_comment($id)) {return true; }
-        $this->lastError = apply_filters ('swpm_restricted_comment_msg', BUtils::_("You are not allowed to view this content") );
+        $this->lastError = apply_filters ('swpm_restricted_comment_msg', BUtils::_("This content is not permitted for your membership level.") );
         return false;
     }
     public function why(){
@@ -70,7 +71,7 @@ class BAccessControl {
 
         if (count($post_segments) >= 2){
             if (BAuth::get_instance()->is_logged_in()){
-                $error_msg = '<div class="swpm-margin-top-10">' . BUtils::_("You do no have permission to view rest of the content") . '</div>';
+                $error_msg = '<div class="swpm-margin-top-10">' . BUtils::_(" The rest of the content is not permitted for your membership level.") . '</div>';
                 $this->lastError = apply_filters ('swpm_restricted_more_tag_msg', $error_msg);
             }
             else {
