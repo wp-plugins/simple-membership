@@ -1,7 +1,7 @@
 === Simple Membership ===
 Contributors: smp7, wp.insider, amijanina
 Donate link: https://simple-membership-plugin.com/
-Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict access, Restrict content, admin, access control, subscription, teaser, protection
+Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.1
 Stable tag: 2.0
@@ -58,6 +58,9 @@ You can create a free forum user account and ask your questions.
 * Hide the admin toolbar from the frontend of your site.
 * Send quick notification email to your members.
 * The login and registration widgets will be responsive if you are using a responsive theme.
+* Front end member registration.
+* Front-end member profiles.
+* Front end member login.
 
 = Language Translations =
 
