@@ -3,7 +3,7 @@ $output = '';
 echo '<link type="text/css" rel="stylesheet" href="' . SIMPLE_WP_MEMBERSHIP_URL . '/css/swpm.addons.listing.css" />' . "\n";
 ?>
 
-<h1><?= BUtils::_('Simple WP Membership::Add-ons') ?></h1>
+<h1><?php echo  BUtils::_('Simple WP Membership::Add-ons') ?></h1>
 <div class="wrap">
 
     <?php

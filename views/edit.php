@@ -1,61 +1,61 @@
 <form id="swpm-editprofile-form" name="swpm-editprofile-form" method="post" action="">
     <table>
         <tr>
-            <td><label for="user_name"><?= BUtils::_('User Name') ?></label></td>
-            <td><?= $user_name ?></td>
+            <td><label for="user_name"><?php echo  BUtils::_('User Name') ?></label></td>
+            <td><?php echo  $user_name ?></td>
         </tr>
         <tr>
-            <td><label for="email"><?= BUtils::_('Email')?></label></td>
-            <td><?= $email; ?></td>
+            <td><label for="email"><?php echo  BUtils::_('Email')?></label></td>
+            <td><?php echo  $email; ?></td>
         </tr>
         <tr>
-            <td><label for="password"><?= BUtils::_('Password')?></label></td>
+            <td><label for="password"><?php echo  BUtils::_('Password')?></label></td>
             <td><input type="text" id="password" value="" tabindex="1" size="50" name="password" /></td>
         </tr>
         <tr>
-            <td><label for="password_re"><?= BUtils::_('Repeat Password')?></label></td>
+            <td><label for="password_re"><?php echo  BUtils::_('Repeat Password')?></label></td>
             <td><input type="text" id="password_re" value="" tabindex="2" size="50" name="password_re" /></td>
         </tr>
         <tr>
-            <td><label for="first_name"><?= BUtils::_('First Name')?></label></td>
-            <td><input type="text" id="first_name" value="<?= $first_name; ?>" tabindex="3" size="50" name="first_name" /></td>
+            <td><label for="first_name"><?php echo  BUtils::_('First Name')?></label></td>
+            <td><input type="text" id="first_name" value="<?php echo  $first_name; ?>" tabindex="3" size="50" name="first_name" /></td>
         </tr>
         <tr>
-            <td><label for="last_name"><?= BUtils::_('Last Name')?></label></td>
-            <td><input type="text" id="last_name" value="<?= $last_name; ?>" tabindex="4" size="50" name="last_name" /></td>
+            <td><label for="last_name"><?php echo  BUtils::_('Last Name')?></label></td>
+            <td><input type="text" id="last_name" value="<?php echo  $last_name; ?>" tabindex="4" size="50" name="last_name" /></td>
         </tr>
         <tr>
-            <td><label for="phone"><?= BUtils::_('Phone')?></label></td>
-            <td><input type="text" id="phone" value="<?= $phone; ?>" tabindex="5" size="50" name="phone" /></td>
+            <td><label for="phone"><?php echo  BUtils::_('Phone')?></label></td>
+            <td><input type="text" id="phone" value="<?php echo  $phone; ?>" tabindex="5" size="50" name="phone" /></td>
         </tr>
         <tr>
-            <td><label for="address_street"><?= BUtils::_('Street')?></label></td>
-            <td><input type="text" id="address_street" value="<?= $address_street; ?>" tabindex="6" size="50" name="address_street" /></td>
+            <td><label for="address_street"><?php echo  BUtils::_('Street')?></label></td>
+            <td><input type="text" id="address_street" value="<?php echo  $address_street; ?>" tabindex="6" size="50" name="address_street" /></td>
         </tr>
         <tr>
-            <td><label for="address_city"><?= BUtils::_('City')?></label></td>
-            <td><input type="text" id="address_city" value="<?= $address_city; ?>" tabindex="7" size="50" name="address_city" /></td>
+            <td><label for="address_city"><?php echo  BUtils::_('City')?></label></td>
+            <td><input type="text" id="address_city" value="<?php echo  $address_city; ?>" tabindex="7" size="50" name="address_city" /></td>
         </tr>
         <tr>
-            <td><label for="address_state"><?= BUtils::_('State')?></label></td>
-            <td><input type="text" id="address_state" value="<?= $address_state; ?>" tabindex="8" size="50" name="address_state" /></td>
+            <td><label for="address_state"><?php echo  BUtils::_('State')?></label></td>
+            <td><input type="text" id="address_state" value="<?php echo  $address_state; ?>" tabindex="8" size="50" name="address_state" /></td>
         </tr>
         <tr>
-            <td><label for="address_zipcode"><?= BUtils::_('Zipcode')?></label></td>
-            <td><input type="text" id="address_zipcode" value="<?= $address_zipcode; ?>" tabindex="9" size="50" name="address_zipcode" /></td>
+            <td><label for="address_zipcode"><?php echo  BUtils::_('Zipcode')?></label></td>
+            <td><input type="text" id="address_zipcode" value="<?php echo  $address_zipcode; ?>" tabindex="9" size="50" name="address_zipcode" /></td>
         </tr>
         <tr>
-            <td><label for="country"><?= BUtils::_('Country') ?></label></td>
-            <td><input type="text" id="country" value="<?= $country; ?>" tabindex="10" size="50" name="country" /></td>
+            <td><label for="country"><?php echo  BUtils::_('Country') ?></label></td>
+            <td><input type="text" id="country" value="<?php echo  $country; ?>" tabindex="10" size="50" name="country" /></td>
         </tr>
         <tr>
-            <td><label for="membership_level"><?= BUtils::_('Membership Level')?></label></td>
+            <td><label for="membership_level"><?php echo  BUtils::_('Membership Level')?></label></td>
             <td>
-                <?= $membership_level_alias; ?>
+                <?php echo  $membership_level_alias; ?>
             </td>
         </tr>
     </table>
-    <p align="center"><input type="submit" value="<?= BUtils::_('Update')?>" tabindex="11" id="submit" name="swpm_editprofile_submit" /></p>
+    <p align="center"><input type="submit" value="<?php echo  BUtils::_('Update')?>" tabindex="11" id="submit" name="swpm_editprofile_submit" /></p>
     <input type="hidden" name="action" value="custom_posts" />
     <?php wp_nonce_field('name_of_my_action', 'name_of_nonce_field'); ?>
 </form>

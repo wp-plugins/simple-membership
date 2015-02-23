@@ -34,7 +34,7 @@ class BSettings {
         add_settings_field('enable-free-membership', BUtils::_('Enable Free Membership'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'enable-free-membership',
-                      'message'=> BUtils::_('Enable/disable registration for free membership level')));
+                      'message'=> BUtils::_('Enable/disable registration for free membership level. When you enable this option, make sure to specify a free membership level ID in the field below.')));
         add_settings_field('free-membership-id', BUtils::_('Free Membership Level ID'),
                 array(&$this, 'textfield_small_callback'), 'simple_wp_membership_settings', 'general-settings',
                 array('item' => 'free-membership-id',
@@ -351,7 +351,7 @@ class BSettings {
         ?>
         <h3 class="nav-tab-wrapper">
             <?php foreach ($this->tabs as $id=>$label):?>
-            <a class="nav-tab <?php echo ($current == $id) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=<?= $id?>"><?= $label?></a>
+            <a class="nav-tab <?php echo ($current == $id) ? 'nav-tab-active' : ''; ?>" href="admin.php?page=simple_wp_membership_settings&tab=<?php echo  $id?>"><?php echo  $label?></a>
             <?php endforeach;?>
         </h3>
         <?php
