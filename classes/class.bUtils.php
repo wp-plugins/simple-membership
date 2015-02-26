@@ -256,8 +256,7 @@ class BUtils {
     public static function swpm_username_exists($user_name) {
         global $wpdb;
         $member_table = $wpdb->prefix. 'swpm_members_tbl';
-        $query = $wpdb->prepare('SELECT member_id FROM ' . $member_table  . 'WHERE user_name=%s', $user_name);
-
+        $query = $wpdb->prepare('SELECT member_id FROM ' . $member_table . ' WHERE user_name=%s', sanitize_user($user_name));
         return $wpdb->get_var($query);
     }
     public static function get_free_level(){
