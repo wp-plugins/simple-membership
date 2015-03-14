@@ -58,11 +58,3 @@
 		<th scope="row"><label for="member_since"><?php echo  BUtils::_('Member Since') ?> </label></th>
 		<td><input class="regular-text" name="member_since" type="text" id="member_since" value="<?php echo esc_attr($member_since); ?>" /></td>
 	</tr>
-</tbody>
-</table>
-<script>
-jQuery(document).ready(function($){
-	$('#member_since').dateinput({'format':'yyyy-mm-dd',selectors: true,yearRange:[-100,100]});
-	$('#subscription_starts').dateinput({'format':'yyyy-mm-dd',selectors: true,yearRange:[-100,100]});
-});
-</script>

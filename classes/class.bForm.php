@@ -258,7 +258,8 @@ class BForm {
     }
 
     protected function subscr_id() {
-
+        $subscr_id = filter_input(INPUT_POST, 'subscr_id', FILTER_SANITIZE_STRING);
+        $this->sanitized['subscr_id'] = $subscr_id;
     }
 
     protected function flags() {

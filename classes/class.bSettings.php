@@ -26,7 +26,13 @@ class BSettings {
         }
     }
     private function tab_1() {
+                
         register_setting('swpm-settings-tab-1', 'swpm-settings', array(&$this, 'sanitize_tab_1'));
+        
+        //This settings section has no heading
+        add_settings_section('swpm-general-post-submission-check', '',
+                array(&$this, 'swpm_general_post_submit_check_callback'), 'simple_wp_membership_settings');
+        
         add_settings_section('swpm-documentation', BUtils::_('Plugin Documentation'),
                 array(&$this, 'swpm_documentation_callback'), 'simple_wp_membership_settings');
         add_settings_section('general-settings', BUtils::_('General Settings'),
@@ -84,10 +90,14 @@ class BSettings {
 
         add_settings_section('debug-settings', BUtils::_('Test & Debug Settings'),
                 array(&$this, 'testndebug_settings_callback'), 'simple_wp_membership_settings');
+        
+        $debug_field_help_text = BUtils::_('Check this option to enable debug logging.');
+        $debug_field_help_text .= '<br />- View debug log file by clicking <a href="'.SIMPLE_WP_MEMBERSHIP_URL.'/log.txt" target="_blank">here</a>.';
+        $debug_field_help_text .= '<br />- Reset debug log file by clicking <a href="admin.php?page=simple_wp_membership_settings&swmp_reset_log=1" target="_blank">here</a>.';
         add_settings_field('enable-debug', 'Enable Debug',
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'debug-settings',
                 array('item' => 'enable-debug',
-                      'message'=>'Check this option to enable debug logging. View debug log file <a href="'.SIMPLE_WP_MEMBERSHIP_URL.'/log.txt" target="_blank">here</a>.'));
+                      'message'=> $debug_field_help_text));
         add_settings_field('enable-sandbox-testing', BUtils::_('Enable Sandbox Testing'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'debug-settings',
                 array('item' => 'enable-sandbox-testing',
@@ -220,6 +230,23 @@ class BSettings {
         </p>
         </div>
         <?php
+    }
+    
+    public function swpm_general_post_submit_check_callback(){
+        //Log file reset handler
+        if(isset($_REQUEST['swmp_reset_log'])){
+            if(miscUtils::reset_swmp_log_files()){
+                echo '<div id="message" class="updated fade"><p>Debug log files have been reset!</p></div>';
+            }
+            else{
+                echo '<div id="message" class="updated fade"><p>Debug log files could not be reset!</p></div>';
+            }
+        }
+        
+        //Show settings updated message
+        if(isset($_REQUEST['settings-updated'])){
+            echo '<div id="message" class="updated fade"><p>' . BUtils::_('Settings updated!') . '</p></div>';
+        }
     }
 
     public function general_settings_callback() {

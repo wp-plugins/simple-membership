@@ -33,6 +33,9 @@
             </td>
 	</tr>        
 <?php include('admin_member_form_common_part.php');?>
+</tbody>
+</table>        
+    <?php include('admin_member_form_common_js.php');?>        
 <?php submit_button( BUtils::_('Add New Member '), 'primary', 'createswpmuser', true, array( 'id' => 'createswpmusersub' ) ); ?>
 </form>
 </div>
