@@ -113,7 +113,10 @@ class BAuth {
         }
         return $wp_hasher->CheckPassword($password, $hash);
     }
-
+    public function match_password($password){
+        if (!$this->is_logged_in()) {return false;} 
+        return $this->check_password($password, $this->get('password'));
+    }
     public function login($user, $pass, $remember = '', $secure = '') {
         Blog::log_simple_debug("login",true);
         if ($this->isLoggedIn){
@@ -240,5 +243,14 @@ class BAuth {
                     $this->get('subscription_duration_type'));
         }
         return "";
+    }
+    public function delete(){
+        if (!$this->is_logged_in()) {return ;}
+        $user_name = $this->get('user_name');
+        $user_id   = $this->get('member_id');
+        wp_clear_auth_cookie();
+        $this->logout();        
+        BMembers::delete_swpm_user_by_id($user_id);
+        BMembers::delete_wp_user($user_name);
     }
 }

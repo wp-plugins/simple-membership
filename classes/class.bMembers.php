@@ -149,7 +149,7 @@ class BMembers extends WP_List_Table {
                 $members = array_map('absint', $members);
                 foreach ($members as $swpm_id) {
                     $user_name = BUtils::get_user_by_id(absint($swpm_id));
-                    $this->delete_wp_user($user_name);
+                    BMembers::delete_wp_user($user_name);
                 }
                 $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id IN (" . implode(',', $members) . ")";
                 $wpdb->query($query);
@@ -157,18 +157,25 @@ class BMembers extends WP_List_Table {
         }
         else if (isset($_REQUEST['member_id'])) {
             $id = absint($_REQUEST['member_id']);
-            $user_name = BUtils::get_user_by_id($id);
-            $this->delete_wp_user($user_name);
-            $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
-            $wpdb->query($query);
+            BMembers::delete_user_by_id($id);
         }
     }
-
+    public static function delete_user_by_id($id){
+        $user_name = BUtils::get_user_by_id($id);
+        BMembers::delete_wp_user($user_name);
+        BMembers::delete_swpm_user_by_id($id);
+    }
+    
+    public static function delete_swpm_user_by_id($id){
+        global $wpdb;
+        $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
+        $wpdb->query($query);        
+    }
     function show() {
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_members.php');
     }
 
-    private function delete_wp_user($user_name) {
+    public static function delete_wp_user($user_name) {
         $wp_user_id = username_exists($user_name);
         $ud = get_userdata($wp_user_id);
         if (!empty($ud) && (isset($ud->wp_capabilities['administrator']) || $ud->wp_user_level == 10)) {

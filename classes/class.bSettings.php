@@ -60,6 +60,11 @@ class BSettings {
                       'options'=>  BUtils::get_account_state_options(),
                       'default'=>'active',
                       'message'=>BUtils::_('Select the default account status for newly registered users. If you want to manually approve the members then you can set the status to "Pending".')));
+        add_settings_field('allow-account-deletion',  BUtils::_('Allow Account Deletion'),
+                array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings',
+                array('item' => 'allow-account-deletion',
+                      'options'=>  BUtils::get_account_state_options(),
+                      'message'=>BUtils::_('Allow users to delete their accounts.')));        
         /*add_settings_field('protect-everything',  BUtils::_('Protect Everything'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings', 
                 array('item' => 'protect-everything',
@@ -280,44 +285,15 @@ class BSettings {
         }
         $output = $this->settings;
         //general settings block
-
-        if (isset($input['hide-adminbar'])){
-            $output['hide-adminbar'] = esc_url($input['hide-adminbar']);
-        }
-        else{
-            $output['hide-adminbar'] = "";
-        }
-        if (isset($input['protect-everything'])){
-            $output['protect-everything'] = esc_url($input['protect-everything']);
-        }
-        else{
-            $output['protect-everything'] = "";
-        }        
         
-        if (isset($input['enable-free-membership'])){
-            $output['enable-free-membership'] = esc_url($input['enable-free-membership']);
-        }
-        else{
-            $output['enable-free-membership'] = "";
-        }
-        if (isset($input['enable-moretag'])){
-            $output['enable-moretag'] = esc_url($input['enable-moretag']);
-        }
-        else{
-            $output['enable-moretag'] = "";
-        }
-        if (isset($input['enable-debug'])){
-            $output['enable-debug'] = esc_url($input['enable-debug']);
-        }
-        else{
-            $output['enable-debug'] = "";
-        }
-        if (isset($input['enable-sandbox-testing'])){
-            $output['enable-sandbox-testing'] = esc_url($input['enable-sandbox-testing']);
-        }
-        else{
-            $output['enable-sandbox-testing'] = "";
-        }
+        $output['hide-adminbar']          = isset($input['hide-adminbar'])? esc_attr($input['hide-adminbar']) : "";
+        $output['protect-everything']     = isset($input['protect-everything'])? esc_attr($input['protect-everything']) : "";
+        $output['enable-free-membership'] = isset($input['enable-free-membership'])? esc_attr($input['enable-free-membership']) : "";
+        $output['enable-moretag']         = isset($input['enable-moretag'])? esc_attr($input['enable-moretag']) : "";
+        $output['enable-debug']           = isset($input['enable-debug'])? esc_attr($input['enable-debug']) : "";        
+        $output['enable-sandbox-testing'] = isset($input['enable-sandbox-testing'])? esc_attr($input['enable-sandbox-testing']) : "";        
+        $output['allow-account-deletion'] = isset($input['allow-account-deletion'])? esc_attr($input['allow-account-deletion']) : "";
+        
         $output['free-membership-id'] = ($input['free-membership-id'] != 1) ? absint($input['free-membership-id']) : '';
         $output['login-page-url'] = esc_url($input['login-page-url']);
         $output['registration-page-url'] = esc_url($input['registration-page-url']);
@@ -342,18 +318,10 @@ class BSettings {
         $output['reg-prompt-complete-mail-subject'] = sanitize_text_field($input['reg-prompt-complete-mail-subject']);
         $output['reg-prompt-complete-mail-body'] = wp_kses_data(force_balance_tags($input['reg-prompt-complete-mail-body']));
         $output['email-from'] = trim($input['email-from']);
-        if (isset($input['enable-admin-notification-after-reg'])){
-            $output['enable-admin-notification-after-reg'] = esc_html($input['enable-admin-notification-after-reg']);
-        }
-        else{
-            $output['enable-admin-notification-after-reg'] = "";
-        }
-        if (isset($input['enable-notification-after-manual-user-add'])){
-            $output['enable-notification-after-manual-user-add'] = esc_html($input['enable-notification-after-manual-user-add']);
-        }
-        else{
-            $output['enable-notification-after-manual-user-add'] = "";
-        }
+        
+        $output['enable-admin-notification-after-reg'] = isset($output['enable-admin-notification-after-reg'])? $output['enable-admin-notification-after-reg'] : "";
+        $output['enable-notification-after-manual-user-add'] = isset($output['enable-notification-after-manual-user-add'])? $output['enable-notification-after-manual-user-add'] : "";
+        
         return $output;
     }
 

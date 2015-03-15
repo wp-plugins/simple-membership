@@ -28,14 +28,14 @@ class SimpleWpMembership {
         add_action('admin_menu', array(&$this, 'menu'));        
         add_action('init', array(&$this, 'init'));
 
-        add_filter('the_content', array(&$this, 'filter_content'));
+        add_filter('the_content', array(&$this, 'filter_content'),11,1);
         add_filter('widget_text', 'do_shortcode');
         add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));
         add_filter('comment_text', array(&$this, 'filter_comment'));
         add_filter('wp_get_attachment_url', array(&$this, 'filter_attachment'));
         add_filter('wp_get_attachment_metadata', array(&$this, 'filter_attachment'));
         add_filter('attachment_fields_to_save', array(&$this,'save_attachment_extra'), 10, 2);
-        add_filter( 'the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
+        add_filter('the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
 
         add_shortcode("swpm_registration_form", array(&$this, 'registration_form'));
         add_shortcode('swpm_profile_form', array(&$this, 'profile_form'));
@@ -380,6 +380,7 @@ class SimpleWpMembership {
         }
         if (!is_admin()){ //frontend stuff
             BAuth::get_instance();
+            $this->verify_and_delete_account();
             $swpm_logout = filter_input(INPUT_GET, 'swpm-logout');
             if (!empty($swpm_logout)) {
                 BAuth::get_instance()->logout();
@@ -410,7 +411,7 @@ class SimpleWpMembership {
     }
 
     private function edit_profile() {
-        $swpm_editprofile_submit = filter_input(INPUT_POST, 'swpm_editprofile_submit');
+        $swpm_editprofile_submit = filter_input(INPUT_POST, 'swpm_editprofile_submit');        
         if (!empty($swpm_editprofile_submit)) {
             BFrontRegistration::get_instance()->edit();
             //todo: do a redirect
@@ -561,5 +562,29 @@ class SimpleWpMembership {
     }
     public function deactivate() {
         wp_clear_scheduled_hook('swpm_account_status_event');
+    }
+    private function verify_and_delete_account(){
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/class.bMembers.php');
+        $delete_account = filter_input(INPUT_GET, 'delete_account');
+        if (empty($delete_account)) {return; }
+        $password = filter_input(INPUT_POST, 'account_delete_confirm_pass',FILTER_UNSAFE_RAW);
+
+        $auth = BAuth::get_instance();
+        if (!$auth->is_logged_in()){return;}
+        if (empty($password)){
+            BUtils::account_delete_confirmation_ui();
+        }
+        
+        $nonce_field = filter_input(INPUT_POST, 'account_delete_confirm_nonce');
+        if (empty($nonce_field) || !wp_verify_nonce($nonce_field, 'swpm_account_delete_confirm')){
+            BUtils::account_delete_confirmation_ui(BUtils::_("Sorry, Nonce verification failed."));
+        }       
+        if ($auth->match_password($password)){
+            $auth->delete();
+            wp_redirect(home_url());
+        }
+        else{
+            BUtils::account_delete_confirmation_ui(BUtils::_("Sorry, Password didn't match."));
+        }
     }
 }

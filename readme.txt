@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,7 @@ You can create a free forum user account and ask your questions.
 * Ability to import WordPress users as members.
 * Can be translated to any language.
 * Hide the admin toolbar from the frontend of your site.
+* Allow your members to deleter their membership accounts.
 * Send quick notification email to your members.
 * The login and registration widgets will be responsive if you are using a responsive theme.
 * Front-end member registration page.
@@ -100,6 +101,9 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 2.1.3 =
+- Added a new feature to allow the members to delete their accounts.
 
 = 2.1.2 =
 - Updated the membership subscription payment cancellation handler and made it more robust.

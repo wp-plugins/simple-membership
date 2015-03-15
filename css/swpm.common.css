@@ -50,3 +50,11 @@ min-width: 100px;
     margin: 0;
     padding-bottom: 5px;
 }
+
+/* Edit profile form CSS */
+.swpm-account-delete-button{
+    text-align: center;
+}
+.swpm-account-delete-button a{
+    color: red !important;
+}
