@@ -34,12 +34,12 @@ class BLevelForm {
 
     protected function subscription_period() {
         $subscript_duration_type = filter_input(INPUT_POST, 'subscription_duration_type');
-        
+
         if ($subscript_duration_type == BMembershipLevel::NO_EXPIRY) {
             $this->sanitized['subscription_period'] = "";
             return;
         }
-        
+
         $subscription_period = filter_input(INPUT_POST, 'subscription_period_'. $subscript_duration_type);
         if (($subscript_duration_type == BMembershipLevel::FIXED_DATE)){
             $dateinfo = date_parse($subscription_period);
@@ -50,6 +50,7 @@ class BLevelForm {
             $this->sanitized['subscription_period'] = sanitize_text_field($subscription_period);
             return;
         }
+        
         if (!is_numeric($subscription_period)) {
             $this->errors['subscription_period'] = BUtils::_("Access duration must be > 0.");
             return;

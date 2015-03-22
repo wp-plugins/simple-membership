@@ -35,6 +35,7 @@ class BMembershipLevels extends WP_List_Table{
             if($item['subscription_duration_type'] == BMembershipLevel::NO_EXPIRY) {return 'No Expiry';}
             if($item['subscription_duration_type'] == BMembershipLevel::FIXED_DATE) {return date(get_option('date_format'), strtotime($item['subscription_period']));}
             if($item['subscription_duration_type'] == BMembershipLevel::DAYS) {return $item['subscription_period'] ." Day(s)";}
+            if($item['subscription_duration_type'] == BMembershipLevel::WEEKS) {return $item['subscription_period'] ." Week(s)";}
             if($item['subscription_duration_type'] == BMembershipLevel::MONTHS) {return $item['subscription_period'] ." Month(s)";}
             if($item['subscription_duration_type'] == BMembershipLevel::YEARS) {return $item['subscription_period'] ." Year(s)";}
         }

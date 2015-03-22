@@ -23,7 +23,7 @@
                 <p><input type="radio" value="<?php echo  BMembershipLevel::DAYS ?>" name="subscription_duration_type" /> <?php echo  BUtils::_('Expire After')?> 
                     <input type="text" value="" name="subscription_period_<?php echo  BMembershipLevel::DAYS ?>"> <?php echo  BUtils::_('Days (Access expires after given number of days)')?></p>
                 <p><input type="radio" value="<?php echo  BMembershipLevel::WEEKS?>" name="subscription_duration_type" /> <?php echo  BUtils::_('Expire After')?> 
-                    <input type="text" value="" name="subscription_period_<?php echo  BMembershipLevel::DAYS ?>"> <?php echo  BUtils::_('Weeks (Access expires after given number of weeks')?></p>
+                    <input type="text" value="" name="subscription_period_<?php echo  BMembershipLevel::WEEKS ?>"> <?php echo  BUtils::_('Weeks (Access expires after given number of weeks')?></p>
                 <p><input type="radio"  value="<?php echo  BMembershipLevel::MONTHS?>" name="subscription_duration_type" /> <?php echo  BUtils::_('Expire After')?> 
                     <input type="text" value="" name="subscription_period_<?php echo  BMembershipLevel::MONTHS?>"> <?php echo  BUtils::_('Months (Access expires after given number of months)')?></p>
                 <p><input type="radio"  value="<?php echo  BMembershipLevel::YEARS?>" name="subscription_duration_type" /> <?php echo  BUtils::_('Expire After')?> 
