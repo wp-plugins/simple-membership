@@ -1,5 +1,4 @@
 <?php
-
 class BUtils {
     public static function is_ajax(){
         return defined('DOING_AJAX') && DOING_AJAX;
@@ -93,7 +92,11 @@ class BUtils {
         $query = $wpdb->prepare("SELECT user_name FROM {$wpdb->prefix}swpm_members_tbl WHERE member_id = %d", $swpm_id);
         return $wpdb->get_var($query);
     }
-
+    public static function get_user_by_user_name($swpm_user_name) {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT member_id FROM {$wpdb->prefix}swpm_members_tbl WHERE user_name = %s", $swpm_user_name);
+        return $wpdb->get_var($query);
+    }
     public static function get_registration_link($for = 'all', $send_email = false, $member_id = '') {
         $members = array();
         global $wpdb;
@@ -201,6 +204,21 @@ class BUtils {
             return;
         }
     }
+    public static function update_wp_user($wp_user_name, $swpm_data){        
+        $wp_user_info = array();        
+        if (isset($swpm_data['email'])){$wp_user_info['user_email'] = $swpm_data['email'];}
+        if (isset($swpm_data['first_name'])){$wp_user_info['first_name'] = $swpm_data['first_name'];}
+        if (isset($swpm_data['last_name'])){$wp_user_info['last_name'] = $swpm_data['last_name'];}
+        if (isset($swpm_data['plain_password'])){$wp_user_info['password'] = $swpm_data['plain_password'];}
+        
+        $wp_user = get_user_by('login', $wp_user_name);        
+        
+        if ($wp_user){            
+            $wp_user_info['ID'] = $wp_user->ID;
+            return wp_update_user($wp_user_info);
+        }        
+        return false;
+    }
     public static function create_wp_user($wp_user_data) {
         if (self::is_multisite_install()) {//MS install
             global $blog_id;
@@ -296,9 +314,19 @@ class BUtils {
     }
     public static function delete_account_button(){
         $allow_account_deletion = BSettings::get_instance()->get_value('allow-account-deletion');
-        if (empty($allow_account_deletion)) {
-            return "";            
-        }
-        return '<div class="swpm-account-delete-button"><a href="?delete_account=1">' . BUtils::_("Delete Account") . '</a></div>';        
+        if (empty($allow_account_deletion)) {return "";}
+        
+        return  '<a href="/?delete_account=1"><div class="swpm-account-delete-button">' . BUtils::_("Delete Account") . '</div></a>';        
+    }
+    
+    public static function encrypt_password($plain_password){
+        include_once(ABSPATH . WPINC . '/class-phpass.php');
+        $wp_hasher = new PasswordHash(8, TRUE);
+        $password_hash = $wp_hasher->HashPassword(trim($plain_password));
+        return $password_hash;
+    }
+    
+    public static function get_restricted_image_url(){
+        return SIMPLE_WP_MEMBERSHIP_URL. '/images/restricted-icon.png'; 
     }
 }

@@ -81,10 +81,8 @@ class BForm {
             if ($saned != $saned_re){
                 $this->errors['password'] = BUtils::_('Password mismatch');
             }
-            include_once(ABSPATH . WPINC . '/class-phpass.php');
-            $wp_hasher = new PasswordHash(8, TRUE);
             $this->sanitized['plain_password'] = $password;
-            $this->sanitized['password'] = $wp_hasher->HashPassword(trim($password)); //should use $saned??;
+            $this->sanitized['password'] = BUtils::encrypt_password(trim($password)); //should use $saned??;
         }
     }
 

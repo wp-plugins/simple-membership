@@ -29,10 +29,10 @@ class BAuth {
         return self::$_this;
     }
 
-    private function authenticate() {
+    private function authenticate($user = null, $pass = null) {
         global $wpdb;
-        $swpm_password = filter_input(INPUT_POST, 'swpm_password');
-        $swpm_user_name = apply_filters('swpm_user_name', filter_input(INPUT_POST, 'swpm_user_name'));
+        $swpm_password = empty($pass)?filter_input(INPUT_POST, 'swpm_password') : $pass;
+        $swpm_user_name = empty($user)? apply_filters('swpm_user_name', filter_input(INPUT_POST, 'swpm_user_name')) : $user;
         //Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
         if (!empty($swpm_user_name) && !empty($swpm_password)) {
             $user = sanitize_user($swpm_user_name);
@@ -121,9 +121,9 @@ class BAuth {
         Blog::log_simple_debug("login",true);
         if ($this->isLoggedIn){
             return;
-        }
+        } var_dump($user, $pass,$this->authenticate($user, $pass));die('here');
         if ($this->authenticate($user, $pass) && $this->validate()) {
-            $this->set_cookie($remember, $secure);
+            $this->set_cookie($remember, $secure); 
         } else {
             $this->isLoggedIn = false;
             $this->userData = null;
@@ -229,7 +229,10 @@ class BAuth {
         if (isset($this->permitted->$key)){
             return $this->permitted->$key;
         }
-        return $this->permitted->get($key, $default);
+        if (!empty($this->permitted)){
+            return $this->permitted->get($key, $default);
+        }
+        return $default;
     }
 
     public function get_message() {

@@ -32,8 +32,8 @@ class BAdminRegistration extends BRegistration {
             $wp_user_info['display_name'] = $member_info['user_name'];
             $wp_user_info['user_email'] = $member_info['email'];
             $wp_user_info['nickname'] = $member_info['user_name'];
-            $wp_user_info['first_name'] = $member_info['first_name']; 
-            $wp_user_info['last_name'] = $member_info['last_name'];
+            if (isset($member_info['first_name'])){$wp_user_info['first_name'] = $member_info['first_name']; }
+            if (isset($member_info['last_name'])){$wp_user_info['last_name'] = $member_info['last_name'];}
             $wp_user_info['user_login'] = $member_info['user_name'];
             $wp_user_info['password'] = $plain_password;
             $wp_user_info['role'] = $wpdb->get_var($query);
@@ -59,12 +59,14 @@ class BAdminRegistration extends BRegistration {
         $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = %d", $id);
         $member = $wpdb->get_row($query, ARRAY_A);
         $email_address = $member['email'];
+        $user_name = $member['user_name'];
         unset($member['member_id']);
         unset($member['email']);
         unset($member['user_name']);
         $form = new BForm($member);
         if ($form->is_valid()) {
             $member = $form->get_sanitized();
+            BUtils::update_wp_user($user_name, $member);
             unset($member['plain_password']);
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member, array('member_id' => $id));
             $message = array('succeeded' => true, 'message' => 'Updated Successfully.');

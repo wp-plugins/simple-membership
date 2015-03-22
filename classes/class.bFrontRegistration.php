@@ -141,11 +141,14 @@ class BFrontRegistration extends BRegistration {
         if ($form->is_valid()) {
             global $wpdb;
             $member_info = $form->get_sanitized();
+            // update corresponding wp user.            
+            BUtils::update_wp_user($auth->get('user_name'),$member_info);
             if (isset($member_info['plain_password'])) {
                 unset($member_info['plain_password']);
             }
+            
             $wpdb->update(
-                    $wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id')));
+                    $wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id'))); 
             $message = array('succeeded' => true, 'message' => 'Profile Updated.');
             BTransfer::get_instance()->set('status', $message);
         } else {
@@ -177,11 +180,13 @@ class BFrontRegistration extends BRegistration {
         }
         $settings = BSettings::get_instance();
         $password = wp_generate_password();
-        include_once(ABSPATH . WPINC . '/class-phpass.php');
-        $wp_hasher = new PasswordHash(8, TRUE);
-        $password_hash = $wp_hasher->HashPassword(trim($password)); //should use $saned??;
-        $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $user->member_id));
 
+        $password_hash = BUtils::encrypt_password(trim($password)); //should use $saned??;
+        $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $user->member_id));
+        
+        // update wp user pass.
+        BUtils::update_wp_user($user->user_name, array('user_pass'=>$password));
+        
         $body = $settings->get_value('reset-mail-body');
         $subject = $settings->get_value('reset-mail-subject');
         $search = array('{user_name}', '{first_name}', '{last_name}', '{password}');
@@ -194,5 +199,4 @@ class BFrontRegistration extends BRegistration {
         $message = array('succeeded' => false, 'message' => $message);
         BTransfer::get_instance()->set('status', $message);
     }
-
 }

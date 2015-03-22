@@ -32,8 +32,8 @@ class SimpleWpMembership {
         add_filter('widget_text', 'do_shortcode');
         add_filter('show_admin_bar', array(&$this, 'hide_adminbar'));
         add_filter('comment_text', array(&$this, 'filter_comment'));
-        add_filter('wp_get_attachment_url', array(&$this, 'filter_attachment'));
-        add_filter('wp_get_attachment_metadata', array(&$this, 'filter_attachment'));
+        add_filter('wp_get_attachment_url', array(&$this, 'filter_attachment_url'), 10, 2);
+        add_filter('wp_get_attachment_metadata', array(&$this, 'filter_attachment'), 10, 2);
         add_filter('attachment_fields_to_save', array(&$this,'save_attachment_extra'), 10, 2);
         add_filter('the_content_more_link', array(&$this, 'filter_moretag'), 10, 2 );
 
@@ -61,7 +61,17 @@ class SimpleWpMembership {
         //init is too early for settings api.
         add_action('admin_init', array(&$this, 'admin_init_hook'));
         add_action('plugins_loaded', array(&$this, "plugins_loaded"));
+        add_action('password_reset', array(&$this, 'wp_password_reset_hook'), 10, 2);
     }
+    function wp_password_reset_hook( $user, $pass ) 
+    {
+        $swpm_id = BUtils::get_user_by_user_name($user->user_login);
+        if (!empty($swpm_id)){
+            $password_hash = BUtils::encrypt_password($pass);
+            global $wpdb;
+            $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $swpm_id));
+        }       
+    }    
     public function plugins_loaded(){
         
     }
@@ -69,10 +79,41 @@ class SimpleWpMembership {
         $this->save_postdata($post['ID']);
         return $post;
     }
-    public function filter_attachment($content){
+    public function filter_attachment($content, $post_id){
         $acl = BAccessControl::get_instance();
-        global $post;
-        return has_post_thumbnail($post->ID)? $content:$acl->filter_post($post->ID, $content);
+        if (has_post_thumbnail($post_id)){ return $content;}
+        if ($acl->can_i_read_post($post_id)) {return $content;}
+        
+        
+        if (isset($content['file'])){
+            $content['file'] = 'restricted-icon.png';
+        }
+        
+        if (isset($content['sizes'])){
+            if ($content['sizes']['thumbnail']){
+                $content['sizes']['thumbnail']['file'] = 'restricted-icon.png';
+                $content['sizes']['thumbnail']['mime-type'] = 'image/jpeg';
+            }
+            if ($content['sizes']['medium']){
+                $content['sizes']['medium']['file'] = 'restricted-icon.png';
+                $content['sizes']['medium']['mime-type'] = 'image/jpeg';
+            }
+            if ($content['sizes']['post-thumbnail']){
+                $content['sizes']['post-thumbnail']['file'] = 'restricted-icon.png';
+                $content['sizes']['post-thumbnail']['mime-type'] = 'image/jpeg';
+            }
+        }
+        return $content;
+    }
+    
+    public function filter_attachment_url($content, $post_id){
+        $acl = BAccessControl::get_instance();
+        if (has_post_thumbnail($post_id)){ return $content;}
+        
+        if ($acl->can_i_read_post($post_id)) {return $content;}
+        
+        return BUtils::get_restricted_image_url();
+        
     }
     public function admin_init_hook(){
         BSettings::get_instance()->init_config_hooks();
@@ -113,11 +154,11 @@ class SimpleWpMembership {
     }
 
     public function wp_login($username, $password) {
-        $auth = BAuth::get_instance();
-        if (($auth->is_logged_in() && ($auth->userData->user_name == $username))) {
+        $auth = BAuth::get_instance(); 
+        if (($auth->is_logged_in() &&($auth->userData->user_name == $username))) {
             return;
         }
-        $auth->login($username, $password, true);
+        if(!empty($username)) {$auth->login($username, $password, true);}
     }
 
     public function wp_logout() {
