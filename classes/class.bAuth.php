@@ -121,7 +121,7 @@ class BAuth {
         Blog::log_simple_debug("login",true);
         if ($this->isLoggedIn){
             return;
-        } var_dump($user, $pass,$this->authenticate($user, $pass));die('here');
+        }
         if ($this->authenticate($user, $pass) && $this->validate()) {
             $this->set_cookie($remember, $secure); 
         } else {
