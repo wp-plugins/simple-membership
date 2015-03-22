@@ -103,6 +103,7 @@ https://simple-membership-plugin.com/
 == Changelog ==
 
 = 2.1.5 =
+- Improved the attachment protection so it doesn't protect when viewing from the admin side also.
 - Removed a dubug dump statement.
 
 = 2.1.4 =

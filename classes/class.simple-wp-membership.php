@@ -80,6 +80,10 @@ class SimpleWpMembership {
         return $post;
     }
     public function filter_attachment($content, $post_id){
+        if(is_admin()){//No need to filter on the admin side
+            return $content;
+        }
+        
         $acl = BAccessControl::get_instance();
         if (has_post_thumbnail($post_id)){ return $content;}
         if ($acl->can_i_read_post($post_id)) {return $content;}
@@ -87,34 +91,39 @@ class SimpleWpMembership {
         
         if (isset($content['file'])){
             $content['file'] = 'restricted-icon.png';
+            $content['width'] = '400';
+            $content['height'] = '400';
         }
         
         if (isset($content['sizes'])){
             if ($content['sizes']['thumbnail']){
                 $content['sizes']['thumbnail']['file'] = 'restricted-icon.png';
-                $content['sizes']['thumbnail']['mime-type'] = 'image/jpeg';
+                $content['sizes']['thumbnail']['mime-type'] = 'image/png';
             }
             if ($content['sizes']['medium']){
                 $content['sizes']['medium']['file'] = 'restricted-icon.png';
-                $content['sizes']['medium']['mime-type'] = 'image/jpeg';
+                $content['sizes']['medium']['mime-type'] = 'image/png';
             }
             if ($content['sizes']['post-thumbnail']){
                 $content['sizes']['post-thumbnail']['file'] = 'restricted-icon.png';
-                $content['sizes']['post-thumbnail']['mime-type'] = 'image/jpeg';
+                $content['sizes']['post-thumbnail']['mime-type'] = 'image/png';
             }
         }
         return $content;
     }
     
     public function filter_attachment_url($content, $post_id){
+        if(is_admin()){//No need to filter on the admin side
+            return $content;
+        }
         $acl = BAccessControl::get_instance();
-        if (has_post_thumbnail($post_id)){ return $content;}
+        if (has_post_thumbnail($post_id)){return $content;}
         
-        if ($acl->can_i_read_post($post_id)) {return $content;}
+        if ($acl->can_i_read_post($post_id)){return $content;}
         
         return BUtils::get_restricted_image_url();
-        
     }
+    
     public function admin_init_hook(){
         BSettings::get_instance()->init_config_hooks();
         $addon_saved = filter_input(INPUT_POST, 'swpm-addon-settings');
@@ -122,6 +131,7 @@ class SimpleWpMembership {
             do_action('swpm_addon_settings_save');
         }
     }
+    
     public function hide_adminbar(){
         if (!is_user_logged_in()){//Never show admin bar if the user is not even logged in
             return false;
