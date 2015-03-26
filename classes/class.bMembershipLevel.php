@@ -56,6 +56,7 @@ class BMembershipLevel {
             $message = array('succeeded' => true, 'message' => BUtils::_('Updated Successfully.'));
             BTransfer::get_instance()->set('status', $message);
             wp_redirect('admin.php?page=simple_wp_membership_levels');
+            return;
         }
         $message = array('succeeded' => false, 'message' => BUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         BTransfer::get_instance()->set('status', $message);

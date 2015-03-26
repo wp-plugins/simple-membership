@@ -6,9 +6,11 @@
  */
 class BCronJob {
     public function __construct() {
-        add_action('swpm_account_status_event', array(&$this, 'updateAccountStatus'));
+        add_action('swpm_account_status_event', array(&$this, 'update_account_status'));
+        add_action('swpm_delete_pending_account_event',array(&$this, 'delete_pending_account'));
     }
-    public function updateAccountStatus(){
+    
+    public function update_account_status(){
         global $wpdb;
         for($counter = 0;; $counter += 100){
             $query = $wpdb->prepare("SELECT member_id, membership_level, subscription_starts, account_state
@@ -28,5 +30,31 @@ class BCronJob {
                 $wpdb->query($query);
             }
         }
+    }
+    
+    public function delete_pending_account(){
+        global $wpdb;
+        $interval = BSettings::get_instance()->get_value('delete-pending-account');
+        if (empty($interval)) {return;}
+        for($counter = 0;; $counter += 100){
+            $query = $wpdb->prepare("SELECT member_id
+                                     FROM 
+                                        {$wpdb->prefix}swpm_members_tbl 
+                                    WHERE account_state='pending' 
+                                         AND subscription_starts < DATE_SUB(NOW(), INTERVAL %d MONTH) LIMIT %d, 100", 
+                                    $interval, $counter);
+            $results = $wpdb->get_results($query);
+            if (empty($results)) {break;}
+            $to_delete = array();
+            foreach($results as $result){               
+                    $to_delete[] = $result->member_id;                           
+            }
+            if (count($to_delete)>0){
+                Blog::log_simple_debug("Auto deleting pending account.", true);
+                $query = "DELETE FROM {$wpdb->prefix}swpm_members_tbl 
+                          WHERE member_id IN (" . implode(',', $to_delete) . ")";
+                $wpdb->query($query);
+            }
+        }        
     }
 }

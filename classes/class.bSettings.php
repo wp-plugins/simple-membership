@@ -65,6 +65,12 @@ class BSettings {
                 array('item' => 'allow-account-deletion',
                       'options'=>  BUtils::get_account_state_options(),
                       'message'=>BUtils::_('Allow users to delete their accounts.')));        
+        add_settings_field('delete-pending-account',  BUtils::_('Auto Delete Pending Account'),
+                array(&$this, 'selectbox_callback'), 'simple_wp_membership_settings', 'general-settings',
+                array('item' => 'delete-pending-account',
+                      'options'=>  array(0 => 'Do not delete', 1=>'Older than 1 month', 2=> 'Older than 2 months'),
+                      'default'=>'0',
+                      'message'=>BUtils::_('Select how long you want to keep "pending" account.')));        
         /*add_settings_field('protect-everything',  BUtils::_('Protect Everything'),
                 array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'general-settings', 
                 array('item' => 'protect-everything',
@@ -318,9 +324,8 @@ class BSettings {
         $output['reg-prompt-complete-mail-subject'] = sanitize_text_field($input['reg-prompt-complete-mail-subject']);
         $output['reg-prompt-complete-mail-body'] = wp_kses_data(force_balance_tags($input['reg-prompt-complete-mail-body']));
         $output['email-from'] = trim($input['email-from']);
-        
-        $output['enable-admin-notification-after-reg'] = isset($output['enable-admin-notification-after-reg'])? $output['enable-admin-notification-after-reg'] : "";
-        $output['enable-notification-after-manual-user-add'] = isset($output['enable-notification-after-manual-user-add'])? $output['enable-notification-after-manual-user-add'] : "";
+        $output['enable-admin-notification-after-reg'] = isset($input['enable-admin-notification-after-reg'])? esc_attr($input['enable-admin-notification-after-reg']) : "";
+        $output['enable-notification-after-manual-user-add'] = isset($input['enable-notification-after-manual-user-add'])? esc_attr($input['enable-notification-after-manual-user-add']) : "";
         
         return $output;
     }

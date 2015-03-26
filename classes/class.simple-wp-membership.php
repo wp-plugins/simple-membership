@@ -603,6 +603,7 @@ class SimpleWpMembership {
 
     public static function activate() {
         wp_schedule_event(time(), 'daily', 'swpm_account_status_event');
+        wp_schedule_event(time(), 'daily', 'swpm_delete_pending_account_event');
         include_once('class.bInstallation.php');
         global $wpdb;
         if (BUtils::is_multisite_install()) {
@@ -613,6 +614,7 @@ class SimpleWpMembership {
     }
     public function deactivate() {
         wp_clear_scheduled_hook('swpm_account_status_event');
+        wp_clear_scheduled_hook('swpm_delete_pending_account_event');        
     }
     private function verify_and_delete_account(){
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/class.bMembers.php');
