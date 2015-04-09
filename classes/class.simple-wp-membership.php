@@ -435,7 +435,7 @@ class SimpleWpMembership {
             $swpm_logout = filter_input(INPUT_GET, 'swpm-logout');
             if (!empty($swpm_logout)) {
                 BAuth::get_instance()->logout();
-                wp_redirect(site_url());
+                wp_redirect(home_url());
             }
             $this->process_password_reset();
             $this->register_member();

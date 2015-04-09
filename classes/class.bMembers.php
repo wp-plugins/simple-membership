@@ -26,6 +26,7 @@ class BMembers extends WP_List_Table {
 
     function get_sortable_columns() {
         return array(
+            'member_id' => array('member_id', true),
             'user_name' => array('user_name', true)
         );
     }
@@ -69,8 +70,13 @@ class BMembers extends WP_List_Table {
         }
         $orderby = filter_input(INPUT_GET, 'orderby');
         $orderby = empty($orderby) ? 'user_name' : $orderby ;
-        $order = filter_input(INPUT_GET, 'orger');
-        $order = empty($order) ? 'ASC' : $order;
+        $order = filter_input(INPUT_GET, 'order');
+        $order = empty($order) ? 'DESC' : $order;
+        
+        $sortable_columns = $this->get_sortable_columns();
+        $orderby = BUtils::sanitize_value_by_array($orderby, $sortable_columns);
+        $order = BUtils::sanitize_value_by_array($order, array('DESC' => '1', 'ASC' => '1'));
+
         $query.=' ORDER BY ' . $orderby . ' ' . $order;
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         $perpage = 20;

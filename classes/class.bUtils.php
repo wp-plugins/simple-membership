@@ -329,4 +329,16 @@ class BUtils {
     public static function get_restricted_image_url(){
         return SIMPLE_WP_MEMBERSHIP_URL. '/images/restricted-icon.png'; 
     }
+    
+    /*
+     * Checks if the string exists in the array key value of the provided array. If it doesn't exist, it returns the first key element from the valid values.
+     */
+    public static function sanitize_value_by_array($val_to_check, $valid_values){
+        $keys = array_keys($valid_values);
+        $keys = array_map('strtolower', $keys);
+        if ( in_array( $val_to_check, $keys ) ) {
+            return $val_to_check;
+        }
+        return reset($keys);//Return he first element from the valid values
+    }    
 }

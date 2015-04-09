@@ -3,8 +3,8 @@ Contributors: smp7, wp.insider, amijanina
 Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
-Tested up to: 4.1
-Stable tag: 2.1.7
+Tested up to: 4.2
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,12 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 2.1.8 =
+- Improved the after logout redirection so it uses the home_url() value.
+- Fixed a bug in the member table sorting functionality.
+- The members table can now be sorted using ID column.
+
 
 = 2.1.7 =
 - Added a new feature to automatically delete pending membership accounts that are older than 1 or 2 months.

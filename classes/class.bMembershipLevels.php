@@ -21,7 +21,8 @@ class BMembershipLevels extends WP_List_Table{
     }
     function get_sortable_columns(){
         return array(
-            'alias'=>array('alias',true)
+            'id' => array('id',true),
+            'alias' => array('alias',true)
         );
     }
     function get_bulk_actions() {
@@ -63,7 +64,13 @@ class BMembershipLevels extends WP_List_Table{
         if(isset($_POST['s'])) $query .= " AND alias LIKE '%" . strip_tags($_POST['s']). "%' ";
         $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'id';
         $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : 'DESC';
+        
+        $sortable_columns = $this->get_sortable_columns();
+        $orderby = BUtils::sanitize_value_by_array($orderby, $sortable_columns);
+        $order = BUtils::sanitize_value_by_array($order, array('DESC' => '1', 'ASC' => '1'));
+        
         if(!empty($orderby) && !empty($order)){ $query.=' ORDER BY '.$orderby.' '.$order; }
+        
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         $perpage = 20;
         $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
