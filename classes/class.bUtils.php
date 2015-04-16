@@ -209,7 +209,7 @@ class BUtils {
         if (isset($swpm_data['email'])){$wp_user_info['user_email'] = $swpm_data['email'];}
         if (isset($swpm_data['first_name'])){$wp_user_info['first_name'] = $swpm_data['first_name'];}
         if (isset($swpm_data['last_name'])){$wp_user_info['last_name'] = $swpm_data['last_name'];}
-        if (isset($swpm_data['plain_password'])){$wp_user_info['password'] = $swpm_data['plain_password'];}
+        if (isset($swpm_data['plain_password'])){$wp_user_info['user_pass'] = $swpm_data['plain_password'];}
         
         $wp_user = get_user_by('login', $wp_user_name);        
         

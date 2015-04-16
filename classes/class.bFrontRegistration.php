@@ -162,7 +162,7 @@ class BFrontRegistration extends BRegistration {
     public function reset_password($email) {
         $email = sanitize_email($email);
         if (!is_email($email)) {
-            $message = BUtils::_("Email Address Not Valid.");
+            $message = '<div class="swpm-reset-pw-error">' . BUtils::_("Email address not valid.") . '</div>';
             $message = array('succeeded' => false, 'message' => $message);
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -173,7 +173,8 @@ class BFrontRegistration extends BRegistration {
                 ' WHERE email = %s';
         $user = $wpdb->get_row($wpdb->prepare($query, $email));
         if (empty($user)) {
-            $message = BUtils::_("User Not Found.");
+            $message = '<div class="swpm-reset-pw-error">' . BUtils::_("No user not found with that email address.") .'</div>';
+            $message .= '<div class="swpm-reset-pw-error-email">' . BUtils::_("Email Address: ") . $email .'</div>';
             $message = array('succeeded' => false, 'message' => $message);
             BTransfer::get_instance()->set('status', $message);
             return;
@@ -185,7 +186,7 @@ class BFrontRegistration extends BRegistration {
         $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $user->member_id));
         
         // update wp user pass.
-        BUtils::update_wp_user($user->user_name, array('user_pass'=>$password));
+        BUtils::update_wp_user($user->user_name, array('plain_password'=>$password));
         
         $body = $settings->get_value('reset-mail-body');
         $subject = $settings->get_value('reset-mail-subject');
@@ -195,7 +196,9 @@ class BFrontRegistration extends BRegistration {
         $from = $settings->get_value('email-from');
         $headers = "From: " . $from . "\r\n";
         wp_mail($email, $subject, $body, $headers);
-        $message = BUtils::_("New password has been sent to your email address.");
+        $message = '<div class="swpm-reset-pw-success">' . BUtils::_("New password has been sent to your email address.") .'</div>';
+        $message .= '<div class="swpm-reset-pw-success-email">' . BUtils::_("Email Address: ") . $email .'</div>';
+        
         $message = array('succeeded' => false, 'message' => $message);
         BTransfer::get_instance()->set('status', $message);
     }

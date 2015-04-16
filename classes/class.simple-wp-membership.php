@@ -149,7 +149,10 @@ class SimpleWpMembership {
                 return;
             }
         }
-        wp_signon(array('user_login' => $user, 'user_password' => $pass, 'remember' => $rememberme), is_ssl());
+        $user = wp_signon(array('user_login' => $user, 'user_password' => $pass, 'remember' => $rememberme), is_ssl());
+        if ( is_a( $user, 'WP_User' ) ) {
+            wp_set_current_user( $user->ID, $user->user_login );
+        }
         do_action('swpm_after_login');
         if (!BUtils::is_ajax()) {
             wp_redirect(site_url());
