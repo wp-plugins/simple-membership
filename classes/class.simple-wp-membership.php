@@ -581,9 +581,9 @@ class SimpleWpMembership {
     public function admin_settings() {
         $current_tab = BSettings::get_instance()->current_tab;
         switch ($current_tab) {
-            case 5:
+            case 6:
                 include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_addon_settings.php');
-                break;                        
+                break;         
             case 4:
                 $link_for = filter_input(INPUT_POST, 'swpm_link_for',FILTER_SANITIZE_STRING);
                 $member_id = filter_input(INPUT_POST, 'member_id',FILTER_SANITIZE_NUMBER_INT);

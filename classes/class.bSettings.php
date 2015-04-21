@@ -17,7 +17,7 @@ class BSettings {
             $tab = empty($tab)?filter_input(INPUT_POST, 'tab'):$tab;
             $this->current_tab = empty($tab) ? 1 : $tab;
             $this->tabs = array(1=> 'General Settings', 2=> 'Payment Settings',
-                                3=> 'Email Settings', 4=> 'Tools', 5=> 'Addons Settings');                    
+                                3=> 'Email Settings', 4=> 'Tools', 5=>'Advanced Settings', 6=> 'Addons Settings');                    
             add_action('swpm-draw-tab', array(&$this, 'draw_tabs'));
             $method = 'tab_' . $this->current_tab;
             if (method_exists($this, $method)){
@@ -170,10 +170,25 @@ class BSettings {
                 array('item' => 'upgrade-complete-mail-body',
                       'message'=>''));
     }
+    
     private function tab_4(){
     }
+    
     private function tab_5(){
+        register_setting('swpm-settings-tab-5', 'swpm-settings', array(&$this, 'sanitize_tab_5'));
+
+        add_settings_section('advanced-settings', BUtils::_('Advanced Settings'),
+                array(&$this, 'advanced_settings_callback'), 'simple_wp_membership_settings');
+        
+        add_settings_field('enable-expired-account-login', BUtils::_('Enable Expired Account Login'),
+                array(&$this, 'checkbox_callback'), 'simple_wp_membership_settings', 'advanced-settings',
+                array('item' => 'enable-expired-account-login',
+                      'message'=>BUtils::_("When enabled, expired members will be able to log into the system but won't be able to view any protected content. This allows them to easily renew their account by making another payment.")));
     }
+    
+    private function tab_6(){
+    }
+    
     public static function get_instance() {
         self::$_this = empty(self::$_this) ? new BSettings() : self::$_this;
         return self::$_this;
@@ -260,38 +275,39 @@ class BSettings {
         }
     }
 
-    public function general_settings_callback() {
-        echo "<p>General Plugin Settings.</p>";
-    }
-
-    public function testndebug_settings_callback(){
-        echo "<p>Test and Debug Related Settings.</p>";
-    }
-    public function reg_email_settings_callback() {
-        echo "<p>This email will be sent to your users when they complete the registration and become a member.</p>";
-    }
-    public function email_misc_settings_callback(){
-        echo "<p>Settings in this section apply to all emails.</p>";
-    }
-    public function upgrade_email_settings_callback() {
-        echo "<p>This email will be sent to your users after account upgrade.</p>";
-    }
-
-    public function reg_prompt_email_settings_callback() {
-        echo "<p>This email will be sent to prompt user to complete registration.</p>";
+    public function general_settings_callback() {        
+        BUtils::e('General Plugin Settings.');
     }
 
     public function pages_settings_callback() {
-        echo '<p>Page Setup and URL Related settings.<p>';
+        BUtils::e('Page Setup and URL Related settings.');
     }
-
+    public function testndebug_settings_callback(){
+        BUtils::e('Testing and Debug Related Settings.');
+    }
+    public function reg_email_settings_callback() {
+        BUtils::e('This email will be sent to your users when they complete the registration and become a member.');
+    }
+    public function email_misc_settings_callback(){
+        BUtils::e('Settings in this section apply to all emails.');
+    }
+    public function upgrade_email_settings_callback() {
+        BUtils::e('This email will be sent to your users after account upgrade.');
+    }
+    public function reg_prompt_email_settings_callback() {
+        BUtils::e('This email will be sent to prompt user to complete registration.');
+    }
+    public function advanced_settings_callback(){
+        BUtils::e('This page allows you to configure some advanced features of the plugin.');
+    }
+    
     public function sanitize_tab_1($input) {
         if (empty($this->settings)){
             $this->settings = (array) get_option('swpm-settings');
         }
         $output = $this->settings;
         //general settings block
-        
+       
         $output['hide-adminbar']          = isset($input['hide-adminbar'])? esc_attr($input['hide-adminbar']) : "";
         $output['protect-everything']     = isset($input['protect-everything'])? esc_attr($input['protect-everything']) : "";
         $output['enable-free-membership'] = isset($input['enable-free-membership'])? esc_attr($input['enable-free-membership']) : "";
@@ -329,7 +345,16 @@ class BSettings {
         
         return $output;
     }
-
+    
+    public function sanitize_tab_5($input){
+        if (empty($this->settings)){
+            $this->settings = (array) get_option('swpm-settings');
+        }
+        $output = $this->settings;
+        $output['enable-expired-account-login'] = isset($input['enable-expired-account-login'])? esc_attr($input['enable-expired-account-login']) : "";
+        
+        return $output;
+    }
     public function get_value($key, $default = "") {
         if (isset($this->settings[$key])){
             return $this->settings[$key];

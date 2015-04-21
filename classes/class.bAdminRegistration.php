@@ -61,11 +61,10 @@ class BAdminRegistration extends BRegistration {
         $email_address = $member['email'];
         $user_name = $member['user_name'];
         unset($member['member_id']);
-        unset($member['email']);
         unset($member['user_name']);
         $form = new BForm($member);
         if ($form->is_valid()) {
-            $member = $form->get_sanitized();
+            $member = $form->get_sanitized(); 
             BUtils::update_wp_user($user_name, $member);
             unset($member['plain_password']);
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member, array('member_id' => $id));

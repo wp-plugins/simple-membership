@@ -88,9 +88,6 @@ class BForm {
 
     protected function email() {
         global $wpdb;
-        if (!empty($this->fields['email'])){
-            return;
-        }
         $email = filter_input(INPUT_POST, 'email', FILTER_UNSAFE_RAW);
         if (empty($email)) {
             $this->errors['email'] = BUtils::_('Email is required');
@@ -102,7 +99,7 @@ class BForm {
         }
         $saned = sanitize_email($email);
         $query = "SELECT count(member_id) FROM {$wpdb->prefix}swpm_members_tbl WHERE email= %s";
-        $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
+        $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT); 
         if (!empty($member_id)) {
             $query .= ' AND member_id !=%d';
             $result = $wpdb->get_var($wpdb->prepare($query, strip_tags($saned), $member_id));

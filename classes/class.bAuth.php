@@ -71,14 +71,28 @@ class BAuth {
         if (empty($this->userData)){
             return false;
         }
-
-        if ($this->userData->account_state != 'active') {
+        $enable_expired_login = BSettings::get_instance()->get_value('enable-expired-account-login', '');
+        
+        $can_login = true;
+        if( $this->userData->account_state == 'inactive'){
             $this->lastStatusMsg = BUtils::_('Account is inactive.');
+            $can_login = false;
+        }
+        else if( $this->userData->account_state == 'pending'){
+            $this->lastStatusMsg = BUtils::_('Account is pending.');
+            $can_login = false;
+        }        
+        else if( ($this->userData->account_state == 'expired') && empty($enable_expired_login)  ){
+            $this->lastStatusMsg = BUtils::_('Account has expired.');
+            $can_login = false;
+        }        
+
+        if(!$can_login){
             $this->isLoggedIn = false;
             $this->userData = null;
-            return false;
+            return false;            
         }
-
+        
         if (BUtils::is_subscription_expired($this->userData)){
             if ($this->userData->account_state == 'active'){
                 global $wpdb;
@@ -90,10 +104,12 @@ class BAuth {
                     array( '%d' ) 
                 );
             }
-            $this->lastStatusMsg = BUtils::_('Account has expired.');
-            $this->isLoggedIn = false;
-            $this->userData = null;
-            return false;
+            if (empty($enable_expired_login)){
+                $this->lastStatusMsg = BUtils::_('Account has expired.');
+                $this->isLoggedIn = false;
+                $this->userData = null;
+                return false;
+            }
         }
         
         $this->permitted = BPermission::get_instance($this->userData->membership_level);        
@@ -152,9 +168,10 @@ class BAuth {
         }
         
         $expiration_timestamp = BUtils::get_expiration_timestamp($this->userData);
-        
+        $enable_expired_login = BSettings::get_instance()->get_value('enable-expired-account-login', '');
         // make sure cookie doesn't live beyond account expiration date.
-        $expire = min ($expire,$expiration_timestamp);
+        // but if expired account login is enabled then ignore if account is expired
+        $expire = empty($enable_expired_login)? min ($expire,$expiration_timestamp) : $expire;
         $pass_frag = substr($this->userData->password, 8, 4);
         $scheme = 'auth';
         if (!$secure){
@@ -255,5 +272,18 @@ class BAuth {
         $this->logout();        
         BMembers::delete_swpm_user_by_id($user_id);
         BMembers::delete_wp_user($user_name);
+    }
+    
+    public function reload_user_data(){
+        if (!$this->is_logged_in()) {return ;}
+        global $wpdb;
+        $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = %d";
+        $this->userData = $wpdb->get_row($wpdb->prepare($query, $this->userData->member_id));        
+        
+    }
+    public function is_expired_account(){
+        // should be called after logging in.        
+        if (!$this->is_logged_in()) {return null;}
+        return $this->get('account_state') === 'expired';
     }
 }

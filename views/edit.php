@@ -6,7 +6,7 @@
         </tr>
         <tr>
             <td><label for="email"><?php echo  BUtils::_('Email')?></label></td>
-            <td><?php echo  $email; ?></td>
+            <td><input type="text" id="email" class="validate[required,custom[email],ajax[ajaxEmailCall]]" value="<?php echo $email;?>" tabindex="2" size="50" name="email" /></td>
         </tr>
         <tr>
             <td><label for="password"><?php echo  BUtils::_('Password')?></label></td>
@@ -62,3 +62,10 @@
     <input type="hidden" name="action" value="custom_posts" />
     <?php wp_nonce_field('name_of_my_action', 'name_of_nonce_field'); ?>
 </form>
+<script>
+jQuery(document).ready(function($){
+    $.validationEngineLanguage.allRules['ajaxEmailCall']['url']= '<?php echo admin_url('admin-ajax.php');?>';
+    $.validationEngineLanguage.allRules['ajaxEmailCall']['extraData'] = '&action=swpm_validate_email&member_id=<?php echo BAuth::get_instance()->get('member_id'); ?>';
+    $("#swpm-editprofile-form").validationEngine('attach');
+});
+</script>

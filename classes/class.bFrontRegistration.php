@@ -149,6 +149,7 @@ class BFrontRegistration extends BRegistration {
             
             $wpdb->update(
                     $wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id'))); 
+            $auth->reload_user_data();
             $message = array('succeeded' => true, 'message' => 'Profile Updated.');
             BTransfer::get_instance()->set('status', $message);
         } else {

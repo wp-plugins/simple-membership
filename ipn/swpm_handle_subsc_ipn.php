@@ -34,8 +34,9 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     {
         //This is payment from an existing member/user. Update the existing member account
         swpm_debug_log_subsc("Modifying the existing membership profile... Member ID: ".$swpm_id,true);
-        // upgrade the member account        
-        $account_state = BSettings::get_instance()->get_value('default-account-status', 'active');        
+        
+        //Upgrade the member account        
+        $account_state = 'active';//This is renewal or upgrade of a previously active account. So the status should be set to active
         $subscription_starts = (date ("Y-m-d"));
         $subscr_id = $unique_ref;
        

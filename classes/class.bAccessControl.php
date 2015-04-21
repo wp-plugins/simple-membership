@@ -29,7 +29,12 @@ class BAccessControl {
             $this->lastError = apply_filters('swpm_not_logged_in_post_msg', $error_msg);
             return false;            
         }
-        
+
+        if ($auth->is_expired_account()){
+            $error_msg = '<div class="swpm-account-expired-msg swpm-yellow-box">'.BUtils::_('Your account has expired. Please renew your account to gain access to this content.').'</div>';
+            $this->lastError = apply_filters('swpm_account_expired_msg', $error_msg);
+            return false;                        
+        }
         $protect_older_posts = apply_filters('swpm_should_protect_older_post', false, $id);
         if ($protect_older_posts){
             $this->lastError = apply_filters ('swpm_restricted_post_msg_older_post', 
@@ -38,7 +43,7 @@ class BAccessControl {
         }
         $perms = BPermission::get_instance($auth->get('membership_level'));
         if($perms->is_permitted($id)) {return true;}
-        $this->lastError = apply_filters ('swpm_restricted_post_msg', BUtils::_('This content is not permitted for your membership level.')) ;
+        $this->lastError = apply_filters ('swpm_restricted_post_msg', '<div class="swpm-no-access-msg">'.BUtils::_('This content is not permitted for your membership level.').'</div>') ;
         return false;
     }
     public function can_i_read_comment($id){
@@ -51,9 +56,14 @@ class BAccessControl {
                     . BSettings::get_instance()->get_login_link());
             return false;            
         }
+        if ($auth->is_expired_account()){
+            $error_msg = '<div class="swpm-account-expired-msg swpm-yellow-box">'.BUtils::_('Your account has expired. Please renew your account to gain access to this content.').'</div>';
+            $this->lastError = apply_filters('swpm_account_expired_msg', $error_msg);
+            return false;                        
+        }        
         $perms = BPermission::get_instance($auth->get('membership_level'));
         if($perms->is_permitted_comment($id)) {return true; }
-        $this->lastError = apply_filters ('swpm_restricted_comment_msg', BUtils::_("This content is not permitted for your membership level.") );
+        $this->lastError = apply_filters ('swpm_restricted_comment_msg', '<div class="swpm-no-access-msg">'.BUtils::_("This content is not permitted for your membership level.").'</div>' );
         return false;
     }
     public function why(){

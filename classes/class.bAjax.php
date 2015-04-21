@@ -10,6 +10,10 @@ class BAjax {
         $field_value = filter_input(INPUT_GET, 'fieldValue');
         $field_id = filter_input(INPUT_GET, 'fieldId');
         $member_id = filter_input(INPUT_GET, 'member_id');
+        if (!is_email($field_value)){
+            echo '[ "' . $field_id .  '",false, "'.BUtils::_('Invalid Email Address').'" ]' ;
+            exit;            
+        }
         $table = $wpdb->prefix . "swpm_members_tbl";
         $query = $wpdb->prepare("SELECT member_id FROM $table WHERE email = %s", $field_value);
         $db_id = $wpdb->get_var($query) ;

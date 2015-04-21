@@ -9,9 +9,9 @@
             <th scope="row"><label for="user_name"><?php echo  BUtils::_('Username'); ?> <span class="description"><?php echo  BUtils::_('(required)'); ?></span></label></th>
             <td><?php echo esc_attr($user_name); ?></td>
         </tr>
-        <tr class="form-field form-required">
+        <tr class="form-required">
             <th scope="row"><label for="email"><?php echo  BUtils::_('E-mail'); ?> <span class="description"><?php echo  BUtils::_('(required)'); ?></span></label></th>
-            <td><?php echo esc_attr($email); ?></td>
+            <td><input name="email"  class="regular-text validate[required,custom[email],ajax[ajaxEmailCall]]"  type="text" id="email" value="<?php echo esc_attr($email); ?>" /></td>
         </tr>
         <tr class="">
             <th scope="row"><label for="password"><?php echo  BUtils::_('Password'); ?> <span class="description"><?php /* translators: password input field */_e('(twice, leave empty to retain old password)'); ?></span></label></th>
@@ -49,7 +49,9 @@
 </form>
 </div>
 <script>
-jQuery(document).ready(function($){
+jQuery(document).ready(function($){    
+    $.validationEngineLanguage.allRules['ajaxEmailCall']['url']= '<?php echo admin_url('admin-ajax.php');?>';
+    $.validationEngineLanguage.allRules['ajaxEmailCall']['extraData']= '&action=swpm_validate_email&member_id=<?php echo $member_id;?>';
     $("#swpm-edit-user").validationEngine('attach');
     $('#account_status_change').change(function(){
         var target = $(this).closest('tr');
