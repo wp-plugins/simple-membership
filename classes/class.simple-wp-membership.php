@@ -71,10 +71,8 @@ class SimpleWpMembership {
             global $wpdb;
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", array('password' => $password_hash), array('member_id' => $swpm_id));
         }       
-    }    
-    public function plugins_loaded(){
-        
     }
+    
     public function save_attachment_extra($post, $attachment) {
         $this->save_postdata($post['ID']);
         return $post;
@@ -604,17 +602,24 @@ class SimpleWpMembership {
          include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_add_ons_page.php');
     }
 
+    public function plugins_loaded(){
+        //Runs when plugins_loaded action gets fired
+        if(is_admin()){
+            //Check and run DB upgrade operation (if needed)
+            if (get_option('swpm_db_version') != SIMPLE_WP_MEMBERSHIP_DB_VER) {
+                include_once('class.bInstallation.php');
+                BInstallation::run_safe_installer();
+            }
+        }        
+    }
+    
     public static function activate() {
         wp_schedule_event(time(), 'daily', 'swpm_account_status_event');
         wp_schedule_event(time(), 'daily', 'swpm_delete_pending_account_event');
         include_once('class.bInstallation.php');
-        global $wpdb;
-        if (BUtils::is_multisite_install()) {
-            BInstallation::do_multisite();
-        }
-        BInstallation::installer();
-        BInstallation::initdb();
+        BInstallation::run_safe_installer();
     }
+    
     public function deactivate() {
         wp_clear_scheduled_hook('swpm_account_status_event');
         wp_clear_scheduled_hook('swpm_delete_pending_account_event');        

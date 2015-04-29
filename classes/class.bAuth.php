@@ -161,25 +161,27 @@ class BAuth {
 
     private function set_cookie($remember = '', $secure = '') {
         if ($remember){
-            $expire = time() + 1209600;
+            $expiration = time() + 1209600; // 14 days
+            $expire = $expiration  + 43200; // 12 hours grace period 
         }
         else{
-            $expire = time() + 172800;
+            $expiration = time() + 172800; // 2 days.
+            $expire = $expiration;//The minimum cookie expiration should be at least couple of days.
         }
         
         $expiration_timestamp = BUtils::get_expiration_timestamp($this->userData);
         $enable_expired_login = BSettings::get_instance()->get_value('enable-expired-account-login', '');
         // make sure cookie doesn't live beyond account expiration date.
         // but if expired account login is enabled then ignore if account is expired
-        $expire = empty($enable_expired_login)? min ($expire,$expiration_timestamp) : $expire;
+        $expiration = empty($enable_expired_login)? min ($expiration,$expiration_timestamp) : $expiration;
         $pass_frag = substr($this->userData->password, 8, 4);
         $scheme = 'auth';
         if (!$secure){
             $secure = is_ssl();
         }
-        $key = BAuth::b_hash($this->userData->user_name . $pass_frag . '|' . $expire, $scheme);
-        $hash = hash_hmac('md5', $this->userData->user_name . '|' . $expire, $key);
-        $auth_cookie = $this->userData->user_name . '|' . $expire . '|' . $hash;
+        $key = BAuth::b_hash($this->userData->user_name . $pass_frag . '|' . $expiration, $scheme);
+        $hash = hash_hmac('md5', $this->userData->user_name . '|' . $expiration, $key);
+        $auth_cookie = $this->userData->user_name . '|' . $expiration . '|' . $hash;
         $auth_cookie_name = $secure ? SIMPLE_WP_MEMBERSHIP_SEC_AUTH : SIMPLE_WP_MEMBERSHIP_AUTH;
         //setcookie($auth_cookie_name, $auth_cookie, $expire, PLUGINS_COOKIE_PATH, COOKIE_DOMAIN, $secure, true);
         setcookie($auth_cookie_name, $auth_cookie, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure, true);

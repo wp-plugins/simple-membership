@@ -7,23 +7,37 @@
  */
 class BInstallation {
 
-    public static function do_multisite() {
+    /*
+     * This function is capable of handing both single site or multi-site install and upgrade all in one.
+     */
+    static function run_safe_installer()
+    {	
         global $wpdb;
-        $networkwide = filter_input(INPUT_GET, 'networkwide');
-        // check if it is a network activation - if so, run the activation function for each blog id
-        if ($networkwide == 1) {
-            $old_blog = $wpdb->blogid;
-            // Get all blog ids
-            $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
-            foreach ($blogids as $blog_id) {
-                switch_to_blog($blog_id);
-                BInstallation::installer();
-                BInstallation::initdb();
+        
+        //Do this if multi-site setup
+        if (function_exists('is_multisite') && is_multisite()) 
+        {
+            // check if it is a network activation - if so, run the activation function for each blog id
+            if (isset($_GET['networkwide']) && ($_GET['networkwide'] == 1)) 
+            {
+                $old_blog = $wpdb->blogid;
+                // Get all blog ids
+                $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+                foreach ($blogids as $blog_id) {
+                    switch_to_blog($blog_id);
+                    BInstallation::installer();
+                    BInstallation::initdb();
+                }
+                switch_to_blog($old_blog);
+                return;
             }
-            switch_to_blog($old_blog);
-            return;
         }
+        
+        //Do this if single site standard install
+        BInstallation::installer();
+        BInstallation::initdb();
     }
+    
     public static function installer() {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -139,6 +153,27 @@ class BInstallation {
                         UNIQUE KEY meta_key_id (level_id,meta_key)
           )" . $charset_collate . " AUTO_INCREMENT=1 ;";
         dbDelta($sql);
+        
+        $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_payments_tbl (
+                        id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        email varchar(64) DEFAULT NULL,
+                        first_name varchar(32) DEFAULT '',
+                        last_name varchar(32) DEFAULT '',
+                        member_id varchar(16) DEFAULT '',
+                        membership_level varchar(16) DEFAULT '',
+                        txn_date date NOT NULL default '0000-00-00',
+                        txn_id varchar(128) NOT NULL default '',
+                        subscr_id varchar(128) NOT NULL default '',
+                        reference varchar(128) NOT NULL default '',
+                        payment_amount varchar(32) NOT NULL default '', 
+                        gateway varchar(16) DEFAULT '',
+                        status varchar(16) DEFAULT '',
+                        ip_address varchar(64) default ''
+                        )" . $charset_collate . ";";
+        dbDelta($sql);
+        
+        //Save the current DB version
+        update_option("swpm_db_version", SIMPLE_WP_MEMBERSHIP_DB_VER);
     }
 
     public static function initdb() {
