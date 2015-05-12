@@ -23,6 +23,8 @@ include_once('class.bMembershipLevelCustom.php');
 include_once('class.bMembershipLevelUtils.php');
 include_once('class.bPermissionCollection.php');
 include_once('class.bAuthPermissionCollection.php');
+include_once('class.bTransactions.php');
+
 class SimpleWpMembership {
     public function __construct() {
         add_action('admin_menu', array(&$this, 'menu'));        
@@ -523,6 +525,8 @@ class SimpleWpMembership {
                 'manage_options', 'simple_wp_membership_levels', array(&$this, "admin_membership_levels"));
         add_submenu_page($menu_parent_slug, __("Settings", 'swpm'), __("Settings", 'swpm'),
                 'manage_options', 'simple_wp_membership_settings', array(&$this, "admin_settings"));
+        add_submenu_page($menu_parent_slug, __("Payments", 'swpm'), __("Payments", 'swpm'),
+                'manage_options', 'simple_wp_membership_payments', array(&$this, "payments_menu"));
         add_submenu_page($menu_parent_slug, __("Add-ons", 'swpm'), __("Add-ons", 'swpm'),
                 'manage_options', 'simple_wp_membership_addons', array(&$this, "add_ons_menu"));
         
@@ -596,6 +600,10 @@ class SimpleWpMembership {
                 include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_settings.php');
                 break;
         }
+    }
+    
+    public function payments_menu(){
+        include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_payments_page.php');
     }
     
     public function add_ons_menu(){

@@ -3,7 +3,6 @@
 /**
  * Description of BAdminRegistration
  *
- * @author nur
  */
 class BAdminRegistration extends BRegistration {
     public static function get_instance(){

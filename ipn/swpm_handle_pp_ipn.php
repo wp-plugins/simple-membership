@@ -26,17 +26,36 @@ class swpm_paypal_ipn_handler {
         $error_msg = "";
 
         // Read the IPN and validate
+        $gross_total = $this->ipn_data['mc_gross'];
+        $transaction_type = $this->ipn_data['txn_type'];
+        $txn_id = $this->ipn_data['txn_id'];        
     	$payment_status = $this->ipn_data['payment_status'];
+        
+        //Check payment status
     	if (!empty($payment_status))
     	{
-            if ($payment_status != "Completed" && $payment_status != "Processed" && $payment_status != "Refunded")
+            if ($payment_status == "Denied") {
+                $this->debug_log("Payment status for this transaction is DENIED. You denied the transaction... most likely a cancellation of an eCheque. Nothing to do here.", false);
+                return false;
+            }
+            if ($payment_status == "Canceled_Reversal") {
+                $this->debug_log("This is a dispute closed notification in your favour. The plugin will not do anyting.", false);
+                return true;
+            }
+            if ($payment_status != "Completed" && $payment_status != "Processed" && $payment_status != "Refunded" && $payment_status != "Reversed")
             {
-                $error_msg .= 'Funds have not been cleared yet. Product(s) will be delivered when the funds clear!';
+                $error_msg .= 'Funds have not been cleared yet. Transaction will be processed when the funds clear!';
                 $this->debug_log($error_msg,false);
                 return false;
             }
     	}
 
+        //Check txn type
+        if ($transaction_type == "new_case") {
+            $this->debug_log('This is a dispute case. Nothing to do here.', true);
+            return true;
+        }
+        
         $custom = $this->ipn_data['custom'];
         $delimiter = "&";
         $customvariables = array();
@@ -54,10 +73,8 @@ class swpm_paypal_ipn_handler {
             $value = substr($keyval_unparsed, $equalsignposition + 1);
             $customvariables[$key] = $value;
         }
-
-        $transaction_type = $this->ipn_data['txn_type'];
-        $txn_id = $this->ipn_data['txn_id'];
-        $gross_total = $this->ipn_data['mc_gross'];
+        
+        //Handle refunds
         if ($gross_total < 0)
         {
             // This is a refund or reversal
@@ -114,11 +131,6 @@ class swpm_paypal_ipn_handler {
             array_push($cart_items, $current_item);
         }
 
-        $product_id_array = Array();
-        $product_name_array = Array();
-        $product_price_array = Array();
-        $attachments_array = Array();
-        $download_link_array = Array();
         $counter = 0;
         foreach ($cart_items as $current_cart_item)
         {
@@ -160,13 +172,22 @@ class swpm_paypal_ipn_handler {
             }
             else
             {
-                $this->debug_log('Membership level ID is missing in the payment notification! Cannot process this notification',false);
+                $this->debug_log('Membership level ID is missing in the payment notification! Cannot process this notification.',false);
             }
             //== End of Membership payment handling ==
             $counter++;
         }
 
-        // Do Post payment operation and cleanup
+        /*** Do Post payment operation and cleanup ***/
+        //Save the transaction data
+        $this->debug_log('Saving transaction data to the database table.', true);
+        $this->ipn_data['gateway'] = 'paypal';
+        $this->ipn_data['status'] = $this->ipn_data['payment_status'];
+        BTransactions::save_txn_record($this->ipn_data, $cart_items);
+        $this->debug_log('Transaction data saved.', true);
+
+        
+        //WP Affiliate Plugin integration
         if (function_exists('wp_aff_platform_install'))
         {
             $this->debug_log('WP Affiliate Platform is installed, checking if custom field has affiliate data...',true);

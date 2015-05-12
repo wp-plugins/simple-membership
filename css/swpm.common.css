@@ -19,6 +19,15 @@
     border-width: 1px;    
 }
 
+.swpm-grey-box{
+    margin: 10px 0 15px;
+    padding: 10px;
+    background-color: #DDDDDD;
+    border-color: #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+}
 .swpm-green-box {
     margin: 10px 0 15px;
     padding: 10px;

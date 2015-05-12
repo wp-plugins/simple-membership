@@ -20,9 +20,9 @@ abstract class BProtectionBase {
         global $wpdb;
         $this->owning_level_id = $level_id;
         $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}swpm_membership_tbl WHERE "
-                . (is_numeric($level_id)? 'id = %d': 'md5(id) = %s' ), $level_id);
+                . (is_numeric($level_id) ? 'id = %d' : 'md5(id) = %s' ), $level_id);
         $result = $wpdb->get_row($query);
-        
+
         $this->bitmap = isset($result->permissions) ? $result->permissions : 0;
         $this->posts = isset($result->post_list) ? (array) unserialize($result->post_list) : array();
         $this->pages = isset($result->page_list) ? (array) unserialize($result->page_list) : array();
@@ -34,16 +34,23 @@ abstract class BProtectionBase {
         $this->disable_bookmark = isset($result->disable_bookmark_list) ? (array) unserialize($result->disable_bookmark_list) : array();
         $this->details = (array) $result;
     }
-    public function apply($ids, $type){
+
+    public function apply($ids, $type) {
         $post_types = get_post_types(array('public' => true, '_builtin' => false));
-        if(in_array($type,$post_types)){$type = 'custom_post';}
+        if (in_array($type, $post_types)) {
+            $type = 'custom_post';
+        }
         return $this->update_perms($ids, true, $type);
     }
-    public function remove($ids, $type){
+
+    public function remove($ids, $type) {
         $post_types = get_post_types(array('public' => true, '_builtin' => false));
-        if(in_array($type,$post_types)){$type = 'custom_post';}
+        if (in_array($type, $post_types)) {
+            $type = 'custom_post';
+        }
         return $this->update_perms($ids, false, $type);
     }
+
     public function get_options() {
         return $this->options;
     }
@@ -74,9 +81,9 @@ abstract class BProtectionBase {
 
     public function is_bookmark_disabled($id) {
         $posts = isset($this->disable_bookmark['posts']) ?
-                (array)$this->disable_bookmark['posts'] : array();
+                (array) $this->disable_bookmark['posts'] : array();
         $pages = isset($this->disable_bookmark['pages']) ?
-                (array)$this->disable_bookmark['pages'] : array();
+                (array) $this->disable_bookmark['pages'] : array();
         return in_array($id, $pages) || in_array($id, $posts);
     }
 
@@ -195,6 +202,10 @@ abstract class BProtectionBase {
     private function update_perms($ids, $set, $type) {
         $list = null;
         $index = '';
+        if (empty($ids)) {
+            return $this;
+        }
+        $ids = (array) $ids;
         switch ($type) {
             case 'page':
                 $list = $this->pages;
@@ -223,6 +234,7 @@ abstract class BProtectionBase {
             default:
                 break;
         }
+
         if (!empty($index)) {
             if ($set) {
                 $list = array_merge($list, $ids);
@@ -275,7 +287,7 @@ abstract class BProtectionBase {
     }
 
     public function get($key, $default = '') {
-        if (isset($this->details[$key])){
+        if (isset($this->details[$key])) {
             return $this->details[$key];
         }
         return $default;
