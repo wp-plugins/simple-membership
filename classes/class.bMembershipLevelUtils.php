@@ -1,8 +1,10 @@
 <?php
+
 /**
- * Description of class
+ * BMembershipLevelUtils
  *
  * @author nur
  */
-class BMembershipLevelUtils {
+abstract class BMembershipLevelUtils {
+
 }
