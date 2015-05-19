@@ -54,7 +54,8 @@ class BCategoryList extends WP_List_Table {
 
     function column_cb($item) {
         return sprintf(
-                '<input type="checkbox" %s name="ids[]" value="%s" />', $this->category->in_categories($item->term_id) ? "checked" : "", $item->term_id
+                '<input type="hidden" name="ids_in_page[]" value="%s">
+            <input type="checkbox" %s name="ids[]" value="%s" />', $item->term_id, $this->category->in_categories($item->term_id) ? "checked" : "", $item->term_id
         );
     }
 
@@ -67,7 +68,13 @@ class BCategoryList extends WP_List_Table {
             ));
             $filtered = filter_input_array(INPUT_POST, $args);
             $ids = $filtered['ids'];
-            $this->category->apply($ids, 'category')->save();
+            $args = array('ids_in_page' => array(
+                    'filter' => FILTER_VALIDATE_INT,
+                    'flags' => FILTER_REQUIRE_ARRAY,
+            ));
+            $filtered = filter_input_array(INPUT_POST, $args);
+            $ids_in_page = $filtered['ids_in_page'];
+            $this->category->remove($ids_in_page, 'category')->apply($ids, 'category')->save();
             $message = array('succeeded' => true, 'message' => BUtils::_('Updated! '));
             BTransfer::get_instance()->set('status', $message);
         }

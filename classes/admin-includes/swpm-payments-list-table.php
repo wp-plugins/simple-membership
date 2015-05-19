@@ -1,6 +1,6 @@
 <?php
 
-include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'includes/class-swpm-list-table.php');
+include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/common/class-swpm-list-table.php');
 
 class SWPM_Payments_List_Table extends SWPM_List_Table {
 

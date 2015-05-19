@@ -5,6 +5,6 @@
  *
  * @author nur
  */
-abstract class BMembershipLevelUtils {
+class BMembershipLevelUtils {
 
 }

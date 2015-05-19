@@ -2,6 +2,7 @@
 
 include_once('class.bUtils.php');
 include_once('class.miscUtils.php');
+include_once('class.bMemberUtils.php');
 include_once('class.bSettings.php');
 include_once('class.bProtection.php');
 include_once('class.bPermission.php');

@@ -5,7 +5,7 @@
  *
  * @author nur
  */
-abstract class BMemberUtils {
+class BMemberUtils {
 
     public static function is_member_logged_in() {
         $auth = BAuth::get_instance();
@@ -21,7 +21,7 @@ abstract class BMemberUtils {
         if (!$auth->is_logged_in()) {
             return bUtils::_("User is not logged in.");
         }
-        return $auth->userData->member_id;
+        return $auth->get('member_id');
     }
 
     public static function get_logged_in_members_level() {
@@ -29,7 +29,7 @@ abstract class BMemberUtils {
         if (!$auth->is_logged_in()) {
             return bUtils::_("User is not logged in.");
         }
-        return $auth->userData->membership_level;
+        return $auth->get('membership_level');
     }
 
 }

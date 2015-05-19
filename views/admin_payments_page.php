@@ -24,7 +24,7 @@ $output = '';
                 </div></div>
 
             <?php
-            include_once('admin-includes/swpm-payments-list-table.php');
+            include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/admin-includes/swpm-payments-list-table.php');
             //Create an instance of our package class...
             $payments_list_table = new SWPM_Payments_List_Table();
             
