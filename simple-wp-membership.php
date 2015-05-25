@@ -1,13 +1,12 @@
 <?php
-
 /*
-  Plugin Name: Simple WordPress Membership
-  Version: v2.2.4
-  Plugin URI: https://simple-membership-plugin.com/
-  Author: smp7, wp.insider
-  Author URI: https://simple-membership-plugin.com/
-  Description: A flexible, well-supported, and easy-to-use WordPress membership plugin for offering free and premium content from your WordPress site.
- */
+Plugin Name: Simple WordPress Membership
+Version: v2.2.5
+Plugin URI: https://simple-membership-plugin.com/
+Author: smp7, wp.insider
+Author URI: https://simple-membership-plugin.com/
+Description: A flexible, well-supported, and easy-to-use WordPress membership plugin for offering free and premium content from your WordPress site.
+*/
 
 //Direct access to this file is not permitted
 if (realpath(__FILE__) === realpath($_SERVER["SCRIPT_FILENAME"])) {
