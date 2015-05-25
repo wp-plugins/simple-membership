@@ -105,9 +105,8 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
-
 = 2.2.5 =
-- Refactored all the class names to use the "spwm" slug to remove potential conflict with other plugins with similar class names.
+- Refactored all the class names to use the "swpm" slug to remove potential conflict with other plugins with similar class names.
 
 = 2.2.4 =
 - Fixed an issue with not being able to unprotect the category protection.
