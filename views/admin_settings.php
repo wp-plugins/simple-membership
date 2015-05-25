@@ -1,5 +1,5 @@
 <?php screen_icon( 'options-general' );?>
-<h1><?php echo  BUtils::_('Simple WP Membership::Settings') ?></h1>
+<h1><?php echo  SwpmUtils::_('Simple WP Membership::Settings') ?></h1>
  <div class="wrap">
         <?php do_action("swpm-draw-tab"); ?>
         <form action="options.php" method="POST">

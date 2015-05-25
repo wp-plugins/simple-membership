@@ -3,7 +3,7 @@
 function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$swpm_id='')
 {
     global $wpdb;
-    $settings = BSettings::get_instance();
+    $settings = SwpmSettings::get_instance();
     $members_table_name = $wpdb->prefix . "swpm_members_tbl";
     $membership_level_table = $wpdb->prefix . "swpm_membership_tbl";
     $membership_level = $subsc_ref;
@@ -180,7 +180,7 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
     $membership_level_table = $wpdb->prefix . "swpm_membership_tbl";
     $email = $ipn_data['payer_email'];
     $subscr_id = $ipn_data['subscr_id'];
-    $account_state = BSettings::get_instance()->get_value('default-account-status', 'active');
+    $account_state = SwpmSettings::get_instance()->get_value('default-account-status', 'active');
     swpm_debug_log_subsc("Updating subscription start date if applicable for this subscription payment. Subscriber ID: ".$subscr_id." Email: ".$email,true);
 
     //We can also query using the email address
@@ -202,7 +202,7 @@ function swpm_update_member_subscription_start_date_if_applicable($ipn_data)
 
 function swpm_debug_log_subsc($message,$success,$end=false) 
 {
-    $settings = BSettings::get_instance();
+    $settings = SwpmSettings::get_instance();
     $debug_enabled = $settings->get_value('enable-debug');
     if (empty($debug_enabled)) {//Debug is not enabled
         return;

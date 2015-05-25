@@ -183,7 +183,7 @@ class swpm_paypal_ipn_handler {
         $this->debug_log('Saving transaction data to the database table.', true);
         $this->ipn_data['gateway'] = 'paypal';
         $this->ipn_data['status'] = $this->ipn_data['payment_status'];
-        BTransactions::save_txn_record($this->ipn_data, $cart_items);
+        SwpmTransactions::save_txn_record($this->ipn_data, $cart_items);
         $this->debug_log('Transaction data saved.', true);
 
         
@@ -310,7 +310,7 @@ class swpm_paypal_ipn_handler {
 
     function debug_log($message,$success,$end=false)
     {
-        BLog::log_simple_debug($message, $success, $end);
+        SwpmLog::log_simple_debug($message, $success, $end);
     }
 }
 
@@ -318,7 +318,7 @@ class swpm_paypal_ipn_handler {
 
 $ipn_handler_instance = new swpm_paypal_ipn_handler();
 
-$settings = BSettings::get_instance();
+$settings = SwpmSettings::get_instance();
 $debug_enabled = $settings->get_value('enable-debug');
 if(!empty($debug_enabled))//debug is enabled in the system
 {
