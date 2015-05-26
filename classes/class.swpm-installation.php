@@ -6,20 +6,17 @@
  * @author nur
  */
 class SwpmInstallation {
-
     /*
      * This function is capable of handing both single site or multi-site install and upgrade all in one.
      */
-    static function run_safe_installer()
-    {	
+
+    static function run_safe_installer() {
         global $wpdb;
-        
+
         //Do this if multi-site setup
-        if (function_exists('is_multisite') && is_multisite()) 
-        {
+        if (function_exists('is_multisite') && is_multisite()) {
             // check if it is a network activation - if so, run the activation function for each blog id
-            if (isset($_GET['networkwide']) && ($_GET['networkwide'] == 1)) 
-            {
+            if (isset($_GET['networkwide']) && ($_GET['networkwide'] == 1)) {
                 $old_blog = $wpdb->blogid;
                 // Get all blog ids
                 $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
@@ -32,23 +29,23 @@ class SwpmInstallation {
                 return;
             }
         }
-        
+
         //Do this if single site standard install
         SwpmInstallation::installer();
         SwpmInstallation::initdb();
     }
-    
+
     public static function installer() {
         global $wpdb;
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        
+
         $charset_collate = '';
-        if (!empty($wpdb->charset)){
+        if (!empty($wpdb->charset)) {
             $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-        }else{
+        } else {
             $charset_collate = "DEFAULT CHARSET=utf8";
         }
-        if (!empty($wpdb->collate)){
+        if (!empty($wpdb->collate)) {
             $charset_collate .= " COLLATE $wpdb->collate";
         }
 
@@ -94,7 +91,7 @@ class SwpmInstallation {
 			permissions tinyint(4) NOT NULL DEFAULT '0',
 			subscription_period varchar(11) NOT NULL DEFAULT '-1',
                         subscription_duration_type tinyint NOT NULL default 0,
-			subscription_unit   VARCHAR(20)        NULL, 
+			subscription_unit   VARCHAR(20)        NULL,
 			loginredirect_page  text NULL,
 			category_list longtext,
 			page_list longtext,
@@ -133,11 +130,11 @@ class SwpmInstallation {
         $wpdb->query($sql);
 
         $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 2 WHERE subscription_unit='weeks' AND subscription_duration_type = 0";
-        $wpdb->query($sql);        
-        
+        $wpdb->query($sql);
+
         $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 3 WHERE subscription_unit='months' AND subscription_duration_type = 0";
-        $wpdb->query($sql);                
-        
+        $wpdb->query($sql);
+
         $sql = "UPDATE  " . $wpdb->prefix . "swpm_membership_tbl SET subscription_duration_type = 4 WHERE subscription_unit='years' AND subscription_duration_type = 0";
         $wpdb->query($sql);
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_membership_meta_tbl (
@@ -150,10 +147,10 @@ class SwpmInstallation {
                         meta_default text,
                         meta_context varchar(255) NOT NULL DEFAULT 'default',
                         KEY level_id (level_id),
-                        UNIQUE KEY meta_key_id (level_id,meta_key)
+                        UNIQUE KEY meta_key_id (level_id,meta_key(191))
           )" . $charset_collate . " AUTO_INCREMENT=1 ;";
         dbDelta($sql);
-        
+
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_payments_tbl (
                         id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
                         email varchar(64) DEFAULT NULL,
@@ -165,13 +162,13 @@ class SwpmInstallation {
                         txn_id varchar(128) NOT NULL default '',
                         subscr_id varchar(128) NOT NULL default '',
                         reference varchar(128) NOT NULL default '',
-                        payment_amount varchar(32) NOT NULL default '', 
+                        payment_amount varchar(32) NOT NULL default '',
                         gateway varchar(16) DEFAULT '',
                         status varchar(16) DEFAULT '',
                         ip_address varchar(64) default ''
                         )" . $charset_collate . ";";
         dbDelta($sql);
-        
+
         //Save the current DB version
         update_option("swpm_db_version", SIMPLE_WP_MEMBERSHIP_DB_VER);
     }
@@ -215,7 +212,7 @@ class SwpmInstallation {
                 " Please login to the member area at the following URL:" .
                 "\n\n {login_link}" .
                 "\n\nThank You";
-        
+
         if (empty($installed_version)) {
             //Do fresh install tasks
 
@@ -231,7 +228,7 @@ class SwpmInstallation {
                     ->set_value('reset-mail-subject', stripslashes($reset_email_subject))
                     ->set_value('reset-mail-body', stripslashes($reset_email_body))
                     ->set_value('account-change-email-subject', stripslashes($status_change_email_subject))
-                    ->set_value('account-change-email-body', stripslashes($status_change_email_body))                    
+                    ->set_value('account-change-email-body', stripslashes($status_change_email_body))
                     ->set_value('email-from', trim(get_option('admin_email')));
         }
         if (version_compare($installed_version, SIMPLE_WP_MEMBERSHIP_VER) == -1) {
@@ -240,4 +237,5 @@ class SwpmInstallation {
 
         $settings->set_value('swpm-active-version', SIMPLE_WP_MEMBERSHIP_VER)->save(); //save everything.
     }
+
 }
