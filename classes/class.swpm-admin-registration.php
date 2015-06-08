@@ -5,10 +5,12 @@
  *
  */
 class SwpmAdminRegistration extends SwpmRegistration {
-    public static function get_instance(){
-        self::$_intance = empty(self::$_intance)? new SwpmAdminRegistration():self::$_intance;
+
+    public static function get_instance() {
+        self::$_intance = empty(self::$_intance) ? new SwpmAdminRegistration() : self::$_intance;
         return self::$_intance;
     }
+
     public function show_form() {
 
     }
@@ -25,14 +27,18 @@ class SwpmAdminRegistration extends SwpmRegistration {
             unset($member_info['plain_password']);
             $wpdb->insert($wpdb->prefix . "swpm_members_tbl", $member_info);
             /*             * ******************** register to wordpress ********** */
-            $query = $wpdb->prepare("SELECT role FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $member_info['membership_level']) ;
+            $query = $wpdb->prepare("SELECT role FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $member_info['membership_level']);
             $wp_user_info = array();
             $wp_user_info['user_nicename'] = implode('-', explode(' ', $member_info['user_name']));
             $wp_user_info['display_name'] = $member_info['user_name'];
             $wp_user_info['user_email'] = $member_info['email'];
             $wp_user_info['nickname'] = $member_info['user_name'];
-            if (isset($member_info['first_name'])){$wp_user_info['first_name'] = $member_info['first_name']; }
-            if (isset($member_info['last_name'])){$wp_user_info['last_name'] = $member_info['last_name'];}
+            if (isset($member_info['first_name'])) {
+                $wp_user_info['first_name'] = $member_info['first_name'];
+            }
+            if (isset($member_info['last_name'])) {
+                $wp_user_info['last_name'] = $member_info['last_name'];
+            }
             $wp_user_info['user_login'] = $member_info['user_name'];
             $wp_user_info['password'] = $plain_password;
             $wp_user_info['role'] = $wpdb->get_var($query);
@@ -42,18 +48,19 @@ class SwpmAdminRegistration extends SwpmRegistration {
             $send_notification = SwpmSettings::get_instance()->get_value('enable-notification-after-manual-user-add');
             $member_info['plain_password'] = $plain_password;
             $this->member_info = $member_info;
-            if (!empty($send_notification)){
+            if (!empty($send_notification)) {
                 $this->send_reg_email();
             }
             $message = array('succeeded' => true, 'message' => SwpmUtils::_('Registration Successful.'));
             SwpmTransfer::get_instance()->set('status', $message);
-            wp_redirect('admin.php?page=simple_wp_membership'); 
+            wp_redirect('admin.php?page=simple_wp_membership');
             return;
         }
         $message = array('succeeded' => false, 'message' => SwpmUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         SwpmTransfer::get_instance()->set('status', $message);
     }
-    public function edit($id){
+
+    public function edit($id) {
         global $wpdb;
         $query = $wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = %d", $id);
         $member = $wpdb->get_row($query, ARRAY_A);
@@ -63,30 +70,34 @@ class SwpmAdminRegistration extends SwpmRegistration {
         unset($member['user_name']);
         $form = new SwpmForm($member);
         if ($form->is_valid()) {
-            $member = $form->get_sanitized(); 
+            $member = $form->get_sanitized();
+            $plain_password = isset($member['plain_password']) ? $member['plain_password'] : "";
             SwpmUtils::update_wp_user($user_name, $member);
             unset($member['plain_password']);
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member, array('member_id' => $id));
             $message = array('succeeded' => true, 'message' => 'Updated Successfully.');
-            do_action('swpm_admin_edit_custom_fields', $member + array('member_id'=>$id));
+            do_action('swpm_admin_edit_custom_fields', $member + array('member_id' => $id));
             SwpmTransfer::get_instance()->set('status', $message);
             $send_notification = filter_input(INPUT_POST, 'account_status_change');
-            if (!empty($send_notification)){
+            if (!empty($send_notification)) {
                 $settings = SwpmSettings::get_instance();
                 $from_address = $settings->get_value('email-from');
                 $headers = 'From: ' . $from_address . "\r\n";
-                $subject = filter_input(INPUT_POST,'notificationmailhead');
+                $subject = filter_input(INPUT_POST, 'notificationmailhead');
                 $body = filter_input(INPUT_POST, 'notificationmailbody');
-                $settings->set_value('account-change-email-body', $body)->set_value('account-change-email-subject', $subject)->save();                
+                $settings->set_value('account-change-email-body', $body)->set_value('account-change-email-subject', $subject)->save();
                 $member['login_link'] = $settings->get_value('login-page-url');
+                $member['user_name'] = $user_name;
+                $member['password'] = empty($plain_password) ? SwpmUtils::_("Your current password") : $plain_password;
                 $values = array_values($member);
                 $keys = array_map('swpm_enclose_var', array_keys($member));
-                $body = str_replace($keys, $values, $body);                
-                wp_mail($email_address, $subject, $body, $headers);                
+                $body = str_replace($keys, $values, $body);
+                wp_mail($email_address, $subject, $body, $headers);
             }
             wp_redirect('admin.php?page=simple_wp_membership');
-        }               
+        }
         $message = array('succeeded' => false, 'message' => SwpmUtils::_('Please correct the following:'), 'extra' => $form->get_errors());
         SwpmTransfer::get_instance()->set('status', $message);
     }
+
 }

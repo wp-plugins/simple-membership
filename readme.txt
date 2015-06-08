@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.2
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,12 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= TODO 2.2.7 =
+- Added Japanese language translation to the plugin. The translation was submitted by Mana.
+- Added Serbian language translation to the plugin. The translation was submitted by Zoran Milijanovic.
+- All member fields will be loaded in the edit page (instead of just two).
+
 = 2.2.6 =
 - Fixed an issue with the category protection menu after the class refactoring work.
 - Fixed the unique key in the DB table
