@@ -106,7 +106,7 @@ https://simple-membership-plugin.com/
 
 == Changelog ==
 
-= TODO 2.2.7 =
+= 2.2.7 =
 - Added Japanese language translation to the plugin. The translation was submitted by Mana.
 - Added Serbian language translation to the plugin. The translation was submitted by Zoran Milijanovic.
 - All member fields will be loaded in the edit page (instead of just two).
