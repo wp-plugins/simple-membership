@@ -1,5 +1,5 @@
 <div class="wrap">
-<h2><?php screen_icon( 'users' );?>Simple WP Membership::Manage Protection</h2>
+<h2>Simple WP Membership::Manage Protection</h2>
     <?php include_once(SIMPLE_WP_MEMBERSHIP_PATH.'views/admin_membership_level_menu.php');?>
 
 <div id="poststuff"><div id="post-body">

@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.2
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,8 @@ The following language translations are already available:
 * Romanian
 * Danish
 * Lithuanian
+* Serbian
+* Japanese
 
 You can translate the plugin using the language [translation documentation](https://simple-membership-plugin.com/translate-simple-membership-plugin/).
 
@@ -105,6 +107,14 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 2.2.8 =
+- Updated the swedish language translation file.
+- Code refactoring: moved all the init hook tasks to a separate class.
+- Increased the size of admin nav tab menu items so they are easy to see.
+- Made all the admin menu title size consistent accross all the menus.
+- Updated the admin menu dashicon icon to a nicer looking one.
+- You can now create and configure PayPal buy now button for membership payment from the payments menu.
 
 = 2.2.7 =
 - Added Japanese language translation to the plugin. The translation was submitted by Mana.

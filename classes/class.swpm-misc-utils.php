@@ -143,7 +143,7 @@ class SwpmMiscUtils {
     public static function reset_swmp_log_files() {
         $log_reset = true;
         $logfile_list = array(
-            SIMPLE_WP_MEMBERSHIP_PATH.'/log.txt',
+            SIMPLE_WP_MEMBERSHIP_PATH . '/log.txt',
         );
 
         foreach ($logfile_list as $logfile) {
@@ -162,6 +162,42 @@ class SwpmMiscUtils {
             }
         }
         return $log_reset;
+    }
+
+    public static function redirect_to_url($url) {
+        if (empty($url)) {
+            return;
+        }
+        $url = apply_filters('swpm_redirect_to_url', $url);
+
+        if (!preg_match("/http/", $url)) {//URL value is incorrect
+            echo '<p>Error! The URL value you entered in the plugin configuration is incorrect.</p>';
+            echo '<p>A URL must always have the "http" keyword in it.</p>';
+            echo '<p style="font-weight: bold;">The URL value you currently configured is: <br />' . $url . '</p>';
+            echo '<p>Here are some examples of correctly formatted URL values for your reference: <br />http://www.example.com<br/>http://example.com<br />https://www.example.com</p>';
+            echo '<p>Find the field where you entered this incorrect URL value and correct the mistake then try again.</p>';
+            exit;
+        }
+        if (!headers_sent()) {
+            header('Location: ' . $url);
+        } else {
+            echo '<meta http-equiv="refresh" content="0;url=' . $url . '" />';
+        }
+        exit;
+    }
+
+    public static function get_current_page_url() {
+        $pageURL = 'http';
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+            $pageURL .= "s";
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80") {
+            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        } else {
+            $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
     }
 
 }

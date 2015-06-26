@@ -2,6 +2,7 @@
 
 include_once('class.swpm-misc-utils.php');
 include_once('class.swpm-utils.php');
+include_once('class.swpm-init-time-tasks.php');
 include_once('class.swpm-member-utils.php');
 include_once('class.swpm-settings.php');
 include_once('class.swpm-protection.php');
@@ -25,12 +26,13 @@ include_once('class.swpm-membership-level-utils.php');
 include_once('class.swpm-permission-collection.php');
 include_once('class.swpm-auth-permission-collection.php');
 include_once('class.swpm-transactions.php');
+include_once('shortcode-related/class.swpm-shortcodes-handler.php');
 
 class SimpleWpMembership {
 
     public function __construct() {
         add_action('admin_menu', array(&$this, 'menu'));
-        add_action('init', array(&$this, 'init'));
+        add_action('init', array(&$this, 'init_hook'));
 
         add_filter('the_content', array(&$this, 'filter_content'), 11, 1);
         add_filter('widget_text', 'do_shortcode');
@@ -41,10 +43,13 @@ class SimpleWpMembership {
         add_filter('attachment_fields_to_save', array(&$this, 'save_attachment_extra'), 10, 2);
         add_filter('the_content_more_link', array(&$this, 'filter_moretag'), 10, 2);
 
+        //TODO - refactor these shortcodes into the shortcodes handler class
         add_shortcode("swpm_registration_form", array(&$this, 'registration_form'));
         add_shortcode('swpm_profile_form', array(&$this, 'profile_form'));
         add_shortcode('swpm_login_form', array(&$this, 'login'));
         add_shortcode('swpm_reset_form', array(&$this, 'reset'));
+        
+        new SwpmShortcodesHandler();//Tackle the shortcode definitions and implementation.
 
         add_action('save_post', array(&$this, 'save_postdata'));
         add_action('admin_notices', array(&$this, 'notices'));
@@ -411,82 +416,9 @@ class SimpleWpMembership {
         return $acl->filter_post_with_moretag($post->ID, $more_link, $more_link_text);
     }
 
-    public function admin_init() {
-        $createswpmuser = filter_input(INPUT_POST, 'createswpmuser');
-        if (!empty($createswpmuser)) {
-            SwpmAdminRegistration::get_instance()->register();
-        }
-        $editswpmuser = filter_input(INPUT_POST, 'editswpmuser');
-        if (!empty($editswpmuser)) {
-            $id = filter_input(INPUT_GET, 'member_id', FILTER_VALIDATE_INT);
-            SwpmAdminRegistration::get_instance()->edit($id);
-        }
-        $createswpmlevel = filter_input(INPUT_POST, 'createswpmlevel');
-        if (!empty($createswpmlevel)) {
-            SwpmMembershipLevel::get_instance()->create();
-        }
-        $editswpmlevel = filter_input(INPUT_POST, 'editswpmlevel');
-        if (!empty($editswpmlevel)) {
-            $id = filter_input(INPUT_GET, 'id');
-            SwpmMembershipLevel::get_instance()->edit($id);
-        }
-    }
-
-    public function init() {
-
-        //Set up localisation. First loaded ones will override strings present in later loaded file.
-        //Allows users to have a customized language in a different folder.
-        $locale = apply_filters('plugin_locale', get_locale(), 'swpm');
-        load_textdomain('swpm', WP_LANG_DIR . "/swpm-$locale.mo");
-        load_plugin_textdomain('swpm', false, SIMPLE_WP_MEMBERSHIP_DIRNAME . '/languages/');
-
-        if (!isset($_COOKIE['swpm_session'])) { // give a unique ID to current session.
-            $uid = md5(microtime());
-            $_COOKIE['swpm_session'] = $uid; // fake it for current session/
-            setcookie('swpm_session', $uid, 0, '/');
-        }
-
-        if (current_user_can('manage_options')) { // admin stuff
-            $this->admin_init();
-        }
-        if (!is_admin()) { //frontend stuff
-            SwpmAuth::get_instance();
-            $this->verify_and_delete_account();
-            $swpm_logout = filter_input(INPUT_GET, 'swpm-logout');
-            if (!empty($swpm_logout)) {
-                SwpmAuth::get_instance()->logout();
-                wp_redirect(home_url());
-            }
-            $this->process_password_reset();
-            $this->register_member();
-            $this->edit_profile();
-        }
-        $this->swpm_ipn_listener();
-    }
-
-    public function swpm_ipn_listener() {
-        $swpm_process_ipn = filter_input(INPUT_GET, 'swpm_process_ipn');
-        if ($swpm_process_ipn == '1') {
-            include(SIMPLE_WP_MEMBERSHIP_PATH . 'ipn/swpm_handle_pp_ipn.php');
-            exit;
-        }
-    }
-
-    public function process_password_reset() {
-        $message = "";
-        $swpm_reset = filter_input(INPUT_POST, 'swpm-reset');
-        $swpm_reset_email = filter_input(INPUT_POST, 'swpm_reset_email', FILTER_UNSAFE_RAW);
-        if (!empty($swpm_reset)) {
-            SwpmFrontRegistration::get_instance()->reset_password($swpm_reset_email);
-        }
-    }
-
-    private function edit_profile() {
-        $swpm_editprofile_submit = filter_input(INPUT_POST, 'swpm_editprofile_submit');
-        if (!empty($swpm_editprofile_submit)) {
-            SwpmFrontRegistration::get_instance()->edit();
-            //todo: do a redirect
-        }
+    public function init_hook() {
+        $init_tasks = new SwpmInitTimeTasks();
+        $init_tasks->do_init_tasks();
     }
 
     public function admin_library() {
@@ -523,19 +455,10 @@ class SimpleWpMembership {
         return SwpmFrontRegistration::get_instance()->regigstration_ui($level);
     }
 
-    private function register_member() {
-        $registration = filter_input(INPUT_POST, 'swpm_registration_submit');
-        if (!empty($registration)) {
-            SwpmFrontRegistration::get_instance()->register();
-        }
-    }
-
     public function menu() {
         $menu_parent_slug = 'simple_wp_membership';
 
-        add_menu_page(__("WP Membership", 'swpm'), __("WP Membership", 'swpm')
-                , 'manage_options', $menu_parent_slug, array(&$this, "admin_members")
-                , SIMPLE_WP_MEMBERSHIP_URL . '/images/logo.png');
+        add_menu_page(__("WP Membership", 'swpm'), __("WP Membership", 'swpm'), 'manage_options', $menu_parent_slug, array(&$this, "admin_members"), 'dashicons-id');
         add_submenu_page($menu_parent_slug, __("Members", 'swpm'), __('Members', 'swpm'), 'manage_options', 'simple_wp_membership', array(&$this, "admin_members"));
         add_submenu_page($menu_parent_slug, __("Membership Levels", 'swpm'), __("Membership Levels", 'swpm'), 'manage_options', 'simple_wp_membership_levels', array(&$this, "admin_membership_levels"));
         add_submenu_page($menu_parent_slug, __("Settings", 'swpm'), __("Settings", 'swpm'), 'manage_options', 'simple_wp_membership_settings', array(&$this, "admin_settings"));
@@ -606,7 +529,7 @@ class SimpleWpMembership {
                 include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_tools_settings.php');
                 break;
             case 2:
-                include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_payment_settings.php');
+                include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/payments/admin_payment_settings.php');
                 break;
             default:
                 include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_settings.php');
@@ -615,7 +538,7 @@ class SimpleWpMembership {
     }
 
     public function payments_menu() {
-        include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_payments_page.php');
+        include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/payments/admin_payments_page.php');
     }
 
     public function add_ons_menu() {
@@ -643,34 +566,6 @@ class SimpleWpMembership {
     public function deactivate() {
         wp_clear_scheduled_hook('swpm_account_status_event');
         wp_clear_scheduled_hook('swpm_delete_pending_account_event');
-    }
-
-    private function verify_and_delete_account() {
-        include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'classes/class.swpm-members.php');
-        $delete_account = filter_input(INPUT_GET, 'delete_account');
-        if (empty($delete_account)) {
-            return;
-        }
-        $password = filter_input(INPUT_POST, 'account_delete_confirm_pass', FILTER_UNSAFE_RAW);
-
-        $auth = SwpmAuth::get_instance();
-        if (!$auth->is_logged_in()) {
-            return;
-        }
-        if (empty($password)) {
-            SwpmUtils::account_delete_confirmation_ui();
-        }
-
-        $nonce_field = filter_input(INPUT_POST, 'account_delete_confirm_nonce');
-        if (empty($nonce_field) || !wp_verify_nonce($nonce_field, 'swpm_account_delete_confirm')) {
-            SwpmUtils::account_delete_confirmation_ui(SwpmUtils::_("Sorry, Nonce verification failed."));
-        }
-        if ($auth->match_password($password)) {
-            $auth->delete();
-            wp_redirect(home_url());
-        } else {
-            SwpmUtils::account_delete_confirmation_ui(SwpmUtils::_("Sorry, Password didn't match."));
-        }
     }
 
 }

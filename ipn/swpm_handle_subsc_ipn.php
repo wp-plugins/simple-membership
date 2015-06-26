@@ -47,7 +47,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         }
         $old_membership_level = $resultset->membership_level;
 
-        swpm_debug_log_subsc("Not using secondary membership level feature... upgrading the current membership level.",true);
+        swpm_debug_log_subsc("Upgrading the current membership level (".$old_membership_level.") of this member to the newly paid level (".$membership_level.")", true);
         $updatedb = $wpdb->prepare("UPDATE $members_table_name SET account_state=%s, membership_level=%d,subscription_starts=%s,subscr_id=%s WHERE member_id=%d", $account_state, $membership_level, $subscription_starts, $subscr_id, $swpm_id);
         $results = $wpdb->query($updatedb);
         do_action('swpm_membership_changed', array('member_id'=>$swpm_id, 'from_level'=>$old_membership_level, 'to_level'=>$membership_level));

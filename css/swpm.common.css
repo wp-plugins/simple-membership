@@ -8,6 +8,9 @@
 .swpm-margin-bottom-10{
     margin-bottom: 10px;
 }
+.swpm-hidden{
+    display: none;
+}
 
 .swpm-yellow-box{
     margin: 10px 0 15px;

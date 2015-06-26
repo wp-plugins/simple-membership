@@ -1,708 +1,919 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: simple membership\n"
-"POT-Creation-Date: 2014-08-28 19:28+1000\n"
-"PO-Revision-Date: 2014-10-17 09:59+0100\n"
-"Last-Translator: Geson Perry <gp@echad.se>\n"
+"Project-Id-Version: Simple Membership\n"
+"POT-Creation-Date: 2015-06-10 22:20+0100\n"
+"PO-Revision-Date: 2015-06-16 14:41+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.1\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: sv\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: classes/class.bAccessControl.php:23 classes/class.bAccessControl.php:40
-msgid "You are not allowed to view this content"
-msgstr "Du är inte tillåten att se detta innehåll"
-
-#: classes/class.bAccessControl.php:26 classes/class.bAccessControl.php:43
+#: simple-membership/classes/class.bAccessControl.php:21
+#: simple-membership/classes/class.bAccessControl.php:28
+#: simple-membership/classes/class.bAccessControl.php:48
 msgid "You need to login to view this content. "
-msgstr "Du behöver logga in för att se innehållet"
+msgstr "Du måste logga in för att se detta innehåll."
 
-#: classes/class.bAdminRegistration.php:48
-#: classes/class.bFrontRegistration.php:64
+#: simple-membership/classes/class.bAccessControl.php:35
+#: simple-membership/classes/class.bAccessControl.php:39
+#: simple-membership/classes/class.bAccessControl.php:54
+msgid "You are not allowed to view this content"
+msgstr "Du får inte att se detta innehåll"
+
+#: simple-membership/classes/class.bAccessControl.php:72
+msgid "You do no have permission to view rest of the content"
+msgstr "Du har inte behörighet att läsa resten av innehållet"
+
+#: simple-membership/classes/class.bAccessControl.php:76
+#: simple-membership/classes/class.bAccessControl.php:94
+msgid "You need to login to view the rest of the content. "
+msgstr "Du måste logga in för att läsa resten av innehållet."
+
+#: simple-membership/classes/class.bAdminRegistration.php:49
 msgid "Registration Successful."
-msgstr "Registreringen är fullförd"
+msgstr "Registreringen lyckades!"
 
-#: classes/class.bAdminRegistration.php:53
-#: classes/class.bAdminRegistration.php:73
-#: classes/class.bMembershipLevel.php:36 classes/class.bMembershipLevel.php:54
+#: simple-membership/classes/class.bAdminRegistration.php:54
+#: simple-membership/classes/class.bAdminRegistration.php:89
+#: simple-membership/classes/class.bMembershipLevel.php:42
+#: simple-membership/classes/class.bMembershipLevel.php:60
 msgid "Please correct the following:"
-msgstr "Vänligen korrigera följande:"
+msgstr "Vänligen rätta till följande:"
 
-#: classes/class.bAjax.php:16 classes/class.bAjax.php:28
+#: simple-membership/classes/class.bAjax.php:17
+#: simple-membership/classes/class.bAjax.php:28
 msgid "Aready taken"
-msgstr "Är redan tagen"
+msgstr "Upptaget"
 
-#: classes/class.bAjax.php:29
+#: simple-membership/classes/class.bAjax.php:29
 msgid "Available"
-msgstr "Tillgänglig"
+msgstr "Tillgängligt"
 
-#: classes/class.bAuth.php:48 classes/class.bFrontRegistration.php:179
+#: simple-membership/classes/class.bAuth.php:46
+#: simple-membership/classes/class.bFrontRegistration.php:173
 msgid "User Not Found."
-msgstr "Användaren finns inte."
+msgstr "Användare hittades inte."
 
-#: classes/class.bAuth.php:55
+#: simple-membership/classes/class.bAuth.php:53
 msgid "Password Empty or Invalid."
-msgstr "Lösenordet är tomt eller felaktigt."
+msgstr "Lösenordet är tomt eller ogiltigt."
 
-#: classes/class.bAuth.php:79
+#: simple-membership/classes/class.bAuth.php:76
 msgid "Account is inactive."
-msgstr "Kontot är inaktivt."
+msgstr "Användarkontot är ej aktivt."
 
-#: classes/class.bAuth.php:89
+#: simple-membership/classes/class.bAuth.php:93
+msgid "Account has expired."
+msgstr "Användarkontot är gammalt."
+
+#: simple-membership/classes/class.bAuth.php:100
 msgid "You are logged in as:"
 msgstr "Du är inloggad som:"
 
-#: classes/class.bAuth.php:128
+#: simple-membership/classes/class.bAuth.php:139
 msgid "Logged Out Successfully."
-msgstr "Du är nu utloggad."
+msgstr "Lyckad utloggning."
 
-#: classes/class.bAuth.php:170
+#: simple-membership/classes/class.bAuth.php:186
 msgid "Session Expired."
-msgstr "Sessionen har utgått."
+msgstr "Slut på sessionen"
 
-#: classes/class.bAuth.php:179
+#: simple-membership/classes/class.bAuth.php:194
 msgid "Invalid User Name"
-msgstr "Ogiltigt Användarnamn"
+msgstr "Ogiltigt användarnamn"
 
-#: classes/class.bAuth.php:187
-msgid "Bad Cookie Hash"
-msgstr "Felaktig Cookie Hash"
+#: simple-membership/classes/class.bAuth.php:202
+msgid "Sorry! Something went wrong"
+msgstr "Nåt blev fel!"
 
-#: classes/class.bForm.php:26
-msgid ""
-"Wordpress account exists with given user name. But given email doesn't match."
-msgstr ""
-"Wordpress-kontot finns med tanke på användarnamnet. Men e-posten matchar "
-"inte."
+#: simple-membership/classes/class.bCategoryList.php:15
+#: simple-membership/classes/class.bMembers.php:21
+#: simple-membership/classes/class.bMembershipLevels.php:8
+#: simple-membership/classes/class.bMembershipLevels.php:17
+#: simple-membership/views/add.php:30
+#: simple-membership/views/admin_member_form_common_part.php:2
+#: simple-membership/views/edit.php:52
+msgid "Membership Level"
+msgstr "Medlemskapsnivå"
 
-#: classes/class.bForm.php:31
-msgid ""
-"Wordpress account exists with given email. But given user name doesn't match."
-msgstr ""
-"Wordpress-kontot finns med given e-post. Men matchar inte med tanke på "
-"användarnamnet."
+#: simple-membership/classes/class.bCategoryList.php:16
+#: simple-membership/classes/class.bMembershipLevels.php:9
+#: simple-membership/classes/class.simple-wp-membership.php:464
+msgid "Membership Levels"
+msgstr "Medlemskapsnivåer"
 
-#: classes/class.bForm.php:40
-msgid "User name is required"
-msgstr "Användarnamn krävs"
-
-#: classes/class.bForm.php:49
-msgid "User name already exists."
-msgstr "Användarnamnet finns redan."
-
-#: classes/class.bForm.php:72
-msgid "Password is required"
-msgstr "Lösenord krävs"
-
-#: classes/class.bForm.php:79
-msgid "Password mismatch"
-msgstr "Lösenordet matchar inte"
-
-#: classes/class.bForm.php:95
-msgid "Email is required"
-msgstr "E-post krävs"
-
-#: classes/class.bForm.php:99
-msgid "Email is invalid"
-msgstr "E-post är ogiltlig"
-
-#: classes/class.bForm.php:112
-msgid "Email is already used."
-msgstr "E-post adressen används redan."
-
-#: classes/class.bForm.php:178
-msgid "Member since field is invalid"
-msgstr "Medlem sedan fältet är ogiltigt"
-
-#: classes/class.bForm.php:189
-msgid "Subscription starts field is invalid"
-msgstr "Prenumeration startar fältet är ogiltigt"
-
-#: classes/class.bForm.php:199
-msgid "Gender field is invalid"
-msgstr "Kön Fältet är ogiltigt"
-
-#: classes/class.bForm.php:210
-msgid "Account state field is invalid"
-msgstr "Kontots tillstånds fält är ogiltigt"
-
-#: classes/class.bFrontRegistration.php:64 classes/class.bSettings.php:326
-msgid "Please"
-msgstr "Vänligen"
-
-#: classes/class.bFrontRegistration.php:64 classes/class.bSettings.php:326
-#: views/login.php:21
-msgid "Login"
-msgstr "Logga in"
-
-#: classes/class.bFrontRegistration.php:79
-#: classes/class.bFrontRegistration.php:158
-msgid "Please correct the following"
-msgstr "Vänligen korrigera följande"
-
-#: classes/class.bFrontRegistration.php:92
-msgid "Membership Level Couldn't be found."
-msgstr "Medlemskapsnivå kunde inte hittas."
-
-#: classes/class.bFrontRegistration.php:168
-msgid "Email Address Not Valid."
-msgstr "E-postadress ogiltig."
-
-#: classes/class.bFrontRegistration.php:199
-msgid "New password has been sent to your email address."
-msgstr "Nytt lösenord har skickats till din e-postadress."
-
-#: classes/class.bLevelForm.php:31
-msgid "Subscriptoin duration must be > 0."
-msgstr "Prenumerationens längd måste vara > 0."
-
-#: classes/class.bMembers.php:7
-msgid "Member"
-msgstr "Medlem"
-
-#: classes/class.bMembers.php:8 classes/class.simple-wp-membership.php:467
-msgid "Members"
-msgstr "Medlemmar"
-
-#: classes/class.bMembers.php:16 classes/class.bMembershipLevels.php:16
+#: simple-membership/classes/class.bCategoryList.php:29
+#: simple-membership/classes/class.bMembers.php:16
+#: simple-membership/classes/class.bMembershipLevels.php:16
 msgid "ID"
 msgstr "ID"
 
-#: classes/class.bMembers.php:17 views/add.php:5 views/edit.php:4
-#: views/login.php:5
+#: simple-membership/classes/class.bCategoryList.php:30
+msgid "Name"
+msgstr "Namn"
+
+#: simple-membership/classes/class.bCategoryList.php:31
+msgid "Description"
+msgstr "Beskrivning"
+
+#: simple-membership/classes/class.bCategoryList.php:32
+msgid "Count"
+msgstr "Antal"
+
+#: simple-membership/classes/class.bCategoryList.php:63
+msgid "Updated! "
+msgstr "Uppdaterad!"
+
+#: simple-membership/classes/class.bForm.php:26
+msgid ""
+"Wordpress account exists with given user name. But given email doesn't match."
+msgstr ""
+"Wordpressanvändare finns med detta användarnamn. Men mejladressen är fel."
+
+#: simple-membership/classes/class.bForm.php:31
+msgid ""
+"Wordpress account exists with given email. But given user name doesn't match."
+msgstr ""
+"Wordpressanvändare finns med detta mejladressen. Men användarnamnet är fel."
+
+#: simple-membership/classes/class.bForm.php:40
+msgid "User name is required"
+msgstr "Användarnamn krävs"
+
+#: simple-membership/classes/class.bForm.php:44
+msgid "User name contains invalid character"
+msgstr "Användarnamn innehåller ogiltiga tecken"
+
+#: simple-membership/classes/class.bForm.php:52
+msgid "User name already exists."
+msgstr "Användarnamnet finns redan"
+
+#: simple-membership/classes/class.bForm.php:75
+msgid "Password is required"
+msgstr "Lösenord krävs"
+
+#: simple-membership/classes/class.bForm.php:82
+msgid "Password mismatch"
+msgstr "Löserord matchar inte"
+
+#: simple-membership/classes/class.bForm.php:98
+msgid "Email is required"
+msgstr "Mejladress krävs"
+
+#: simple-membership/classes/class.bForm.php:102
+msgid "Email is invalid"
+msgstr "Ogiltig mejladress"
+
+#: simple-membership/classes/class.bForm.php:118
+msgid "Email is already used."
+msgstr "Mejladressen används redan"
+
+#: simple-membership/classes/class.bForm.php:184
+msgid "Member since field is invalid"
+msgstr "Fältet för medlem sedan är ogiltigt"
+
+#: simple-membership/classes/class.bForm.php:195
+msgid "Access starts field is invalid"
+msgstr "Åtkomst börjar fältet är ogiltigt"
+
+#: simple-membership/classes/class.bForm.php:205
+msgid "Gender field is invalid"
+msgstr "Könfältet är ogiltigt"
+
+#: simple-membership/classes/class.bForm.php:216
+msgid "Account state field is invalid"
+msgstr "Konto status fältet är ogiltigt"
+
+#: simple-membership/classes/class.bForm.php:223
+msgid "Invalid membership level"
+msgstr "Ogiltig medlemskapsnivå"
+
+#: simple-membership/classes/class.bFrontRegistration.php:61
+msgid "Registration Successful. "
+msgstr "Registreringen lyckades!"
+
+#: simple-membership/classes/class.bFrontRegistration.php:61
+#: simple-membership/classes/class.bSettings.php:367
+msgid "Please"
+msgstr "Vänligen"
+
+#: simple-membership/classes/class.bFrontRegistration.php:61
+#: simple-membership/classes/class.bSettings.php:367
+#: simple-membership/views/login.php:21
+msgid "Login"
+msgstr "Logga in"
+
+#: simple-membership/classes/class.bFrontRegistration.php:72
+#: simple-membership/classes/class.bFrontRegistration.php:152
+msgid "Please correct the following"
+msgstr "Vänligen rätta till följande:"
+
+#: simple-membership/classes/class.bFrontRegistration.php:106
+msgid "Membership Level Couldn't be found."
+msgstr "Medlemsskapsnivå kunde inte hittas"
+
+#: simple-membership/classes/class.bFrontRegistration.php:162
+msgid "Email Address Not Valid."
+msgstr "Ogiltig mejladress"
+
+#: simple-membership/classes/class.bFrontRegistration.php:193
+msgid "New password has been sent to your email address."
+msgstr "Ett nytt lösenord har skickats till din mejladress"
+
+#: simple-membership/classes/class.bLevelForm.php:47
+msgid "Date format is not valid."
+msgstr "Datumformatet är ogiltigt"
+
+#: simple-membership/classes/class.bLevelForm.php:54
+msgid "Access duration must be > 0."
+msgstr "Åtkomsttiden måste vara > 0"
+
+#: simple-membership/classes/class.bMembers.php:7
+msgid "Member"
+msgstr "Medlem"
+
+#: simple-membership/classes/class.bMembers.php:8
+#: simple-membership/classes/class.simple-wp-membership.php:462
+msgid "Members"
+msgstr "Medlemmar"
+
+#: simple-membership/classes/class.bMembers.php:17
+#: simple-membership/views/add.php:6 simple-membership/views/edit.php:4
 msgid "User Name"
 msgstr "Användarnamn"
 
-#: classes/class.bMembers.php:18 views/add.php:21
-#: views/admin_member_form_common_part.php:2 views/edit.php:20
+#: simple-membership/classes/class.bMembers.php:18
+#: simple-membership/views/add.php:22
+#: simple-membership/views/admin_member_form_common_part.php:15
+#: simple-membership/views/edit.php:20
 msgid "First Name"
 msgstr "Förnamn"
 
-#: classes/class.bMembers.php:19 views/add.php:25
-#: views/admin_member_form_common_part.php:6 views/edit.php:24
+#: simple-membership/classes/class.bMembers.php:19
+#: simple-membership/views/add.php:26
+#: simple-membership/views/admin_member_form_common_part.php:19
+#: simple-membership/views/edit.php:24
 msgid "Last Name"
 msgstr "Efternamn"
 
-#: classes/class.bMembers.php:20 views/add.php:9 views/edit.php:8
+#: simple-membership/classes/class.bMembers.php:20
+#: simple-membership/views/add.php:10 simple-membership/views/edit.php:8
 msgid "Email"
-msgstr "E-post"
+msgstr "Mejladress"
 
-#: classes/class.bMembers.php:21 classes/class.bMembershipLevels.php:8
-#: classes/class.bMembershipLevels.php:17 views/add.php:64
-#: views/admin_member_form_common_part.php:55 views/edit.php:52
-msgid "Membership Level"
-msgstr "Medlemsnivå"
+#: simple-membership/classes/class.bMembers.php:22
+#: simple-membership/views/admin_member_form_common_part.php:11
+msgid "Access Starts"
+msgstr "Åtkomst börjar"
 
-#: classes/class.bMembers.php:22 views/admin_member_form_common_part.php:78
-msgid "Subscription Starts"
-msgstr "Prenumerationen startar"
-
-#: classes/class.bMembers.php:23
+#: simple-membership/classes/class.bMembers.php:23
 msgid "Account State"
-msgstr "Tillstånd på kontot"
+msgstr "Konto status"
 
-#: classes/class.bMembers.php:35 classes/class.bMembershipLevels.php:29
+#: simple-membership/classes/class.bMembers.php:35
+#: simple-membership/classes/class.bMembershipLevels.php:29
 msgid "Delete"
-msgstr "Ta bort"
+msgstr "Radera"
 
-#: classes/class.bMembers.php:100
+#: simple-membership/classes/class.bMembers.php:101
 msgid "No Member found."
-msgstr "Ingen medlem funnen."
+msgstr "Medlem ej hittad"
 
-#: classes/class.bMembershipLevel.php:31
+#: simple-membership/classes/class.bMembershipLevel.php:37
 msgid "Membership Level Creation Successful."
-msgstr "Skapande av Medlemsnivå lyckades."
+msgstr "Ny medlemsskapsnivå har skapats"
 
-#: classes/class.bMembershipLevel.php:50
+#: simple-membership/classes/class.bMembershipLevel.php:56
 msgid "Updated Successfully."
-msgstr "Uppdatering klar."
+msgstr "Uppdateringen lyckades"
 
-#: classes/class.bMembershipLevels.php:9
-#: classes/class.simple-wp-membership.php:469
-msgid "Membership Levels"
-msgstr "Medlemsnivåer"
-
-#: classes/class.bMembershipLevels.php:18
+#: simple-membership/classes/class.bMembershipLevels.php:18
 msgid "Role"
-msgstr "Roll"
+msgstr "Uppgift"
 
-#: classes/class.bMembershipLevels.php:19
-msgid "Subscription Valid For"
-msgstr "Prenumerationen gäller"
+#: simple-membership/classes/class.bMembershipLevels.php:19
+msgid "Access Valid For/Until"
+msgstr "Åtkomst giltig till"
 
-#: classes/class.bSettings.php:28
+#: simple-membership/classes/class.bSettings.php:30
 msgid "Plugin Documentation"
-msgstr "Plugin dokumentation"
+msgstr "Dokumentation för plugin"
 
-#: classes/class.bSettings.php:30
+#: simple-membership/classes/class.bSettings.php:32
 msgid "General Settings"
-msgstr "Generella inställningar"
+msgstr "Allmänna inställningar"
 
-#: classes/class.bSettings.php:32
+#: simple-membership/classes/class.bSettings.php:34
 msgid "Enable Free Membership"
-msgstr "Aktivera gratis medlemskap"
+msgstr "Möjliggör gratis medlemskapsnivå"
 
-#: classes/class.bSettings.php:35
+#: simple-membership/classes/class.bSettings.php:37
 msgid "Enable/disable registration for free membership level"
-msgstr "Aktivera / inaktivera registrering för gratis medlemsnivå"
+msgstr "Möjliggör/möjliggör ej registrering för gratis medlemsskapsnivå"
 
-#: classes/class.bSettings.php:36
+#: simple-membership/classes/class.bSettings.php:38
 msgid "Free Membership Level ID"
-msgstr "Gratis medlemsnivå ID"
+msgstr "Gratis medlemskapsnivå ID"
 
-#: classes/class.bSettings.php:39
+#: simple-membership/classes/class.bSettings.php:41
 msgid "Assign free membership level ID"
-msgstr "Tilldela gratis medlemskap nivå ID"
+msgstr "Tilldela gratis medlemskapsnivå ID "
 
-#: classes/class.bSettings.php:40
+#: simple-membership/classes/class.bSettings.php:42
+msgid "Enable More Tag Protection"
+msgstr "Möjliggör More Tag skydd"
+
+#: simple-membership/classes/class.bSettings.php:45
+msgid ""
+"Enables or disables \"more\" tag protection in the posts and pages. Anything "
+"after the More tag is protected. Anything before the more tag is teaser "
+"content."
+msgstr ""
+"Möjliggör eller möjliggör ej \"more\" tag skydd hos posts och pages. Allt "
+"efter More tag är skyddat. Allt innan More tag är teaser innehåll"
+
+#: simple-membership/classes/class.bSettings.php:46
 msgid "Hide Adminbar"
 msgstr "Göm Adminbar"
 
-#: classes/class.bSettings.php:43
+#: simple-membership/classes/class.bSettings.php:49
 msgid ""
 "WordPress shows an admin toolbar to the logged in users of the site. Check "
 "this box if you want to hide that admin toolbar in the fronend of your site."
 msgstr ""
-"Wordpress visar admin verktygsfältet för inloggade användare på webbplatsen. "
-"Markera den här rutan om du vill dölja admin verktygsfältet på din webbplats."
+"Wordpress visar en admin bar för inloggade användare på sidan. Bocka av "
+"checkboxen om du vill gömma admin baren på framsidan av din sida."
 
-#: classes/class.bSettings.php:45
+#: simple-membership/classes/class.bSettings.php:51
+msgid "Default Account Status"
+msgstr "Standard kontostatus"
+
+#: simple-membership/classes/class.bSettings.php:56
+msgid ""
+"Select the default account status for newly registered users. If you want to "
+"manually approve the members then you can set the status to \"Pending\"."
+msgstr ""
+"Välj standard kontostatusen för de nyaste registrerade användarna. Om du "
+"vill godkänna medlemmarna manuellt så kan du sätta statusen till \"avvaktande"
+"\""
+
+#: simple-membership/classes/class.bSettings.php:62
 msgid "Pages Settings"
-msgstr "Sidinställningar"
+msgstr "Sidoinställningar"
 
-#: classes/class.bSettings.php:47
+#: simple-membership/classes/class.bSettings.php:64
 msgid "Login Page URL"
-msgstr "Login sidans URL"
+msgstr "Inloggningssida URL"
 
-#: classes/class.bSettings.php:51
+#: simple-membership/classes/class.bSettings.php:68
 msgid "Registration Page URL"
-msgstr "Registreringssidans URL"
+msgstr "Registreringssida URL"
 
-#: classes/class.bSettings.php:55
+#: simple-membership/classes/class.bSettings.php:72
 msgid "Join Us Page URL"
-msgstr "Gå med oss sidans URL"
+msgstr "Bli medlemsida URL"
 
-#: classes/class.bSettings.php:59
+#: simple-membership/classes/class.bSettings.php:76
 msgid "Edit Profile Page URL"
-msgstr "Ändra profilsidans URL"
+msgstr "Profilredigeringssida URL"
 
-#: classes/class.bSettings.php:63
+#: simple-membership/classes/class.bSettings.php:80
 msgid "Password Reset Page URL"
-msgstr "Återställ lösenordssidans URL"
+msgstr "Sida för återställning av lösenord"
 
-#: classes/class.bSettings.php:68
+#: simple-membership/classes/class.bSettings.php:85
 msgid "Test & Debug Settings"
-msgstr "Test & Debug inställningar"
+msgstr "Inställningar för test och rättelser"
 
-#: classes/class.bSettings.php:74
+#: simple-membership/classes/class.bSettings.php:91
 msgid "Enable Sandbox Testing"
-msgstr "Aktivera Sandbox test"
+msgstr "Möjliggör Sandbox testing"
 
-#: classes/class.bSettings.php:77
+#: simple-membership/classes/class.bSettings.php:94
 msgid "Enable this option if you want to do sandbox payment testing."
-msgstr "Aktivera det här alternativet om du vill testa Sandbox betalning."
+msgstr "Möjliggör detta om du vill ha sandbox payment testing"
 
-#: classes/class.bSettings.php:90
+#: simple-membership/classes/class.bSettings.php:104
 msgid "Email Misc. Settings"
-msgstr "Diverse E-post inställningar"
+msgstr "Inställningar för mejl misc "
 
-#: classes/class.bSettings.php:92
+#: simple-membership/classes/class.bSettings.php:106
 msgid "From Email Address"
-msgstr "Från E-post adress"
+msgstr "Från mejladressen"
 
-#: classes/class.bSettings.php:97
+#: simple-membership/classes/class.bSettings.php:111
 msgid "Email Settings (Prompt to Complete Registration )"
-msgstr "E-postinställningar (Uppmana att slutföra registreringen)"
+msgstr "Inställningar för mejl (prompt to complete registration)"
 
-#: classes/class.bSettings.php:99 classes/class.bSettings.php:110
-#: classes/class.bSettings.php:129
+#: simple-membership/classes/class.bSettings.php:113
+#: simple-membership/classes/class.bSettings.php:124
+#: simple-membership/classes/class.bSettings.php:143
 msgid "Email Subject"
-msgstr "E-post ämne"
+msgstr "E-ämne"
 
-#: classes/class.bSettings.php:103 classes/class.bSettings.php:114
-#: classes/class.bSettings.php:133
+#: simple-membership/classes/class.bSettings.php:117
+#: simple-membership/classes/class.bSettings.php:128
+#: simple-membership/classes/class.bSettings.php:147
 msgid "Email Body"
-msgstr "E-post meddelande"
+msgstr "E-postmeddelande"
 
-#: classes/class.bSettings.php:108
+#: simple-membership/classes/class.bSettings.php:122
 msgid "Email Settings (Registration Complete)"
-msgstr "E-post inställningar (Registrering avklarad)"
+msgstr "Inställningar för mejl (lyckad registrering)"
 
-#: classes/class.bSettings.php:118
+#: simple-membership/classes/class.bSettings.php:132
 msgid "Send Notification To Admin"
-msgstr "Skicka ett meddelande till Admin"
+msgstr "Skicka meddelande till Admin"
 
-#: classes/class.bSettings.php:122
+#: simple-membership/classes/class.bSettings.php:136
 msgid "Send Email to Member When Added via Admin Dashboard"
-msgstr "Skicka e-post till medlem när de är tillagda via Admin dashboard"
+msgstr "Skicka mejl till medlem när hen är tillagd via Admin dashboard"
 
-#: classes/class.bSettings.php:127
+#: simple-membership/classes/class.bSettings.php:141
 msgid " Email Settings (Account Upgrade Notification)"
-msgstr "E-postinställningar (Kontouppgraderings meddelande)"
+msgstr "Inställningar för mejl (anmälan av kontouppgradering)"
 
-#: classes/class.bSettings.php:326
+#: simple-membership/classes/class.bSettings.php:367
 msgid "Not a Member?"
-msgstr "Inte medlem?"
+msgstr "Du är inte medlem?"
 
-#: classes/class.bSettings.php:326 views/login.php:30
+#: simple-membership/classes/class.bSettings.php:367
+#: simple-membership/views/login.php:27
 msgid "Join Us"
-msgstr "Gå med oss"
+msgstr "Bli medlem"
 
-#: classes/class.bUtils.php:32 views/admin_member_form_common_part.php:66
+#: simple-membership/classes/class.bUtils.php:63
 msgid "Active"
 msgstr "Aktiv"
 
-#: classes/class.bUtils.php:33 views/admin_member_form_common_part.php:67
+#: simple-membership/classes/class.bUtils.php:64
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: classes/class.bUtils.php:34 views/admin_member_form_common_part.php:68
+#: simple-membership/classes/class.bUtils.php:65
 msgid "Pending"
-msgstr "Väntar"
+msgstr "Avvaktande"
 
-#: classes/class.bUtils.php:35 views/admin_member_form_common_part.php:69
+#: simple-membership/classes/class.bUtils.php:66
 msgid "Expired"
-msgstr "Förfallen"
+msgstr "Upphöra"
 
-#: classes/class.bUtils.php:225
+#: simple-membership/classes/class.bUtils.php:251
 msgid "Never"
 msgstr "Aldrig"
 
-#: classes/class.miscUtils.php:51
+#: simple-membership/classes/class.miscUtils.php:51
 msgid "Registration"
 msgstr "Registrering"
 
-#: classes/class.miscUtils.php:74
+#: simple-membership/classes/class.miscUtils.php:74
 msgid "Member Login"
-msgstr "Login för medlemmar"
+msgstr "Logga in"
 
-#: classes/class.miscUtils.php:97
+#: simple-membership/classes/class.miscUtils.php:97
 msgid "Profile"
 msgstr "Profil"
 
-#: classes/class.miscUtils.php:120
+#: simple-membership/classes/class.miscUtils.php:120
 msgid "Password Reset"
-msgstr "Återställ lösenord"
+msgstr "Återställning av lösenord"
 
-#: classes/class.simple-wp-membership.php:178
+#: simple-membership/classes/class.simple-wp-membership.php:184
 msgid "You are not logged in."
-msgstr "Du är inte inloggad."
+msgstr "Du är ej inloggad"
 
-#: classes/class.simple-wp-membership.php:209
+#: simple-membership/classes/class.simple-wp-membership.php:215
 msgid "Simple WP Membership Protection"
-msgstr "Simple WP Membership skydd"
+msgstr "Simple WP Membership-skydd"
 
-#: classes/class.simple-wp-membership.php:222
+#: simple-membership/classes/class.simple-wp-membership.php:228
 msgid "Simple Membership Protection options"
-msgstr "Simple Membership Protection alternativ"
+msgstr "Alternativ för Simple WP Membership-skydd"
 
-#: classes/class.simple-wp-membership.php:238
+#: simple-membership/classes/class.simple-wp-membership.php:244
 msgid "Do you want to protect this content?"
-msgstr "Vill du skydda innehållet?"
+msgstr "Will du skydda detta innehåll?"
 
-#: classes/class.simple-wp-membership.php:243
+#: simple-membership/classes/class.simple-wp-membership.php:249
 msgid "Select the membership level that can access this content:"
-msgstr "Välj den medlemsnivå som kan komma åt det här innehållet:"
+msgstr "Välj vilken medlemskapsnivå som ska kunna läsa detta innehåll"
 
-#: classes/class.simple-wp-membership.php:375
-msgid "Display SWPM Login."
-msgstr "Visa SWPM Login."
-
-#: classes/class.simple-wp-membership.php:377
-msgid "SWPM Login"
-msgstr "SWPM Login"
-
-#: classes/class.simple-wp-membership.php:464
+#: simple-membership/classes/class.simple-wp-membership.php:459
 msgid "WP Membership"
 msgstr "WP medlemskap"
 
-#: classes/class.simple-wp-membership.php:471
+#: simple-membership/classes/class.simple-wp-membership.php:466
 msgid "Settings"
 msgstr "Inställningar"
 
-#: views/add.php:13 views/admin_member_form_common_part.php:45
-#: views/edit.php:12 views/login.php:11
+#: simple-membership/classes/class.simple-wp-membership.php:468
+msgid "Add-ons"
+msgstr "Add-ons"
+
+#: simple-membership/views/add.php:14 simple-membership/views/admin_add.php:19
+#: simple-membership/views/admin_edit.php:17
+#: simple-membership/views/edit.php:12 simple-membership/views/login.php:11
 msgid "Password"
 msgstr "Lösenord"
 
-#: views/add.php:17 views/edit.php:16
+#: simple-membership/views/add.php:18 simple-membership/views/edit.php:16
 msgid "Repeat Password"
-msgstr "Upprepa lösenord"
+msgstr "Repetera lösenord"
 
-#: views/add.php:29 views/admin_member_form_common_part.php:10
-msgid "Gender"
-msgstr "Kön"
-
-#: views/add.php:36 views/admin_member_form_common_part.php:17
-#: views/edit.php:28
-msgid "Phone"
-msgstr "Telefon"
-
-#: views/add.php:40 views/admin_member_form_common_part.php:21
-#: views/edit.php:32
-msgid "Street"
-msgstr "Gata"
-
-#: views/add.php:44 views/admin_member_form_common_part.php:25
-#: views/edit.php:36
-msgid "City"
-msgstr "Stad"
-
-#: views/add.php:48 views/admin_member_form_common_part.php:29
-#: views/edit.php:40
-msgid "State"
-msgstr "Stat"
-
-#: views/add.php:52 views/admin_member_form_common_part.php:33
-#: views/edit.php:44
-msgid "Zipcode"
-msgstr "Poastnummer"
-
-#: views/add.php:56 views/admin_member_form_common_part.php:37
-#: views/edit.php:48
-msgid "Country"
-msgstr "Land"
-
-#: views/add.php:60 views/admin_member_form_common_part.php:41
-msgid "Company"
-msgstr "Företag"
-
-#: views/add.php:71
+#: simple-membership/views/add.php:37
 msgid "Register"
-msgstr "Registrera"
+msgstr "Register"
 
-#: views/admin_add.php:6
+#: simple-membership/views/admin_add.php:6
 msgid "Add Member"
 msgstr "Lägg till medlem"
 
-#: views/admin_add.php:7
+#: simple-membership/views/admin_add.php:7
 msgid "Create a brand new user and add it to this site."
-msgstr "Skapa en helt ny användare och lägga till den här webbplatsen."
+msgstr "Skapa en helt ny användare och lägg til denna användare till sidan"
 
-#: views/admin_add.php:11
+#: simple-membership/views/admin_add.php:11
 msgid "User name"
 msgstr "Användarnamn"
 
-#: views/admin_add.php:11 views/admin_add.php:15 views/admin_add_level.php:11
-#: views/admin_add_level.php:15 views/admin_add_level.php:19
-#: views/admin_edit.php:9 views/admin_edit.php:13
-#: views/admin_edit_level.php:10 views/admin_edit_level.php:14
-#: views/admin_edit_level.php:18
+#: simple-membership/views/admin_add.php:11
+#: simple-membership/views/admin_add.php:15
+#: simple-membership/views/admin_add_level.php:11
+#: simple-membership/views/admin_add_level.php:15
+#: simple-membership/views/admin_add_level.php:19
+#: simple-membership/views/admin_edit.php:9
+#: simple-membership/views/admin_edit.php:13
+#: simple-membership/views/admin_edit_level.php:10
+#: simple-membership/views/admin_edit_level.php:14
+#: simple-membership/views/admin_edit_level.php:18
 msgid "(required)"
 msgstr "(krävs)"
 
-#: views/admin_add.php:15 views/admin_edit.php:13
+#: simple-membership/views/admin_add.php:15
+#: simple-membership/views/admin_edit.php:13
 msgid "E-mail"
-msgstr "E.post"
+msgstr "E-mejl"
 
-#: views/admin_add.php:19
-msgid "Add New Member "
-msgstr "Lägg till ny medlem"
-
-#: views/admin_add_level.php:6
-msgid "Create new membership level."
-msgstr "Skapa ny medlemsnivå."
-
-#: views/admin_add_level.php:11 views/admin_edit_level.php:10
-msgid "Membership Level Name"
-msgstr "Namn på medlemsnivå"
-
-#: views/admin_add_level.php:15 views/admin_edit_level.php:14
-msgid "Default WordPress Role"
-msgstr "Standard Wordpress roll"
-
-#: views/admin_add_level.php:19 views/admin_edit_level.php:18
-msgid "Subscription Duration"
-msgstr "Längd på prenumeration"
-
-#: views/admin_add_level.php:26 views/admin_edit_level.php:27
-msgid "No Expiry"
-msgstr "Ingen utgång"
-
-#: views/admin_add_level.php:55
-msgid "Add New Membership Level "
-msgstr "Lägg till ny medlemsnivå"
-
-#: views/admin_edit.php:5
-msgid "Edit Member"
-msgstr "Ändra medlem"
-
-#: views/admin_edit.php:6
-msgid "Edit existing member details."
-msgstr "Ändra existerande medlemsdetaljer"
-
-#: views/admin_edit.php:9
-msgid "Username"
-msgstr "Användarnamn"
-
-#: views/admin_edit.php:18
-msgid "Edit User "
-msgstr "Ändra användare"
-
-#: views/admin_edit_level.php:5
-msgid "Edit membership level"
-msgstr "Ändra medlemsnivå"
-
-#: views/admin_edit_level.php:6
-msgid "Edit membership level."
-msgstr "Ändra medlemsnivå."
-
-#: views/admin_edit_level.php:54
-msgid "Edit Membership Level "
-msgstr "Ändra medlemsnivå"
-
-#: views/admin_members.php:2
-msgid "Simple WP Membership::Members"
-msgstr "Simple WP Membership::Medlemmar"
-
-#: views/admin_members.php:3 views/admin_members.php:19
-#: views/admin_membership_levels.php:21
-msgid "Add New"
-msgstr "Lägg till ny"
-
-#: views/admin_members.php:9 views/admin_membership_levels.php:11
-msgid "search"
-msgstr "sök"
-
-#: views/admin_membership_levels.php:3
-msgid "Simple WP Membership::Membership Levels"
-msgstr "Simple WP Membership::Medlemsnivåer"
-
-#: views/admin_membership_level_menu.php:2
-msgid "Membership level"
-msgstr "Medlemsnivå"
-
-#: views/admin_membership_level_menu.php:3
-msgid "Manage Content Production"
-msgstr "Hantera innehållsproduktion"
-
-#: views/admin_membership_manage.php:17
-msgid "Example Content Protection Settings"
-msgstr "Exempel på skyddsinställningar av innehåll"
-
-#: views/admin_member_form_common_part.php:45
+#: simple-membership/views/admin_add.php:19
 msgid "(twice, required)"
-msgstr "(två gånger, krävs)"
+msgstr "(återigen, det krävs)"
 
-#: views/admin_member_form_common_part.php:50
+#: simple-membership/views/admin_add.php:24
+#: simple-membership/views/admin_edit.php:21
 msgid "Strength indicator"
-msgstr "Indikator för styrka"
+msgstr "Säkerhetsnivå"
 
-#: views/admin_member_form_common_part.php:51
+#: simple-membership/views/admin_add.php:25
+#: simple-membership/views/admin_edit.php:22
 msgid ""
 "Hint: The password should be at least seven characters long. To make it "
 "stronger, use upper and lower case letters, numbers and symbols like ! \" ? "
 "$ % ^ &amp; )."
-msgstr ""
-"Tips: Lösenordet ska vara minst sju tecken långt. För att göra det starkare, "
-"använd stora och små bokstäver, siffror och symboler som! ?  \"$% ^ & Amp;)."
+msgstr "Obs: Lösenordet borde vara minst sju bokstäver."
 
-#: views/admin_member_form_common_part.php:64 views/loggedin.php:7
-#: views/login_widget_logged.php:6
+#: simple-membership/views/admin_add.php:29
+#: simple-membership/views/admin_edit.php:26
+#: simple-membership/views/loggedin.php:7
 msgid "Account Status"
-msgstr "Tillstånd på kontot"
+msgstr "Kontostatus"
 
-#: views/admin_member_form_common_part.php:74
+#: simple-membership/views/admin_add.php:36
+msgid "Add New Member "
+msgstr "Lägg till ny medlem"
+
+#: simple-membership/views/admin_addon_settings.php:2
+#: simple-membership/views/admin_payment_settings.php:2
+#: simple-membership/views/admin_settings.php:2
+#: simple-membership/views/admin_tools_settings.php:2
+msgid "Simple WP Membership::Settings"
+msgstr "Inställningar för Simple WP Membership"
+
+#: simple-membership/views/admin_addon_settings.php:7
+msgid ""
+"Some of the simple membership plugin's addon settings and options will be "
+"displayed here (if you have them)"
+msgstr ""
+"Vissa av simple membership plugins addons inställningar och alternativ "
+"kommer visas här (om du har dom)"
+
+#: simple-membership/views/admin_add_level.php:6
+msgid "Create new membership level."
+msgstr "Lägg till ny medlemskapsnivå"
+
+#: simple-membership/views/admin_add_level.php:11
+#: simple-membership/views/admin_edit_level.php:10
+msgid "Membership Level Name"
+msgstr "Namn på medlemskapsnivå"
+
+#: simple-membership/views/admin_add_level.php:15
+#: simple-membership/views/admin_edit_level.php:14
+msgid "Default WordPress Role"
+msgstr "Standard Wordpress role"
+
+#: simple-membership/views/admin_add_level.php:19
+#: simple-membership/views/admin_edit_level.php:18
+msgid "Access Duration"
+msgstr "Tid för inloggning"
+
+#: simple-membership/views/admin_add_level.php:22
+msgid "No Expiry (Access for this level will not expire until cancelled"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:23
+#: simple-membership/views/admin_add_level.php:25
+#: simple-membership/views/admin_add_level.php:27
+#: simple-membership/views/admin_add_level.php:29
+#: simple-membership/views/admin_edit_level.php:22
+#: simple-membership/views/admin_edit_level.php:25
+#: simple-membership/views/admin_edit_level.php:28
+#: simple-membership/views/admin_edit_level.php:31
+msgid "Expire After"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:24
+#: simple-membership/views/admin_edit_level.php:23
+msgid "Days (Access expires after given number of days)"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:26
+msgid "Weeks (Access expires after given number of weeks"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:28
+#: simple-membership/views/admin_edit_level.php:29
+msgid "Months (Access expires after given number of months)"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:30
+#: simple-membership/views/admin_edit_level.php:32
+msgid "Years (Access expires after given number of years)"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:31
+#: simple-membership/views/admin_edit_level.php:34
+msgid "Fixed Date Expiry"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:32
+#: simple-membership/views/admin_edit_level.php:35
+msgid "(Access expires on a fixed date)"
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:36
+msgid "Access to older posts."
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:39
+msgid "Only allow access to posts published after the user's join date."
+msgstr ""
+
+#: simple-membership/views/admin_add_level.php:45
+msgid "Add New Membership Level "
+msgstr ""
+
+#: simple-membership/views/admin_add_ons_page.php:6
+msgid "Simple WP Membership::Add-ons"
+msgstr ""
+
+#: simple-membership/views/admin_category_list.php:2
+msgid "Simple WP Membership::Categories"
+msgstr ""
+
+#: simple-membership/views/admin_category_list.php:7
+msgid ""
+"First of all, globally protect the category on your site by selecting "
+"\"General Protection\" from the drop-down box below and then select the "
+"categories that should be protected from non-logged in users."
+msgstr ""
+
+#: simple-membership/views/admin_category_list.php:10
+msgid ""
+"Next, select an existing membership level from the drop-down box below and "
+"then select the categories you want to grant access to (for that particular "
+"membership level)."
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:5
+msgid "Edit Member"
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:6
+msgid "Edit existing member details."
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:9
+#: simple-membership/views/login.php:5
+msgid "Username"
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:17
+msgid "(twice, leave empty to retain old password)"
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:33
+msgid "Notify User"
+msgstr ""
+
+#: simple-membership/views/admin_edit.php:40
+msgid "Edit User "
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:5
+msgid "Edit membership level"
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:6
+msgid "Edit membership level."
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:21
+msgid "No Expiry (Access for this level will not expire until cancelled)"
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:26
+msgid "Weeks (Access expires after given number of weeks)"
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:40
+msgid "Protect Older Posts (optional)"
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:43
+msgid ""
+"Only allow access to protected posts published after the members's join date."
+msgstr ""
+
+#: simple-membership/views/admin_edit_level.php:51
+msgid "Edit Membership Level "
+msgstr ""
+
+#: simple-membership/views/admin_members.php:2
+msgid "Simple WP Membership::Members"
+msgstr ""
+
+#: simple-membership/views/admin_members.php:3
+#: simple-membership/views/admin_members.php:19
+#: simple-membership/views/admin_membership_levels.php:20
+msgid "Add New"
+msgstr ""
+
+#: simple-membership/views/admin_members.php:9
+#: simple-membership/views/admin_membership_levels.php:10
+msgid "search"
+msgstr ""
+
+#: simple-membership/views/admin_membership_levels.php:2
+msgid "Simple WP Membership::Membership Levels"
+msgstr ""
+
+#: simple-membership/views/admin_membership_level_menu.php:2
+msgid "Membership level"
+msgstr ""
+
+#: simple-membership/views/admin_membership_level_menu.php:3
+msgid "Manage Content Production"
+msgstr ""
+
+#: simple-membership/views/admin_membership_level_menu.php:4
+msgid "Category Protection"
+msgstr ""
+
+#: simple-membership/views/admin_membership_manage.php:17
+msgid "Example Content Protection Settings"
+msgstr ""
+
+#: simple-membership/views/admin_member_form_common_part.php:23
+msgid "Gender"
+msgstr "Kön"
+
+#: simple-membership/views/admin_member_form_common_part.php:30
+#: simple-membership/views/edit.php:28
+msgid "Phone"
+msgstr "Telefonnummer"
+
+#: simple-membership/views/admin_member_form_common_part.php:34
+#: simple-membership/views/edit.php:32
+msgid "Street"
+msgstr "Gata"
+
+#: simple-membership/views/admin_member_form_common_part.php:38
+#: simple-membership/views/edit.php:36
+msgid "City"
+msgstr "Stad"
+
+#: simple-membership/views/admin_member_form_common_part.php:42
+#: simple-membership/views/edit.php:40
+msgid "State"
+msgstr "Landskap"
+
+#: simple-membership/views/admin_member_form_common_part.php:46
+#: simple-membership/views/edit.php:44
+msgid "Zipcode"
+msgstr "Postnummer"
+
+#: simple-membership/views/admin_member_form_common_part.php:50
+#: simple-membership/views/edit.php:48
+msgid "Country"
+msgstr "Land"
+
+#: simple-membership/views/admin_member_form_common_part.php:54
+msgid "Company"
+msgstr "Företag"
+
+#: simple-membership/views/admin_member_form_common_part.php:58
 msgid "Member Since"
 msgstr "Medlem sedan"
 
-#: views/admin_payment_settings.php:2 views/admin_settings.php:2
-#: views/admin_tools_settings.php:2
-msgid "Simple WP Membership::Settings"
-msgstr "Simple WP Membership::Inställningar"
-
-#: views/admin_payment_settings.php:33
+#: simple-membership/views/admin_payment_settings.php:33
 msgid "PayPal Integration Settings"
-msgstr "PayPal integrationsinställningar"
+msgstr ""
 
-#: views/admin_payment_settings.php:36
+#: simple-membership/views/admin_payment_settings.php:36
 msgid "Generate the \"Advanced Variables\" Code for your PayPal button"
-msgstr "Generera  \"Avancerade variabler \" Kod för din PayPal-knapp"
+msgstr ""
 
-#: views/admin_payment_settings.php:39
+#: simple-membership/views/admin_payment_settings.php:39
 msgid "Enter the Membership Level ID"
-msgstr "Ange medlemsnivå ID"
+msgstr ""
 
-#: views/admin_payment_settings.php:41
+#: simple-membership/views/admin_payment_settings.php:41
 msgid "Generate Code"
-msgstr "Skapa kod"
+msgstr ""
 
-#: views/admin_tools_settings.php:9
+#: simple-membership/views/admin_tools_settings.php:9
 msgid "Generate a Registration Completion link"
-msgstr "Skapa en Registrering klar länk"
+msgstr ""
 
-#: views/admin_tools_settings.php:12
+#: simple-membership/views/admin_tools_settings.php:12
 msgid ""
 "You can manually generate a registration completion link here and give it to "
 "your customer if they have missed the email that was automatically sent out "
 "to them after the payment."
 msgstr ""
-"Du kan manuellt skapa en registrerings slutförande länk här och ge den till "
-"din kund om de har missat den e-post som automatiskt skickades ut till dem "
-"efter betalningen."
 
-#: views/admin_tools_settings.php:17
+#: simple-membership/views/admin_tools_settings.php:17
 msgid "Generate Registration Completion Link"
-msgstr "Skapa en Registrering klar länk"
+msgstr "Skapa fullbordad registreringslänk"
 
-#: views/admin_tools_settings.php:20
+#: simple-membership/views/admin_tools_settings.php:20
 msgid "OR"
-msgstr "ELLER"
+msgstr ""
 
-#: views/admin_tools_settings.php:21
+#: simple-membership/views/admin_tools_settings.php:21
 msgid "For All Pending Registrations"
-msgstr "För alla väntande registreringar"
+msgstr "För alla avvaktande registreringar"
 
-#: views/admin_tools_settings.php:24
+#: simple-membership/views/admin_tools_settings.php:24
 msgid "Registration Completion Links Will Appear Below:"
-msgstr "Registrering klar länk visas nedan:"
+msgstr "Fullbordad registreringslänk ses nedan"
 
-#: views/admin_tools_settings.php:31
+#: simple-membership/views/admin_tools_settings.php:31
 msgid "Send Registration Reminder Email too"
-msgstr "Skicka registrerings påminnelse via E-post till"
+msgstr "Skicka registreringspåminnelse via mejl till"
 
-#: views/admin_tools_settings.php:34
+#: simple-membership/views/admin_tools_settings.php:34
 msgid "Submit"
 msgstr "Skicka"
 
-#: views/edit.php:58
+#: simple-membership/views/edit.php:58
 msgid "Update"
 msgstr "Uppdatera"
 
-#: views/forgot_password.php:5
+#: simple-membership/views/forgot_password.php:5
 msgid "Email Address"
-msgstr "E-post adress"
+msgstr "Mejladress"
 
-#: views/forgot_password.php:12
+#: simple-membership/views/forgot_password.php:12
 msgid "Reset Password"
 msgstr "Återställ lösenord"
 
-#: views/loggedin.php:3 views/login_widget_logged.php:3
+#: simple-membership/views/loggedin.php:3
 msgid "Logged in as"
 msgstr "Inloggad som"
 
-#: views/loggedin.php:11 views/login_widget_logged.php:9
+#: simple-membership/views/loggedin.php:11
 msgid "Membership"
 msgstr "Medlemskap"
 
-#: views/loggedin.php:15 views/login_widget_logged.php:12
+#: simple-membership/views/loggedin.php:15
 msgid "Account Expiry"
-msgstr "Utgång för konto"
+msgstr "Utgånget konto"
 
-#: views/loggedin.php:19 views/login_widget_logged.php:16
+#: simple-membership/views/loggedin.php:19
 msgid "Logout"
 msgstr "Logga ut"
 
-#: views/login.php:17
+#: simple-membership/views/login.php:18
 msgid "Remember Me"
 msgstr "Kom ihåg mig"
 
-#: views/login.php:26
+#: simple-membership/views/login.php:24
 msgid "Forgot Password"
-msgstr "Glömt lösenordet"
+msgstr "Glömt lösenordet?"

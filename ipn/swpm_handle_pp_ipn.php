@@ -96,7 +96,7 @@ class swpm_paypal_ipn_handler {
 
             if (!empty($subsc_ref))
             {
-                $this->debug_log('swpm integration is being used... creating member account... see the "subscription_handle_debug.log" file for details',true);
+                $this->debug_log('swpm integration is being used... creating member account...',true);
                 $swpm_id = $customvariables['swpm_id'];
                 swpm_handle_subsc_signup_stand_alone($this->ipn_data,$subsc_ref,$this->ipn_data['subscr_id'],$swpm_id);
                 //Handle customized subscription signup
@@ -121,12 +121,12 @@ class swpm_paypal_ipn_handler {
             $mc_currency = $this->ipn_data['mc_currency'];
 
             $current_item = array(
-                                                               'item_number' => $item_number,
-                                                               'item_name' => $item_name,
-                                                               'quantity' => $quantity,
-                                                               'mc_gross' => $mc_gross,
-                                                               'mc_currency' => $mc_currency,
-                                                              );
+            'item_number' => $item_number,
+            'item_name' => $item_name,
+            'quantity' => $quantity,
+            'mc_gross' => $mc_gross,
+            'mc_currency' => $mc_currency,
+            );
 
             array_push($cart_items, $current_item);
         }

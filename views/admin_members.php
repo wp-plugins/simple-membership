@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h2><?php screen_icon('users'); ?><?php echo  SwpmUtils::_('Simple WP Membership::Members') ?>
+    <h2><?php echo  SwpmUtils::_('Simple WP Membership::Members') ?>
         <a href="admin.php?page=simple_wp_membership&member_action=add" class="add-new-h2"><?php echo  SwpmUtils::_('Add New'); ?></a></h2>
     <form method="post">
         <p class="search-box">
