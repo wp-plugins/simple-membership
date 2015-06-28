@@ -201,9 +201,10 @@ class SwpmInstallation {
                 "\n\nThank You";
         $reset_email_subject = get_bloginfo('name') . ": New Password";
         $reset_email_body = "Dear {first_name} {last_name}" .
-                "\n\nHere is your new password" .
+                "\n\nHere is your new password:" .
                 "\n\nUser name: {user_name}" .
-                "\n\nPassword: {password}" .
+                "\nPassword: {password}" .
+                "\n\nYou can change the password from the edit profile section of the site (after you log into the site)" .
                 "\n\nThank You";
 
         $status_change_email_subject = "Account Updated!";

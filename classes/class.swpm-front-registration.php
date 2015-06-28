@@ -145,17 +145,21 @@ class SwpmFrontRegistration extends SwpmRegistration {
         $form = new SwpmForm($user_data);
         if ($form->is_valid()) {
             global $wpdb;
-            $member_info = $form->get_sanitized();
-            // update corresponding wp user.
-            SwpmUtils::update_wp_user($auth->get('user_name'), $member_info);
+            $message = array('succeeded' => true, 'message' => SwpmUtils::_('Profile updated successfully.'));
+            
+            $member_info = $form->get_sanitized();                        
+            SwpmUtils::update_wp_user($auth->get('user_name'), $member_info); //Update corresponding wp user record.
+            
+            
             if (isset($member_info['plain_password'])) {
+                //Password was also changed so show the appropriate message
+                $message = array('succeeded' => true, 'message' => SwpmUtils::_('Profile updated successfully. You will need to re-login since you changed your password.'));
                 unset($member_info['plain_password']);
             }
 
-            $wpdb->update(
-                    $wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id')));
+            $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id')));
             $auth->reload_user_data();
-            $message = array('succeeded' => true, 'message' => 'Profile Updated.');
+            
             SwpmTransfer::get_instance()->set('status', $message);
         } else {
             $message = array('succeeded' => false, 'message' => SwpmUtils::_('Please correct the following'),
