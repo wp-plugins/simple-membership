@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Simple Membership\n"
 "POT-Creation-Date: 2015-06-10 22:20+0100\n"
-"PO-Revision-Date: 2015-06-16 14:41+0100\n"
+"PO-Revision-Date: 2015-06-28 10:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -189,7 +189,7 @@ msgstr "Könfältet är ogiltigt"
 
 #: simple-membership/classes/class.bForm.php:216
 msgid "Account state field is invalid"
-msgstr "Konto status fältet är ogiltigt"
+msgstr "Kontostatus fältet är ogiltigt"
 
 #: simple-membership/classes/class.bForm.php:223
 msgid "Invalid membership level"
@@ -275,7 +275,7 @@ msgstr "Åtkomst börjar"
 
 #: simple-membership/classes/class.bMembers.php:23
 msgid "Account State"
-msgstr "Konto status"
+msgstr "Kontostatus"
 
 #: simple-membership/classes/class.bMembers.php:35
 #: simple-membership/classes/class.bMembershipLevels.php:29
@@ -442,12 +442,12 @@ msgstr "Inställningar för mejl (anmälan av kontouppgradering)"
 
 #: simple-membership/classes/class.bSettings.php:367
 msgid "Not a Member?"
-msgstr "Du är inte medlem?"
+msgstr "Är du är inte medlem?"
 
 #: simple-membership/classes/class.bSettings.php:367
 #: simple-membership/views/login.php:27
 msgid "Join Us"
-msgstr "Bli medlem"
+msgstr "Bli medlem här!"
 
 #: simple-membership/classes/class.bUtils.php:63
 msgid "Active"
@@ -529,7 +529,7 @@ msgstr "Repetera lösenord"
 
 #: simple-membership/views/add.php:37
 msgid "Register"
-msgstr "Register"
+msgstr "Skicka"
 
 #: simple-membership/views/admin_add.php:6
 msgid "Add Member"
@@ -624,7 +624,7 @@ msgstr "Tid för inloggning"
 
 #: simple-membership/views/admin_add_level.php:22
 msgid "No Expiry (Access for this level will not expire until cancelled"
-msgstr ""
+msgstr "Inget utgångsdatum"
 
 #: simple-membership/views/admin_add_level.php:23
 #: simple-membership/views/admin_add_level.php:25
@@ -635,26 +635,26 @@ msgstr ""
 #: simple-membership/views/admin_edit_level.php:28
 #: simple-membership/views/admin_edit_level.php:31
 msgid "Expire After"
-msgstr ""
+msgstr "Upphör efter"
 
 #: simple-membership/views/admin_add_level.php:24
 #: simple-membership/views/admin_edit_level.php:23
 msgid "Days (Access expires after given number of days)"
-msgstr ""
+msgstr "Dagar (antal dagar till att medlemskapet upphör)"
 
 #: simple-membership/views/admin_add_level.php:26
 msgid "Weeks (Access expires after given number of weeks"
-msgstr ""
+msgstr "Veckor (antal veckor till att medlemskapet upphör)"
 
 #: simple-membership/views/admin_add_level.php:28
 #: simple-membership/views/admin_edit_level.php:29
 msgid "Months (Access expires after given number of months)"
-msgstr ""
+msgstr "Månader (antal månader till att medlemskapet upphör)"
 
 #: simple-membership/views/admin_add_level.php:30
 #: simple-membership/views/admin_edit_level.php:32
 msgid "Years (Access expires after given number of years)"
-msgstr ""
+msgstr "År (antal år till att medlemskapet upphör)"
 
 #: simple-membership/views/admin_add_level.php:31
 #: simple-membership/views/admin_edit_level.php:34
@@ -702,16 +702,16 @@ msgstr ""
 
 #: simple-membership/views/admin_edit.php:5
 msgid "Edit Member"
-msgstr ""
+msgstr "Redigera medlem"
 
 #: simple-membership/views/admin_edit.php:6
 msgid "Edit existing member details."
-msgstr ""
+msgstr "Redigera befintliga medlemsuppgifter"
 
 #: simple-membership/views/admin_edit.php:9
 #: simple-membership/views/login.php:5
 msgid "Username"
-msgstr ""
+msgstr "Användarnamn"
 
 #: simple-membership/views/admin_edit.php:17
 msgid "(twice, leave empty to retain old password)"
@@ -767,7 +767,7 @@ msgstr ""
 #: simple-membership/views/admin_members.php:9
 #: simple-membership/views/admin_membership_levels.php:10
 msgid "search"
-msgstr ""
+msgstr "Sök"
 
 #: simple-membership/views/admin_membership_levels.php:2
 msgid "Simple WP Membership::Membership Levels"
@@ -775,7 +775,7 @@ msgstr ""
 
 #: simple-membership/views/admin_membership_level_menu.php:2
 msgid "Membership level"
-msgstr ""
+msgstr "Medlemskapsnivå"
 
 #: simple-membership/views/admin_membership_level_menu.php:3
 msgid "Manage Content Production"
@@ -904,7 +904,7 @@ msgstr "Medlemskap"
 
 #: simple-membership/views/loggedin.php:15
 msgid "Account Expiry"
-msgstr "Utgånget konto"
+msgstr "Medlemskapet upphör"
 
 #: simple-membership/views/loggedin.php:19
 msgid "Logout"

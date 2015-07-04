@@ -11,6 +11,7 @@ class SwpmShortcodesHandler {
         extract(shortcode_atts(array(
         'id' => '',
         'button_text' => '',
+        'new_window' => '',
         ), $args));
         
         if(empty($id)){

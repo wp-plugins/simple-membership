@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.2
-Stable tag: 2.2.9
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,11 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 3.0 =
+- Updated the swedish langauge translation
+- Added a new option to enable opening of the PayPal buy button in a new window (using the "new_window" parameter in the shortcode).
+- You can now create and configure PayPal Subscription button for membership payment from the payments menu.
 
 = 2.2.9 =
 - Added a new feature to customize the password reset email.
