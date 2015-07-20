@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple WordPress Membership
-Version: 3.0
+Version: 3.0.1
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -9,7 +9,7 @@ Description: A flexible, well-supported, and easy-to-use WordPress membership pl
 */
 
 //Direct access to this file is not permitted
-if (realpath(__FILE__) === realpath($_SERVER["SCRIPT_FILENAME"])) {
+if (!defined('ABSPATH')){
     exit("Do not access this file directly.");
 }
 
@@ -17,7 +17,7 @@ include_once('classes/class.simple-wp-membership.php');
 include_once('classes/class.swpm-cronjob.php');
 include_once('swpm-compat.php');
 
-define('SIMPLE_WP_MEMBERSHIP_VER', '3.0');
+define('SIMPLE_WP_MEMBERSHIP_VER', '3.0.1');
 define('SIMPLE_WP_MEMBERSHIP_DB_VER', '1.2');
 define('SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL', home_url());
 define('SIMPLE_WP_MEMBERSHIP_PATH', dirname(__FILE__) . '/');

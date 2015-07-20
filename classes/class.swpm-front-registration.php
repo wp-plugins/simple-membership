@@ -15,13 +15,12 @@ class SwpmFrontRegistration extends SwpmRegistration {
     public function regigstration_ui($level) {
         $settings_configs = SwpmSettings::get_instance();
         $joinuspage_url = $settings_configs->get_value('join-us-page-url');
-        $membership_level = '';
-        $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
-        $code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
-
+        $membership_level = '';        
         global $wpdb;
+                
         if (SwpmUtils::is_paid_registration()) {
-            $member = $member = SwpmUtils::get_paid_member_info();
+            //Lets check if this is a registration for paid membership
+            $member = SwpmUtils::get_paid_member_info();
             if (empty($member)) {
                 SwpmUtils::e('Error! Invalid Request. Could not find a match for the given security code and the user ID.');
             }
@@ -32,7 +31,11 @@ class SwpmFrontRegistration extends SwpmRegistration {
         }
         if (empty($membership_level)) {
             $joinuspage_link = '<a href="' . $joinuspage_url . '">Join us</a>';
+            echo '<p>';
             SwpmUtils::e('Free membership is disabled on this site. Please make a payment from the ' . $joinuspage_link . ' page to pay for a premium membership.');
+            echo '</p><p>';
+            SwpmUtils::e('You will receive a unique link via email after the payment. You will be able to use that link to complete the premium membership registration.');
+            echo '</p>';
             return;
         }
         $form = apply_filters('swpm_registration_form_override', '', $membership_level);
@@ -58,12 +61,20 @@ class SwpmFrontRegistration extends SwpmRegistration {
     }
 
     public function register() {
+        //If captcha is present and validation failed, it returns an error string. If validation succeeds, it returns an empty string.
+        $captcha_validation_output = apply_filters('swpm_validate_registration_form_submission', '');
+
+        if (!empty($captcha_validation_output)) {
+            $message = array('succeeded' => false, 'message' => SwpmUtils::_('Security check: captcha validation failed.'));
+            SwpmTransfer::get_instance()->set('status', $message);
+            return;
+        }
         if ($this->create_swpm_user() && $this->create_wp_user() && $this->send_reg_email()) {
-            do_action('swpm_front_end_registration_complete');//Keep this action hook for people who are using it (so their implementation doesn't break).
+            do_action('swpm_front_end_registration_complete'); //Keep this action hook for people who are using it (so their implementation doesn't break).
             do_action('swpm_front_end_registration_complete_user_data', $this->member_info);
 
             $login_page_url = SwpmSettings::get_instance()->get_value('login-page-url');
-            $after_rego_msg = '<p>' . SwpmUtils::_('Registration Successful. ') . SwpmUtils::_('Please') . ' <a href="' . $login_page_url . '">' . SwpmUtils::_('Login') . '</a></p>';
+            $after_rego_msg = '<div class="swpm-registration-success-msg">' . SwpmUtils::_('Registration Successful. ') . SwpmUtils::_('Please') . ' <a href="' . $login_page_url . '">' . SwpmUtils::_('Login') . '</a></div>';
             $message = array('succeeded' => true, 'message' => $after_rego_msg);
             SwpmTransfer::get_instance()->set('status', $message);
             return;
@@ -146,11 +157,11 @@ class SwpmFrontRegistration extends SwpmRegistration {
         if ($form->is_valid()) {
             global $wpdb;
             $message = array('succeeded' => true, 'message' => SwpmUtils::_('Profile updated successfully.'));
-            
-            $member_info = $form->get_sanitized();                        
+
+            $member_info = $form->get_sanitized();
             SwpmUtils::update_wp_user($auth->get('user_name'), $member_info); //Update corresponding wp user record.
-            
-            
+
+
             if (isset($member_info['plain_password'])) {
                 //Password was also changed so show the appropriate message
                 $message = array('succeeded' => true, 'message' => SwpmUtils::_('Profile updated successfully. You will need to re-login since you changed your password.'));
@@ -159,7 +170,7 @@ class SwpmFrontRegistration extends SwpmRegistration {
 
             $wpdb->update($wpdb->prefix . "swpm_members_tbl", $member_info, array('member_id' => $auth->get('member_id')));
             $auth->reload_user_data();
-            
+
             SwpmTransfer::get_instance()->set('status', $message);
         } else {
             $message = array('succeeded' => false, 'message' => SwpmUtils::_('Please correct the following'),

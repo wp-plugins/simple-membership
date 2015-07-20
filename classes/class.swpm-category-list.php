@@ -82,7 +82,7 @@ class SwpmCategoryList extends WP_List_Table {
         $all_cat_ids = get_categories(array('hide_empty' => '0'));
         $totalitems = count($all_cat_ids);
         $perpage = 100;
-        $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+        $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
         if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }

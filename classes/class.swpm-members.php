@@ -69,7 +69,7 @@ class SwpmMembers extends WP_List_Table {
                     . " OR last_name LIKE '%" . strip_tags($s) . "%' ";
         }
         $orderby = filter_input(INPUT_GET, 'orderby');
-        $orderby = empty($orderby) ? 'user_name' : $orderby ;
+        $orderby = empty($orderby) ? 'member_id' : $orderby ;
         $order = filter_input(INPUT_GET, 'order');
         $order = empty($order) ? 'DESC' : $order;
         

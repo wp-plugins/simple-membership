@@ -3,8 +3,8 @@ Contributors: smp7, wp.insider, amijanina
 Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
-Tested up to: 4.2
-Stable tag: 3.0
+Tested up to: 4.3
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,7 @@ You can create a free forum user account and ask your questions.
 * Hide the admin toolbar from the frontend of your site.
 * Allow your members to deleter their membership accounts.
 * Send quick notification email to your members.
+* Customize the password reset email for members.
 * The login and registration widgets will be responsive if you are using a responsive theme.
 * Front-end member registration page.
 * Front-end member profiles.
@@ -76,6 +77,7 @@ The following language translations are already available:
 * French
 * Chinese
 * Portuguese (Brazil)
+* Portuguese (Portugal)
 * Swedish
 * Macedonian
 * Polish
@@ -107,6 +109,13 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 3.0.1 =
+- Added a new CSS class to the registration complete message.
+- Added Portuguese (Portugal) language translation file. The translation was submitted by Edgar Sprecher.
+- Replaced mysql_real_escape_string() with esc_sql()
+- Members list in the admin is now sorted by member_id by default.
+- Added a new filter in the registration form so Google recaptcha can be added to it.
 
 = 3.0 =
 - Updated the swedish langauge translation

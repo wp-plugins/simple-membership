@@ -84,8 +84,8 @@ class SwpmMembershipLevels extends WP_List_Table {
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE  id !=1 ";
         if (isset($_POST['s']))
             $query .= " AND alias LIKE '%" . strip_tags($_POST['s']) . "%' ";
-        $orderby = !empty($_GET["orderby"]) ? mysql_real_escape_string($_GET["orderby"]) : 'id';
-        $order = !empty($_GET["order"]) ? mysql_real_escape_string($_GET["order"]) : 'DESC';
+        $orderby = !empty($_GET["orderby"]) ? esc_sql($_GET["orderby"]) : 'id';
+        $order = !empty($_GET["order"]) ? esc_sql($_GET["order"]) : 'DESC';
 
         $sortable_columns = $this->get_sortable_columns();
         $orderby = SwpmUtils::sanitize_value_by_array($orderby, $sortable_columns);
@@ -97,7 +97,7 @@ class SwpmMembershipLevels extends WP_List_Table {
 
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         $perpage = 20;
-        $paged = !empty($_GET["paged"]) ? mysql_real_escape_string($_GET["paged"]) : '';
+        $paged = !empty($_GET["paged"]) ? esc_sql($_GET["paged"]) : '';
         if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
