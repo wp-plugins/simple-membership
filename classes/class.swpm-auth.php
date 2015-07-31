@@ -17,7 +17,7 @@ class SwpmAuth {
 
     private function init() {
         $valid = $this->validate();
-        //Blog::log_simple_debug("init:". ($valid? "valid": "invalid"), true);
+        //SwpmLog::log_auth_debug("init:". ($valid? "valid": "invalid"), true);
         if (!$valid) {
             $this->authenticate();
         }
@@ -35,10 +35,12 @@ class SwpmAuth {
         global $wpdb;
         $swpm_password = empty($pass) ? filter_input(INPUT_POST, 'swpm_password') : $pass;
         $swpm_user_name = empty($user) ? apply_filters('swpm_user_name', filter_input(INPUT_POST, 'swpm_user_name')) : $user;
-        //Blog::log_simple_debug("Authenticate:" . $swpm_user_name, true);
-        if (!empty($swpm_user_name) && !empty($swpm_password)) {
+                
+        if (!empty($swpm_user_name) && !empty($swpm_password)) {            
             $user = sanitize_user($swpm_user_name);
             $pass = trim($swpm_password);
+            SwpmLog::log_auth_debug("Authenticate request - Username: " . $swpm_user_name, true);
+            
             $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE user_name = %s";
             $userData = $wpdb->get_row($wpdb->prepare($query, $user));
             $this->userData = $userData;
@@ -61,7 +63,7 @@ class SwpmAuth {
                 $this->set_cookie($remember);
                 $this->isLoggedIn = true;
                 $this->lastStatusMsg = "Logged In.";
-                SwpmLog::log_simple_debug("swpm_login action.", true);
+                SwpmLog::log_auth_debug("Authentication successful for username: ".$user.". Executing swpm_login action hook.", true);
                 do_action('swpm_login', $user, $pass, $remember);
                 return true;
             }
@@ -134,7 +136,7 @@ class SwpmAuth {
     }
 
     public function login($user, $pass, $remember = '', $secure = '') {
-        SwpmLog::log_simple_debug("login", true);
+        SwpmLog::log_auth_debug("login", true);
         if ($this->isLoggedIn) {
             return;
         }
@@ -195,7 +197,8 @@ class SwpmAuth {
         if (count($cookie_elements) != 3) {
             return false;
         }
-        SwpmLog::log_simple_debug("validate:" . $_COOKIE[$auth_cookie_name], true);
+        
+        //SwpmLog::log_auth_debug("validate() - " . $_COOKIE[$auth_cookie_name], true);
         list($username, $expiration, $hmac) = $cookie_elements;
         $expired = $expiration;
         // Allow a grace period for POST and AJAX requests
@@ -205,9 +208,10 @@ class SwpmAuth {
         // Quick check to see if an honest cookie has expired
         if ($expired < time()) {
             $this->lastStatusMsg = SwpmUtils::_("Session Expired."); //do_action('auth_cookie_expired', $cookie_elements);
+            SwpmLog::log_auth_debug("validate() - Session Expired", true);
             return false;
         }
-        SwpmLog::log_simple_debug("validate:Session Expired", true);
+        
         global $wpdb;
         $query = " SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE user_name = %s";
         $user = $wpdb->get_row($wpdb->prepare($query, $username));
@@ -215,15 +219,16 @@ class SwpmAuth {
             $this->lastStatusMsg = SwpmUtils::_("Invalid User Name");
             return false;
         }
-        SwpmLog::log_simple_debug("validate:Invalid User Name:" . serialize($user), true);
+
         $pass_frag = substr($user->password, 8, 4);
         $key = SwpmAuth::b_hash($username . $pass_frag . '|' . $expiration);
         $hash = hash_hmac('md5', $username . '|' . $expiration, $key);
         if ($hmac != $hash) {
             $this->lastStatusMsg = SwpmUtils::_("Please login again.");
+            SwpmLog::log_auth_debug("validate() - Bad Hash", true);
             return false;
         }
-        SwpmLog::log_simple_debug("validate:bad hash", true);
+        
         if ($expiration < time()) {
             $GLOBALS['login_grace_period'] = 1;
         }

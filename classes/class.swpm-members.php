@@ -59,6 +59,9 @@ class SwpmMembers extends WP_List_Table {
 
     function prepare_items() {
         global $wpdb;
+        
+        $this->process_bulk_action();
+        
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
         $query .= " LEFT JOIN " . $wpdb->prefix . "swpm_membership_tbl";
         $query .= " ON ( membership_level = id ) ";
@@ -147,21 +150,23 @@ class SwpmMembers extends WP_List_Table {
         return false;
     }
 
-    function delete() {
-        global $wpdb;
-        if (isset($_REQUEST['members'])) {
-            $members = $_REQUEST['members'];
-            if (!empty($members)) {
-                $members = array_map('absint', $members);
-                foreach ($members as $swpm_id) {
-                    $user_name = SwpmUtils::get_user_by_id(absint($swpm_id));
-                    SwpmMembers::delete_wp_user($user_name);
-                }
-                $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id IN (" . implode(',', $members) . ")";
-                $wpdb->query($query);
+    function process_bulk_action() {
+        //Detect when a bulk action is being triggered... //print_r($_REQUEST);
+        if ('bulk_delete' === $this->current_action()) {
+            $records_to_delete = $_REQUEST['members'];           
+            if (empty($records_to_delete)) {
+                echo '<div id="message" class="updated fade"><p>Error! You need to select multiple records to perform a bulk action!</p></div>';
+                return;
             }
+            foreach ($records_to_delete as $record_id) {
+                SwpmMembers::delete_user_by_id($record_id);
+            }
+            echo '<div id="message" class="updated fade"><p>Selected records deleted successfully!</p></div>';
         }
-        else if (isset($_REQUEST['member_id'])) {
+    }
+    
+    function delete() {
+        if (isset($_REQUEST['member_id'])) {
             $id = absint($_REQUEST['member_id']);
             SwpmMembers::delete_user_by_id($id);
         }

@@ -140,30 +140,6 @@ class SwpmMiscUtils {
         $settings->save(); //Save all settings object changes
     }
 
-    public static function reset_swmp_log_files() {
-        $log_reset = true;
-        $logfile_list = array(
-            SIMPLE_WP_MEMBERSHIP_PATH . '/log.txt',
-        );
-
-        foreach ($logfile_list as $logfile) {
-            if (empty($logfile)) {
-                continue;
-            }
-
-            $text = '[' . date('m/d/Y g:i A') . '] - SUCCESS : Log file reset';
-            $text .= "\n------------------------------------------------------------------\n\n";
-            $fp = fopen($logfile, 'w');
-            if ($fp != FALSE) {
-                @fwrite($fp, $text);
-                @fclose($fp);
-            } else {
-                $log_reset = false;
-            }
-        }
-        return $log_reset;
-    }
-
     public static function redirect_to_url($url) {
         if (empty($url)) {
             return;

@@ -67,6 +67,15 @@ echo '<link type="text/css" rel="stylesheet" href="' . SIMPLE_WP_MEMBERSHIP_URL 
             );
             array_push($addons_data, $addon_7);
 
+            $addon_8 = array(
+                'name' => 'Affiliates Manager',
+                'thumbnail' => SIMPLE_WP_MEMBERSHIP_URL . '/images/addons/affiliates-manager-integration.png',
+                'description' => 'Allows you to integrate with the Affiliates Manager plugin so you can reward affiliates for sending paid members your way.',
+                'page_url' => 'https://wpaffiliatemanager.com/affiliates-manager-and-simple-membership-integration/',
+            );
+            array_push($addons_data, $addon_8);
+            
+            /*** Show the addons list ***/
             foreach ($addons_data as $addon) {
                 $output .= '<div class="swpm_addon_item_canvas">';
 

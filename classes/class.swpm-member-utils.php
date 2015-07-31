@@ -24,6 +24,14 @@ class SwpmMemberUtils {
         return $auth->get('member_id');
     }
 
+    public static function get_logged_in_members_username() {
+        $auth = SwpmAuth::get_instance();
+        if (!$auth->is_logged_in()) {
+            return SwpmUtils::_("User is not logged in.");
+        }
+        return $auth->get('user_name');
+    }
+    
     public static function get_logged_in_members_level() {
         $auth = SwpmAuth::get_instance();
         if (!$auth->is_logged_in()) {

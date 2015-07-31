@@ -123,16 +123,6 @@ class SwpmForm {
         $saned = wp_kses($phone, array());
         $this->sanitized['phone'] = $saned;        
         return;
-        //Not doing phone number validation
-        
-//        $saned = wp_kses($phone, array());
-//        $this->sanitized['phone'] = $saned;
-//        if (strlen($saned) > 9 && preg_match('/^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}$/', $saned)){
-//            $this->sanitized['phone'] = $saned;
-//        }
-//        else{
-//            $this->errors['phone'] = BUtils::_('Phone number is invalid');
-//        }
     }
 
     protected function address_street() {

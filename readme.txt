@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: member, members, members only, membership, memberships, register, WordPress membership plugin, content, content protection, paypal, restrict, restrict access, Restrict content, admin, access control, subscription, teaser, protection, profile, login, login page,
 Requires at least: 3.3
 Tested up to: 4.3
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +109,13 @@ Please visit the memberhsip plugin page to view screenshots:
 https://simple-membership-plugin.com/
 
 == Changelog ==
+
+= 3.0.2 =
+- Added a new shortcode that can be used on your thank you page. This will allow your users to complete paid registration from the thank you page after payment.
+- The last accessed from IP address of a member is shown to the admin in the member edit screen.
+- The debug log (if enabled) for authentication request is written to the "log-auth.txt" file.
+- Fixed a bug with the bulk member delete option from the bottom bulk action form.
+- Fixed a bug with the bulk membership level delete option from the bottom bulk action form.
 
 = 3.0.1 =
 - Added a new CSS class to the registration complete message.

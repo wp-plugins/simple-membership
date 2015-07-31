@@ -8,6 +8,9 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     $membership_level_table = $wpdb->prefix . "swpm_membership_tbl";
     $membership_level = $subsc_ref;
 
+    swpm_debug_log_subsc("swpm_handle_subsc_signup_stand_alone(). Custom value: ".$ipn_data['custom'],true);
+    $custom_vars = parse_str($ipn_data['custom']);
+    
     if(empty($swpm_id))
     {
         //Lets try to find an existing user profile for this payment
@@ -72,8 +75,9 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
     }// End of existing user account upgrade
     else
     {
-        $default_account_status = $settings->get_value('default-account-status', 'active');
         // create new member account
+        $default_account_status = $settings->get_value('default-account-status', 'active');
+        
         $data = array();
         $data['user_name'] ='';
         $data['password'] = '';
@@ -94,11 +98,12 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
         $data['country'] = $ipn_data['address_country'];
         $data['member_since']  = $data['subscription_starts'] = $data['last_accessed'] = date ("Y-m-d");
         $data['account_state'] = $default_account_status;
-        $reg_code = uniqid();//rand(10, 1000);
+        $reg_code = uniqid();
         $md5_code = md5($reg_code);
         $data['reg_code'] = $md5_code;
         $data['referrer'] = $data['extra_info'] = $data['txn_id'] = '';
         $data['subscr_id']= $subscr_id;
+        $data['last_accessed_from_ip'] = isset($user_ip) ? $user_ip : '';//Save the users IP address
 
         $wpdb->insert($members_table_name,  $data);//Create the member record
         $results = $wpdb->get_row($wpdb->prepare("SELECT * FROM $members_table_name where subscr_id=%s and reg_code=%s",$subscr_id, $md5_code), OBJECT);
@@ -127,7 +132,7 @@ function swpm_handle_subsc_signup_stand_alone($ipn_data,$subsc_ref,$unique_ref,$
 
         $tags = array("{first_name}","{last_name}","{reg_link}");
         $vals = array($data['first_name'],$data['last_name'],$reg_url);
-        $email_body    = str_replace($tags,$vals,$body);
+        $email_body = str_replace($tags,$vals,$body);
         $headers = 'From: '.$from_address . "\r\n";
     }
 

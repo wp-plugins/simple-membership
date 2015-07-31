@@ -40,7 +40,11 @@
 		<th scope="row"><label for="subscr_id"><?php echo  SwpmUtils::_('Subscriber ID/Reference') ?> </label></th>
 		<td><input class="regular-text" name="subscr_id" type="text" id="subscr_id" value="<?php echo esc_attr($subscr_id); ?>" /></td>
 	</tr>        
-
+        <tr>
+		<th scope="row"><label for="last_accessed_from_ip"><?php echo  SwpmUtils::_('Last Accessed From IP') ?> </label></th>
+		<td><?php echo esc_attr($last_accessed_from_ip); ?></td>
+	</tr> 
+        
     </table>
     
     <?php include('admin_member_form_common_js.php');?>

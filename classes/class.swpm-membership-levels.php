@@ -81,6 +81,9 @@ class SwpmMembershipLevels extends WP_List_Table {
 
     function prepare_items() {
         global $wpdb;
+        
+        $this->process_bulk_action();
+        
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE  id !=1 ";
         if (isset($_POST['s']))
             $query .= " AND alias LIKE '%" . strip_tags($_POST['s']) . "%' ";
@@ -151,17 +154,29 @@ class SwpmMembershipLevels extends WP_List_Table {
         return false;
     }
 
-    function delete() {
+    function process_bulk_action() {
+        //Detect when a bulk action is being triggered... 
         global $wpdb;
-        if (isset($_REQUEST['ids'])) {
-            $members = $_REQUEST['ids'];
-            if (!empty($members)) {
-                $members = array_map('absint', $members);
-                $members = implode(',', $members);
-                $query = "DELETE FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id IN (" . $members . ")";
+        
+        if ('bulk_delete' === $this->current_action()) {
+            //print_r($_REQUEST);
+            
+            $records_to_delete = $_REQUEST['ids'];           
+            if (empty($records_to_delete)) {
+                echo '<div id="message" class="updated fade"><p>Error! You need to select multiple records to perform a bulk action!</p></div>';
+                return;
+            }
+            foreach ($records_to_delete as $record_id) {
+                $query = $wpdb->prepare("DELETE FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $record_id);
                 $wpdb->query($query);
             }
-        } else if (isset($_REQUEST['id'])) {
+            echo '<div id="message" class="updated fade"><p>Selected records deleted successfully!</p></div>';
+        }
+    }
+    
+    function delete() {
+        global $wpdb;
+        if (isset($_REQUEST['id'])) {
             $id = absint($_REQUEST['id']);
             $query = $wpdb->prepare("DELETE FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE id = %d", $id);
             $wpdb->query($query);

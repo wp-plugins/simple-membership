@@ -35,8 +35,11 @@ function swpm_render_pp_buy_now_button_sc_output($button_code, $args) {
     }
     $cancel_url = SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL;
 
-    $custom_field_value = 'subsc_ref=' . $membership_level_id;
-    $user_ip = $_SERVER['REMOTE_ADDR'];
+    $user_ip = SwpmUtils::get_user_ip_address();
+    $_SESSION['swpm_payment_button_interaction'] = $user_ip;
+    
+    //Custom field data
+    $custom_field_value = 'subsc_ref=' . $membership_level_id;    
     $custom_field_value .= '&user_ip=' . $user_ip;
     if (SwpmMemberUtils::is_member_logged_in()) {
         $custom_field_value .= '&swpm_id=' . SwpmMemberUtils::get_logged_in_members_id();
@@ -134,8 +137,11 @@ function swpm_render_pp_subscription_button_sc_output($button_code, $args) {
     }
     $cancel_url = SIMPLE_WP_MEMBERSHIP_SITE_HOME_URL;
 
+    $user_ip = SwpmUtils::get_user_ip_address();
+    $_SESSION['swpm_payment_button_interaction'] = $user_ip;
+    
+    //Custom field data
     $custom_field_value = 'subsc_ref=' . $membership_level_id;
-    $user_ip = $_SERVER['REMOTE_ADDR'];
     $custom_field_value .= '&user_ip=' . $user_ip;
     if (SwpmMemberUtils::is_member_logged_in()) {
         $custom_field_value .= '&swpm_id=' . SwpmMemberUtils::get_logged_in_members_id();
