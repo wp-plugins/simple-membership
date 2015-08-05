@@ -81,9 +81,9 @@ class SwpmMembershipLevels extends WP_List_Table {
 
     function prepare_items() {
         global $wpdb;
-        
+
         $this->process_bulk_action();
-        
+
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_membership_tbl WHERE  id !=1 ";
         if (isset($_POST['s']))
             $query .= " AND alias LIKE '%" . strip_tags($_POST['s']) . "%' ";
@@ -155,13 +155,13 @@ class SwpmMembershipLevels extends WP_List_Table {
     }
 
     function process_bulk_action() {
-        //Detect when a bulk action is being triggered... 
+        //Detect when a bulk action is being triggered...
         global $wpdb;
-        
+
         if ('bulk_delete' === $this->current_action()) {
             //print_r($_REQUEST);
-            
-            $records_to_delete = $_REQUEST['ids'];           
+
+            $records_to_delete = $_REQUEST['ids'];
             if (empty($records_to_delete)) {
                 echo '<div id="message" class="updated fade"><p>Error! You need to select multiple records to perform a bulk action!</p></div>';
                 return;
@@ -173,7 +173,7 @@ class SwpmMembershipLevels extends WP_List_Table {
             echo '<div id="message" class="updated fade"><p>Selected records deleted successfully!</p></div>';
         }
     }
-    
+
     function delete() {
         global $wpdb;
         if (isset($_REQUEST['id'])) {
@@ -184,17 +184,17 @@ class SwpmMembershipLevels extends WP_List_Table {
     }
 
     function show() {
-        $selected = 1;
+        $selected = "";
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_membership_levels.php');
     }
 
     function manage() {
-        $selected = 2;
+        $selected = "manage";
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_membership_manage.php');
     }
 
     function manage_categroy() {
-        $selected = 3;
+        $selected = "category_list";
         include_once('class.swpm-category-list.php');
         $category_list = new SwpmCategoryList();
         include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_category_list.php');

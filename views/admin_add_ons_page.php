@@ -74,6 +74,22 @@ echo '<link type="text/css" rel="stylesheet" href="' . SIMPLE_WP_MEMBERSHIP_URL 
                 'page_url' => 'https://wpaffiliatemanager.com/affiliates-manager-and-simple-membership-integration/',
             );
             array_push($addons_data, $addon_8);
+
+            $addon_9 = array(
+                'name' => 'iDevAffiliate',
+                'thumbnail' => SIMPLE_WP_MEMBERSHIP_URL . '/images/addons/idevaffiliate-integration.png',
+                'description' => 'Allows you to integrate with iDevAffiliates so you can reward affiliates for sending paid members your way.',
+                'page_url' => 'https://simple-membership-plugin.com/simple-membership-and-idevaffiliate-integration/',
+            );
+            array_push($addons_data, $addon_9);
+            
+            $addon_10 = array(
+                'name' => 'Affiliate Platform',
+                'thumbnail' => SIMPLE_WP_MEMBERSHIP_URL . '/images/addons/affiliate-platform-integration.png',
+                'description' => 'Allows you to integrate with the Affiliate Platform plugin so you can reward affiliates for sending paid members your way.',
+                'page_url' => 'https://simple-membership-plugin.com/simple-membership-and-wp-affiliate-platform-integration/',
+            );
+            array_push($addons_data, $addon_10);
             
             /*** Show the addons list ***/
             foreach ($addons_data as $addon) {

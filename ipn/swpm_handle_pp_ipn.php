@@ -184,55 +184,8 @@ class swpm_paypal_ipn_handler {
         $this->ipn_data['status'] = $this->ipn_data['payment_status'];
         SwpmTransactions::save_txn_record($this->ipn_data, $cart_items);
         $this->debug_log('Transaction data saved.', true);
-
         
-        //WP Affiliate Plugin integration
-        if (function_exists('wp_aff_platform_install'))
-        {
-            $this->debug_log('WP Affiliate Platform is installed, checking if custom field has affiliate data...',true);
-            //It expects the value of the custom field to be like the following:
-            //<input type="hidden" name="custom" value="subsc_ref=4&ap_id=AFF_ID" />
-
-            $custom_field_val = $this->ipn_data['custom'];
-            $this->debug_log('Custom field value: '.$custom_field_val,true);
-            $findme = 'ap_id';
-            $pos = strpos($custom_field_val, $findme);
-            if($pos !== false){
-                parse_str($custom_field_val);
-                $referrer = $ap_id;
-            }else{
-                $this->debug_log('Could not find affiliate ID (ap_id) data in the custom field',true);
-            }
-
-            if(!empty($referrer))
-            {
-                    $total_tax = $this->ipn_data['tax'];
-                    if(empty($total_tax)){$total_tax = 0;}
-                    $total_shipping = 0;
-                    if(!empty($this->ipn_data['shipping'])){
-                            $total_shipping = $this->ipn_data['shipping'];
-                    }else if (!empty($this->ipn_data['mc_shipping'])){
-                            $total_shipping = $this->ipn_data['mc_shipping'];
-                    }
-                    $gross_sale_amt = $this->ipn_data['mc_gross'];
-                    $this->debug_log('Gross sale amount: '.$gross_sale_amt.' Tax: '.$total_tax.' Shipping: '.$total_shipping,true);
-                    $sale_amount = $gross_sale_amt - $total_shipping - $total_tax;
-
-                    $txn_id = $this->ipn_data['txn_id'];
-                    $item_id = $this->ipn_data['item_number'];
-                    $buyer_email = $this->ipn_data['payer_email'];
-                    $buyer_name = $this->ipn_data['first_name'] . " " .$this->ipn_data['last_name'];
-                    wp_aff_award_commission_unique($referrer,$sale_amount,$txn_id,$item_id,$buyer_email,'','',$buyer_name);
-                    $aff_details_debug = "Referrer: ".$referrer." Sale Amt: ".$sale_amount." Buyer Email: ".$buyer_email." Txn ID: ".$txn_id;
-                    $this->debug_log('Affiliate Commission Details => '.$aff_details_debug,true);
-            }
-            else
-            {
-                $this->debug_log("Referrer value is empty! No commission will be awarded for this sale",true);
-            }
-            
-            do_action('swpm_paypal_ipn_processed', $this->ipn_data);
-        }
+        do_action('swpm_paypal_ipn_processed', $this->ipn_data);
         return true;
     }
 

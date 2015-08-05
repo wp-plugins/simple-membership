@@ -51,7 +51,7 @@ class SwpmInstallation {
 
         $sql = "CREATE TABLE " . $wpdb->prefix . "swpm_members_tbl (
 			member_id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-			user_name varchar(32) NOT NULL,
+			user_name varchar(255) NOT NULL,
 			first_name varchar(32) DEFAULT '',
 			last_name varchar(32) DEFAULT '',
 			password varchar(64) NOT NULL,

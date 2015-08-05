@@ -322,7 +322,7 @@ abstract class SwpmUtils {
     public static function is_paid_registration() {
         $member_id = filter_input(INPUT_GET, 'member_id', FILTER_SANITIZE_NUMBER_INT);
         $code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
-        if(!empty($member_id) && !empty($code)){
+        if (!empty($member_id) && !empty($code)) {
             return true;
         }
         return false;
@@ -340,20 +340,20 @@ abstract class SwpmUtils {
         return null;
     }
 
-    public static function get_incomplete_paid_member_info_by_ip(){
+    public static function get_incomplete_paid_member_info_by_ip() {
         global $wpdb;
         $user_ip = SwpmUtils::get_user_ip_address();
-        if(!empty($user_ip)){
+        if (!empty($user_ip)) {
             //Lets check if a payment has been confirmed from this user's IP and the profile needs to be completed (where username is empty).
             $username = '';
             $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl WHERE last_accessed_from_ip=%s AND user_name=%s";
-            $query = $wpdb->prepare($query, $user_ip, $username);           
+            $query = $wpdb->prepare($query, $user_ip, $username);
             $result = $wpdb->get_row($query);
             return $result;
         }
         return null;
     }
-    
+
     public static function account_delete_confirmation_ui($msg = "") {
         ob_start();
         include(SIMPLE_WP_MEMBERSHIP_PATH . 'views/account_delete_warning.php');
@@ -384,6 +384,7 @@ abstract class SwpmUtils {
     /*
      * Checks if the string exists in the array key value of the provided array. If it doesn't exist, it returns the first key element from the valid values.
      */
+
     public static function sanitize_value_by_array($val_to_check, $valid_values) {
         $keys = array_keys($valid_values);
         $keys = array_map('strtolower', $keys);

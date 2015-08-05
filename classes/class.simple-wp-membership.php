@@ -501,6 +501,7 @@ class SimpleWpMembership {
         $members = new SwpmMembers();
         $action = filter_input(INPUT_GET, 'member_action');
         $action = empty($action) ? filter_input(INPUT_POST, 'action') : $action;
+        $output = '';
         switch ($action) {
             case 'add':
             case 'edit':
@@ -509,7 +510,12 @@ class SimpleWpMembership {
             case 'delete':
                 $members->delete();
             default:
-                $members->show();
+                $output = apply_filters('swpm_admin_member_menu_details_hook', $action, '');
+                if (empty($output)) {
+                    $output = $members->show();
+                }
+                $selected = $action;
+                include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_members.php');
                 break;
         }
     }

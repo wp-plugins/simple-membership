@@ -13,18 +13,24 @@ class SwpmFrontRegistration extends SwpmRegistration {
     }
 
     public function regigstration_ui($level) {
+        $form = apply_filters('swpm_registration_form_override', '', $level);
+        if (!empty($form)) {
+            return $form;
+        }
+
         $settings_configs = SwpmSettings::get_instance();
         $joinuspage_url = $settings_configs->get_value('join-us-page-url');
-        $membership_level = '';        
+        $membership_level = '';
         global $wpdb;
-                
+
         if (SwpmUtils::is_paid_registration()) {
             //Lets check if this is a registration for paid membership
             $member = SwpmUtils::get_paid_member_info();
             if (empty($member)) {
                 SwpmUtils::e('Error! Invalid Request. Could not find a match for the given security code and the user ID.');
+            } else {
+                $membership_level = $member->membership_level;
             }
-            $membership_level = $member->membership_level;
         } else if (!empty($level)) {
             $member = SwpmTransfer::$default_fields;
             $membership_level = absint($level);
@@ -38,10 +44,7 @@ class SwpmFrontRegistration extends SwpmRegistration {
             echo '</p>';
             return;
         }
-        $form = apply_filters('swpm_registration_form_override', '', $membership_level);
-        if (!empty($form)) {
-            return $form;
-        }
+
 
         $mebership_info = SwpmPermission::get_instance($membership_level);
         $membership_level = $mebership_info->get('id');

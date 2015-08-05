@@ -59,23 +59,23 @@ class SwpmMembers extends WP_List_Table {
 
     function prepare_items() {
         global $wpdb;
-        
+
         $this->process_bulk_action();
-        
+
         $query = "SELECT * FROM " . $wpdb->prefix . "swpm_members_tbl";
         $query .= " LEFT JOIN " . $wpdb->prefix . "swpm_membership_tbl";
         $query .= " ON ( membership_level = id ) ";
         $s = filter_input(INPUT_POST, 's');
-        if (!empty($s)){
+        if (!empty($s)) {
             $query .= " WHERE  user_name LIKE '%" . strip_tags($s) . "%' "
                     . " OR first_name LIKE '%" . strip_tags($s) . "%' "
                     . " OR last_name LIKE '%" . strip_tags($s) . "%' ";
         }
         $orderby = filter_input(INPUT_GET, 'orderby');
-        $orderby = empty($orderby) ? 'member_id' : $orderby ;
+        $orderby = empty($orderby) ? 'member_id' : $orderby;
         $order = filter_input(INPUT_GET, 'order');
         $order = empty($order) ? 'DESC' : $order;
-        
+
         $sortable_columns = $this->get_sortable_columns();
         $orderby = SwpmUtils::sanitize_value_by_array($orderby, $sortable_columns);
         $order = SwpmUtils::sanitize_value_by_array($order, array('DESC' => '1', 'ASC' => '1'));
@@ -83,7 +83,7 @@ class SwpmMembers extends WP_List_Table {
         $query.=' ORDER BY ' . $orderby . ' ' . $order;
         $totalitems = $wpdb->query($query); //return the total number of affected rows
         $perpage = 20;
-        $paged  = filter_input(INPUT_GET, 'paged');
+        $paged = filter_input(INPUT_GET, 'paged');
         if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
@@ -118,7 +118,10 @@ class SwpmMembers extends WP_List_Table {
 
     function add() {
         $form = apply_filters('swpm_admin_registration_form_override', '');
-        if (!empty($form)) {echo $form;return;}
+        if (!empty($form)) {
+            echo $form;
+            return;
+        }
         global $wpdb;
         $member = SwpmTransfer::$default_fields;
         $member['member_since'] = date('Y-m-d');
@@ -153,7 +156,7 @@ class SwpmMembers extends WP_List_Table {
     function process_bulk_action() {
         //Detect when a bulk action is being triggered... //print_r($_REQUEST);
         if ('bulk_delete' === $this->current_action()) {
-            $records_to_delete = $_REQUEST['members'];           
+            $records_to_delete = $_REQUEST['members'];
             if (empty($records_to_delete)) {
                 echo '<div id="message" class="updated fade"><p>Error! You need to select multiple records to perform a bulk action!</p></div>';
                 return;
@@ -164,26 +167,31 @@ class SwpmMembers extends WP_List_Table {
             echo '<div id="message" class="updated fade"><p>Selected records deleted successfully!</p></div>';
         }
     }
-    
+
     function delete() {
         if (isset($_REQUEST['member_id'])) {
             $id = absint($_REQUEST['member_id']);
             SwpmMembers::delete_user_by_id($id);
         }
     }
-    public static function delete_user_by_id($id){
+
+    public static function delete_user_by_id($id) {
         $user_name = SwpmUtils::get_user_by_id($id);
         SwpmMembers::delete_wp_user($user_name);
         SwpmMembers::delete_swpm_user_by_id($id);
     }
-    
-    public static function delete_swpm_user_by_id($id){
+
+    public static function delete_swpm_user_by_id($id) {
         global $wpdb;
         $query = "DELETE FROM " . $wpdb->prefix . "swpm_members_tbl WHERE member_id = $id";
-        $wpdb->query($query);        
+        $wpdb->query($query);
     }
+
     function show() {
-        include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_members.php');
+        ob_start();
+        include_once(SIMPLE_WP_MEMBERSHIP_PATH . 'views/admin_members_list.php');
+        $output = ob_get_clean();
+        return $output;
     }
 
     public static function delete_wp_user($user_name) {
